@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>helyos_agent_sdk.connector module &mdash; HelyOS Agent SDK library  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> HelyOS Agent SDK library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HelyOS Agent SDK library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>helyos_agent_sdk.connector module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apidocs_edited/helyos_agent_sdk.connector.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-helyos_agent_sdk.connector">
+<span id="helyos-agent-sdk-connector-module"></span><h1>helyos_agent_sdk.connector module<a class="headerlink" href="#module-helyos_agent_sdk.connector" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.parse_assignment_message">
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_assignment_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_assignment_message" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.parse_instant_actions">
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_instant_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_instant_actions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">AgentConnector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">helyos_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.agent_status">
+<span class="sig-name descname"><span class="pre">agent_status</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'free'</span></em><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.agent_status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.agent_resources">
+<span class="sig-name descname"><span class="pre">agent_resources</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.agent_resources" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.current_assignment">
+<span class="sig-name descname"><span class="pre">current_assignment</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.current_assignment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.agent_idle_status">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">agent_idle_status</span></span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.agent_idle_status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">helyos_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Agent Connector class</p>
+<p>Usage:
+helyos_client = HelyOSClient(‘rabbitmq.host.com’, 5432, uuid=’123-456’)
+helyos_client.perform_checkin()
+agentConnector = AgentConnector(helyos_client)</p>
+<p>The agent connector allows the developer to consume and publish messages correctly in helyOS framework.
+It implements the data formating compatible with helyOS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>helyos_client</strong> (<a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient" title="helyos_agent_sdk.client.HelyOSClient"><em>HelyOSClient</em></a>) – Instance of HelyOS Client. The instance should be “checked in”.</p></li>
+<li><p><strong>pose</strong> (<a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.Pose" title="helyos_agent_sdk.models.Pose"><em>Pose</em></a>) – (Optional) save the initial agent position in AgentConnector.agent_pose. This may be useful in callback methods.</p></li>
+<li><p><strong>encrypted</strong> (<em>bool</em>) – Set if the published messages should be encrypted, defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.agent_pose">
+<span class="sig-name descname"><span class="pre">agent_pose</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.Pose" title="helyos_agent_sdk.models.Pose"><span class="pre">Pose</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Pose(x=0,</span> <span class="pre">y=0,</span> <span class="pre">z=0,</span> <span class="pre">orientations=[0])</span></em><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.agent_pose" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.assignment_callback">
+<span class="sig-name descname"><span class="pre">assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.assignment_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.cancel_callback">
+<span class="sig-name descname"><span class="pre">cancel_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.cancel_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.reserve_callback">
+<span class="sig-name descname"><span class="pre">reserve_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.reserve_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.release_callback">
+<span class="sig-name descname"><span class="pre">release_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.release_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.other_instant_actions_callback">
+<span class="sig-name descname"><span class="pre">other_instant_actions_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_instant_actions_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.other_assignment_callback">
+<span class="sig-name descname"><span class="pre">other_assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_assignment_callback" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.consume_instant_action_messages">
+<span class="sig-name descname"><span class="pre">consume_instant_action_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reserve_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">release_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.consume_instant_action_messages" title="Permalink to this definition"></a></dt>
+<dd><p>Register the callback functions for instant actions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reserve_callback</strong> (<em>func</em>) – reserve_callback(ch, method, properties, received_str)</p></li>
+<li><p><strong>release_callback</strong> (<em>func</em>) – release_callback(ch, method, properties, received_str)</p></li>
+<li><p><strong>cancel_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>method</em><em>, </em><em>properties</em><em>, </em><em>received_str</em><em>)</em>) – cancel_callback</p></li>
+<li><p><strong>other_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>method</em><em>, </em><em>properties</em><em>, </em><em>received_str</em><em>)</em>) – Non-helyOS related instant action</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.consume_assignment_messages">
+<span class="sig-name descname"><span class="pre">consume_assignment_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assignment_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.consume_assignment_messages" title="Permalink to this definition"></a></dt>
+<dd><p>Register the callback functions for assignments or order (VDA5050)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reserve_callback</strong> (<em>func</em>) – assignment_callback(ch, method, properties, received_str)</p></li>
+<li><p><strong>other_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>method</em><em>, </em><em>properties</em><em>, </em><em>received_str</em><em>)</em>) – Non-helyOS related instant action</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.start_consuming">
+<span class="sig-name descname"><span class="pre">start_consuming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.start_consuming" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.stop_consuming">
+<span class="sig-name descname"><span class="pre">stop_consuming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.stop_consuming" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.publish_general_updates">
+<span class="sig-name descname"><span class="pre">publish_general_updates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.publish_general_updates" title="Permalink to this definition"></a></dt>
+<dd><p>Updates agent properties of agent: name, code, factsheet, etc.
+This is published in a low-priority queue to helyOS; in very high load conditions, some messages
+may be expired before helyOS consumption.
+Any other client can tap this information by use the routing key = ‘agent.{uuid}.update’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.publish_state">
+<span class="sig-name descname"><span class="pre">publish_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_STATE" title="helyos_agent_sdk.models.AGENT_STATE"><span class="pre">AGENT_STATE</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentCurrentResources" title="helyos_agent_sdk.models.AgentCurrentResources"><span class="pre">AgentCurrentResources</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCurrentStatus" title="helyos_agent_sdk.models.AssignmentCurrentStatus"><span class="pre">AssignmentCurrentStatus</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.publish_state" title="Permalink to this definition"></a></dt>
+<dd><p>Updates agent and the work processes status. For a good design, this method should be triggered by events.
+The data is published in a priviledged queue to helyOS and the message is always available for helyOS consumption.
+Other rabbitmq clients can tap this information by using the routing key = ‘agent.{uuid}.state’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> (<em>string</em><em> | </em><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_STATE" title="helyos_agent_sdk.models.AGENT_STATE"><em>AGENT_STATE</em></a>) – Agent status.</p></li>
+<li><p><strong>resources</strong> (<a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentCurrentResources" title="helyos_agent_sdk.models.AgentCurrentResources"><em>AgentCurrentResources</em></a>) – Agent availability information.</p></li>
+<li><p><strong>assignment_status</strong> (<a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCurrentStatus" title="helyos_agent_sdk.models.AssignmentCurrentStatus"><em>AssignmentCurrentStatus</em></a>) – Information about the current (or last) assignment.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.publish_sensors">
+<span class="sig-name descname"><span class="pre">publish_sensors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.publish_sensors" title="Permalink to this definition"></a></dt>
+<dd><p>Publishes agent position and sensors. The sensor data format is freely defined by the application.
+This method should be triggered periodically to ensure the helyOS-agent connection.
+This is published in a low-priority queue to helyOS; in very high load conditions, some of the messages
+may be expired before the helyOS consumption. Any rabbitmq client can tap this information by using the 
+routing key = ‘agent.{uuid}.visualization’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – Agent x position</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – Agent y position</p></li>
+<li><p><strong>orientations</strong> (<em>float list</em>) – Agent and trailer orientations</p></li>
+<li><p><strong>sensors</strong> (<em>dict</em>) – Agent sensor, user defined. defaults to {}</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.request_mission">
+<span class="sig-name descname"><span class="pre">request_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mission_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tools_uuids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sched_start_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.request_mission" title="Permalink to this definition"></a></dt>
+<dd><p>Request a mission to helyOS. The mission data is freely defined by the application.
+As example, this method could be triggered in the scenario where the agent needs an extra assignments to complete
+a mission, or when it delegates to other agents. Other rabbitmq clients can tap this information by using the 
+routing key = ‘agent.{uuid}.mission’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mission_name</strong> (<em>name</em>) – requested mission, as defined in helyOS dashboard.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) – User-defined data</p></li>
+<li><p><strong>tools_uuids</strong> (<em>string list</em>) – UUID list of agents to be reserved for the mission.</p></li>
+<li><p><strong>sched_start_at</strong> (<em>DateTime</em>) – Mission starting, user defined. defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.agent_checkin_to_helyos">
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">agent_checkin_to_helyos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yard_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'free'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.agent_checkin_to_helyos" title="Permalink to this definition"></a></dt>
+<dd><p>agent_checkin_helyos(uuid, yard_uid, agent_data, status=”free”, pubkey=None)   
+Helper to perform the check in of the agent {uuid} to helyOS at the yard {yard_uid}.
+It excutes the following operations:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>step 1 - instantiate client object (this will connect anonously to rabbitmq to exchange checkin data.</dt><dd><p>The anononymous connection last 60 seconds.</p>
+</dd>
+</dl>
+</li>
+<li><p>step 2 - send the check-in data</p></li>
+<li><p>step 3 - subscribe to the temporary queue to get checkin results</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, HelyOS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

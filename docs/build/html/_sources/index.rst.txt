@@ -1,0 +1,45 @@
+.. ScienceDesk helper library documentation master file, created by
+   sphinx-quickstart on Sat May  2 22:29:41 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to HelyOS Agent helper library's documentation!
+========================================================
+
+Introduction
+------------
+This library aims to help the integration of vehicles and robots with helyOS.
+
+Install
+-------
+Latest release
+
+.. code-block:: bash
+
+   pip install agent-helyos-sdk
+
+
+Development release candidates
+
+Check out for versions `Here <https://>`_
+
+.. code-block:: bash
+
+   pip install -i https://nexus.dev/simple/ agent-helyos-sdk==0.2.2+rc.5
+
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Usage Examples:
+
+   examples/index
+
+
+
+Indices and tables
+===================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
