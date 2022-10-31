@@ -9,7 +9,7 @@ keywords = ["autonomous driving", "helyos", "sdk"]
 
 homepage = "https://helyos.ivi.fraunhofer.de"
 repository = "https://github.com/"
-documentation = "https://helyos_agent_sdk.readthedocs.io/en/latest/"
+documentation = "https://fraunhoferivi.github.io/helyOS-agent-sdk/"
 
 classifiers = [
     "Environment :: Console",
