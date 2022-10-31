@@ -1,0 +1,46 @@
+.. Agent HelyOS helper library documentation master file, created by
+   sphinx-quickstart on Sat May  2 22:29:41 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to HelyOS Agent helper library's documentation!
+========================================================
+
+Introduction
+------------
+This library aims to help the integration of vehicles and robots with helyOS.
+
+Install
+-------
+Latest release
+
+.. code-block:: bash
+
+   pip install agent_helyos_sdk
+
+
+Development release candidates
+
+Check out for versions `Here <https://>`_
+
+.. code-block:: bash
+
+ pip install --index-url https://test.pypi.org/simple/  --extra-index-url https://pypi.org/simple helyos_agent_sdk
+   
+
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Usage Examples:
+
+   examples/index
+
+
+
+Indices and tables
+===================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
