@@ -76,17 +76,18 @@
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
 <section id="create-a-helyos-client">
 <h2>Create a HelyOS Client<a class="headerlink" href="#create-a-helyos-client" title="Permalink to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">helyos_agent_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="s2">&quot;dev2.rabbitmq.net&quot;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard information.</span>
 </pre></div>
 </div>
 </section>
 <section id="create-an-agent-connector-and-publish-messages-to-helyos">
 <h2>Create an Agent Connector and publish messages to helyOS<a class="headerlink" href="#create-an-agent-connector-and-publish-messages-to-helyos" title="Permalink to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">AgentConnector</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">helyos_agent_sdk</span> <span class="kn">import</span> <span class="n">AgentConnector</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span> <span class="o">=</span> <span class="n">AgentConnector</span><span class="p">(</span><span class="n">helyos_client</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">publish_state</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;free&quot;</span><span class="p">,</span> <span class="n">wp_process</span><span class="o">=</span><span class="n">wp_process</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">publish_sensors</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">43243</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">423423</span><span class="p">,</span> <span class="n">sensors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">36</span><span class="p">})</span>

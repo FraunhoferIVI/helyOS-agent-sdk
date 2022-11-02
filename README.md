@@ -36,6 +36,44 @@ The helyos-agent-sdk python package encloses methods and data structures definit
 *   Easy access to helyOS assignments via callbacks. 
 *   Application-level encryption.
 
+### Install
+
+```
+pip install helyos_agent_sdk
+
+```
+### Usage
+
+```python
+os.environ['AGENTS_UL_EXCHANGE'] = "xchange_helyos.agents.ul"
+os.environ['AGENTS_DL_EXCHANGE'] = "xchange_helyos.agents.dl"
+os.environ['AGENT_ANONYMOUS_EXCHANGE'] = "xchange_helyos.agents.anonymous"
+from helyos_agent_sdk import HelyOSClient, AgentConnector
+
+# Check in
+helyOS_client = HelyOSClient(rabbitmq_host, rabbitmq_port, uuid=AGENT_UID)
+helyOS_client.perform_checkin(yard_uid='1', agent_data=agent_data, status="free")
+helyOS_client.get_checkin_result()
+
+
+# Communication
+agent_connector = AgentConnector(helyOS_client)
+agent_connector.publish_sensors(x=-30167, y=3000, z=0, orientations=[1500, 0], sensor= {"my_sensor": 12})
+
+# ... #
+
+agentConnector.publish_state(status, resources, assignment_status)
+
+# ... #
+
+agentConnector.consume_instant_action_messages(my_reserve_callback, my_release_callback, my_cancel_assignm_callback, any_other_callback)
+agentConnector.consume_assignment_messages(my_assignment_callback)
+agentConnector.start_consuming()
+
+
+```
+
+
 ### Contributing
 
 Keep it simple. Keep it minimal.

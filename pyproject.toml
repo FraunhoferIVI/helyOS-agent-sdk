@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "helyos_agent_sdk"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = ["Carlos Viol Barbosa <you@example.com>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ packages = [{include = "helyos_agent_sdk"}]
 keywords = ["autonomous driving", "helyos", "sdk"]
 
 homepage = "https://helyos.ivi.fraunhofer.de"
-repository = "https://github.com/"
+repository = "https://github.com/FraunhoferIVI/helyOS-agent-sdk"
 documentation = "https://fraunhoferivi.github.io/helyOS-agent-sdk/"
 
 classifiers = [

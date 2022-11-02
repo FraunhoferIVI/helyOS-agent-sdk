@@ -6,17 +6,18 @@ Create a HelyOS Client
 --------------------------
 .. code-block:: python
 
-    >>> from agent_helyos_sdk import HelyOSClient
+    >>> from helyos_agent_sdk import HelyOSClient
     >>>
     >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
+    >>> helyOS_client.get_checkin_result()
     >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
 
 Create an Agent Connector and publish messages to helyOS
 ----------------------------------------------------------
 .. code-block:: python
 
-    >>> from agent_helyos_sdk import AgentConnector
+    >>> from helyos_agent_sdk import AgentConnector
     >>> agent_connector = AgentConnector(helyos_client)
     >>> agent_connector.publish_state(state="free", wp_process=wp_process)
     >>> agent_connector.publish_sensors(x=43243, y=423423, sensors={'temperature': 36})

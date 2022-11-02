@@ -16,7 +16,7 @@ Latest release
 
 .. code-block:: bash
 
-   pip install agent_helyos_sdk
+   pip install helyos_agent_sdk
 
 
 Development release candidates
