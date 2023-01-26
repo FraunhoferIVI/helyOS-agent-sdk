@@ -33,6 +33,7 @@ def generate_private_public_keys():
 
 class HelyOSClient():
     connection = None
+    channel = None
     checkin_data = None
     tries = 0
     

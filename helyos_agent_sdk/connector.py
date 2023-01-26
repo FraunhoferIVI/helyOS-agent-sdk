@@ -54,7 +54,10 @@ def parse_instant_actions(self, ch, method, properties, received_str):
         operation_types_required = received_message['body']['operation_types_required']
         reserved = received_message['body']['reserved']
         inst_wp_clearance = WorkProcessResourcesRequest(work_process_id, operation_types_required, reserved)
-        return self.reserve_callback(ch, method, properties, inst_wp_clearance)
+        if reserved:
+            return self.reserve_callback(ch, method, properties, inst_wp_clearance)
+        else:
+            return self.release_callback(ch, method, properties, inst_wp_clearance)
 
     return self.other_instant_actions_callback(ch, method, properties, received_str)
     

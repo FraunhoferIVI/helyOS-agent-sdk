@@ -1,2 +1,2 @@
-from .client import HelyOSClient
+from .client import HelyOSClient, connect_rabbitmq
 from .connector import AgentConnector
