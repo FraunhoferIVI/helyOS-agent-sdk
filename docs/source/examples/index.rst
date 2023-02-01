@@ -6,21 +6,59 @@ Create a HelyOS Client
 --------------------------
 .. code-block:: python
 
-    >>> from helyos_agent_sdk import HelyOSClient
+    >>> from agent_helyos_sdk import HelyOSClient
     >>>
     >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyOS_client.get_checkin_result()
-    >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
+    >>> print(helyos_client.checkin_data) # Data returned from helyOS containing yard information.
 
 Create an Agent Connector and publish messages to helyOS
 ----------------------------------------------------------
 .. code-block:: python
 
-    >>> from helyos_agent_sdk import AgentConnector
+    >>> from agent_helyos_sdk import AgentConnector
     >>> agent_connector = AgentConnector(helyos_client)
     >>> agent_connector.publish_state(state="free", wp_process=wp_process)
     >>> agent_connector.publish_sensors(x=43243, y=423423, sensors={'temperature': 36})
+
+The parameter sensors has an arbrittary data format. 
+If you don't have any strict requirement, you may use the 
+helyos-native data format:
+
+  | \[field_id: string\]: 
+  |              "value" : string | number, required
+  |              "title" : string, required
+  |              "type" :  string = "string" or "number", required
+  |              "description": string,
+  |              "unit":      string,
+  |              "minimum" :  number,
+  |              "maximum" :  number,
+  |              "maxLength": number,
+  |              "minLength": number
+
+
+.. code-block:: python
+
+       sensors = {
+         "sensor_set_2": {
+           "velocity_01": {
+                  "title": "velocity",
+                  "value": 20,
+                  "type": "number",
+                  "unit": "km/h",
+                  "minimum": 0,
+                  "maximum": 200
+             },
+             "back_door_status": {
+                  "title": "Truck door",
+                  "value": "half-open",
+                  "type": "string",
+                  "unit": "km/h",
+                  "minLength": 5,
+                  "maxLength": 10
+             }
+        }
+
 
 Use the agent connector to receive messsages from helyOS
 ---------------------------------------------------------
