@@ -51,14 +51,15 @@ os.environ['AGENT_ANONYMOUS_EXCHANGE'] = "xchange_helyos.agents.anonymous"
 from helyos_agent_sdk import HelyOSClient, AgentConnector
 
 # Check in
+initial_agent_data = {'name': "vehicle name", 'pose': {'x':-30167, 'y':-5415, 'orientations':[0, 0]}, 'geometry':{"my_custom_format": {}}}
 helyOS_client = HelyOSClient(rabbitmq_host, rabbitmq_port, uuid=AGENT_UID)
-helyOS_client.perform_checkin(yard_uid='1', agent_data=agent_data, status="free")
+helyOS_client.perform_checkin(yard_uid='1', agent_data=initial_agent_data, status="free")
 helyOS_client.get_checkin_result()
 
 
 # Communication
 agent_connector = AgentConnector(helyOS_client)
-agent_connector.publish_sensors(x=-30167, y=3000, z=0, orientations=[1500, 0], sensor= {"my_sensor": 12})
+agent_connector.publish_sensors(x=-30167, y=3000, z=0, orientations=[1500, 0], sensor= {"my_custom_format": {}})
 
 # ... #
 
