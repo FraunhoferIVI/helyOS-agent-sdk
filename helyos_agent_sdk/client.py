@@ -36,6 +36,7 @@ class HelyOSClient():
     channel = None
     checkin_data = None
     tries = 0
+    rbmq_username = None
     
     def __init__(self, rabbitmq_host, rabbitmq_port=5672, uuid=None, pubkey=None):
         """ HelyOS client class
