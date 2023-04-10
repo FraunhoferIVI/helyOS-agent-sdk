@@ -146,15 +146,54 @@ class HelyOSClient():
         self.checkin_response_queue = temp_queue.method.queue 
         self.guest_channel.basic_consume(queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback)
 
+
+    def __prepare_checkin_for_already_connected(self):
+         # step 1 - use existent connection
+        self.guest_channel = self.channel
+        # step 2 - creates a temporary queue to receive checkin response
+        temp_queue = self.guest_channel.queue_declare(queue='', exclusive=True)            
+        self.checkin_response_queue = temp_queue.method.queue 
+        self.guest_channel.basic_consume(queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback)
+
+
+    def connect_rabbitmq(self, username, password):
+        """ Connect to RabbitMQ 
+
+        :param username:  username previously registered in RabbitMQ server
+        :type username: str
+        :param password: password previously registered in RabbitMQ server'
+        :type password: str
+        """
+
+        try:
+            self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, username, password) 
+            self.channel = self.connection.channel()
+            self.rbmq_username = username
+
+        except Exception as inst:
+            print(inst)
+            raise HelyOSAccountConnectionError(
+                    f"Not able to connect as {username} to rabbitMQ to perform check in.")
+
+
+
     def perform_checkin(self, yard_uid, status='free', agent_data={}):
-        """ Check in the agent
+        """ Check in the agent: The checkin procedure registers an agent to a specific yard, and retrives the data about this yard. 
+            If the agent does not have a rabbitMQ account, helyOS will create an rabbitmq account using the agent's uuid as username.
+            Username and password are transmitted to the agent inside the check-in data.
 
         :param yard_uid: Yard UID
         :type yard_uid: str
         :param status: Agent status, defaults to 'free'
         :type status: str
         """
-        self.__connect_as_anonymous()
+        if self.connection:
+            self.__prepare_checkin_for_already_connected()
+            username = self.rbmq_username
+        else:
+            self.__connect_as_anonymous()
+            username = 'anonymous'
+
         self.yard_uid = yard_uid
         checkin_msg = {  'type': 'checkin',
                          'uuid': self.uuid,
@@ -168,7 +207,7 @@ class HelyOSClient():
 
         self.guest_channel.basic_publish(exchange = AGENT_ANONYMOUS_EXCHANGE,
                                   routing_key =  self.checking_routing_key,
-                                  properties=pika.BasicProperties(reply_to = self.checkin_response_queue),
+                                  properties=pika.BasicProperties(reply_to = self.checkin_response_queue, user_id = username),
                                   body=json.dumps(checkin_msg))
         
 
@@ -185,19 +224,23 @@ class HelyOSClient():
         response_code = body.get('response_code', 500)
         if response_code!='200':
             print(body)
-            raise HelyOSCheckinError(f"Check in refused: code {response_code}")
+            message  = body.get('message', "Check in refused")
+            raise HelyOSCheckinError(f"{message}: code {response_code}")
             
-        password = body['rbmq_password']
+        password = body.get('rbmq_password', None)
         try:
-            self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password)
-            self.channel = self.connection.channel()
+            if password:
+                self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password)
+                self.channel = self.connection.channel()
+                self.rbmq_username = body['rbmq_username']
+                print('username', body['rbmq_username'])
+                print('password', body['rbmq_password'])
             self.uuid = received_message['uuid']
             self.checkin_data = body
             ch.stop_consuming()
             
             print('uuid', self.uuid)
-            print('username', body['rbmq_username'])
-            print('password', body['rbmq_password'])
+
         except  Exception as inst: 
             self.tries += 1
             print(f"try {self.tries}")
@@ -217,10 +260,12 @@ class HelyOSClient():
         """
 
         try:
-            self.channel.basic_publish(exchange, routing_key, body=message)
+            self.channel.basic_publish(exchange, routing_key, properties=pika.BasicProperties(user_id = self.rbmq_username), body=message)
         except ConnectionResetError:
             self.channel = self.connection.channel()
-            self.channel.basic_publish(exchange, routing_key, body=message)
+            self.channel.basic_publish(exchange, routing_key,
+                                       properties=pika.BasicProperties(user_id = self.rbmq_username),
+                                       body=message)
 
     @auth_required            
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):

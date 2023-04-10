@@ -5,6 +5,10 @@ class HelyOSAnonymousConnectionError(Exception):
     """ Raised on anonymous connection during checkin procedure. """
     pass
 
+class HelyOSAccountConnectionError(Exception):
+    """ Raised on regristered account connection during checkin procedure. """
+    pass
+
 class HelyOSClientAutheticationError(Exception):
     """ Raised if is not yet authenticated. """
     pass
