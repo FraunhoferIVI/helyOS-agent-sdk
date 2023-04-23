@@ -70,7 +70,7 @@
 <span id="helyos-agent-sdk-client-module"></span><h1>helyos_agent_sdk.client module<a class="headerlink" href="#module-helyos_agent_sdk.client" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.connect_rabbitmq">
-<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.client.</span></span><span class="sig-name descname"><span class="pre">connect_rabbitmq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passwd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.connect_rabbitmq" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.client.</span></span><span class="sig-name descname"><span class="pre">connect_rabbitmq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passwd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.connect_rabbitmq" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -80,42 +80,24 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.client.</span></span><span class="sig-name descname"><span class="pre">HelyOSClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5672</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.client.</span></span><span class="sig-name descname"><span class="pre">HelyOSClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5672</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.connection">
-<span class="sig-name descname"><span class="pre">connection</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.connection" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.channel">
-<span class="sig-name descname"><span class="pre">channel</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.channel" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.checkin_data">
-<span class="sig-name descname"><span class="pre">checkin_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.checkin_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.tries">
-<span class="sig-name descname"><span class="pre">tries</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.tries" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5672</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5672</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>HelyOS client class</p>
-<p>The client implements several functions to make it easier to
-interact with rabbitMQ. It reads the rabbitMQ exchange names from environment variables
-and it encloses the routing-key names as properties.</p>
+<p>The client implements several functions to facilitate the
+interaction with RabbitMQ. It reads the RabbitMQ exchange names from environment variables
+and it provides the helyOS routing-key names as properties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rabbitmq_host</strong> (<em>str</em>) – RabbitMQ host name (e.g rabbitmq.mydomain.com)</p></li>
 <li><p><strong>rabbitmq_port</strong> (<em>int</em>) – RabbitMQ port, defaults to 5672</p></li>
 <li><p><strong>uuid</strong> (<em>str</em>) – universal unique identifier fot the agent</p></li>
-<li><p><strong>pubkey</strong> (<em>str</em><em>, </em><em>optional</em>) – RSA public key to be saved in helyOS core, defaults to None</p></li>
+<li><p><strong>enalble_ssl</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Enable rabbitmq SSL connection, default False.</p></li>
+<li><p><strong>ca_certificate</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – Certificate authority of the RabbitMQ server, defaults to None</p></li>
+<li><p><strong>pubkey</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – RSA public key can be saved in helyOS core, defaults to None</p></li>
 </ul>
 </dd>
 </dl>
@@ -176,9 +158,37 @@ as <cite>checkin_data</cite>.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.connect_rabbitmq">
+<span class="sig-name descname"><span class="pre">connect_rabbitmq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.connect_rabbitmq" title="Permalink to this definition"></a></dt>
+<dd><p>Creates the connection between agent and the RabbitMQ server.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;myrabbitmq.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5672</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3452345-52453-43525&#39;</span><span class="p">)</span>
+<span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="s1">&#39;my_username&#39;</span><span class="p">,</span> <span class="s1">&#39;secret_password&#39;</span><span class="p">)</span> <span class="c1">#  &lt;===</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – username previously registered in RabbitMQ server</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – password previously registered in RabbitMQ server’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.perform_checkin">
 <span class="sig-name descname"><span class="pre">perform_checkin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yard_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'free'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.perform_checkin" title="Permalink to this definition"></a></dt>
-<dd><p>Check in the agent</p>
+<dd><p>The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard 
+and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method <cite>get_checkin_result()</cite> to retrieve these data.</p>
+<p>The method <cite>connect_rabbitmq()</cite> should run before the check-in, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
+In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the 
+uuid as username and returns a password, which can be found in the property <cite>rbmq_password</cite>. This password should be safely stored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;myrabbitmq.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5672</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3452345-52453-43525&#39;</span><span class="p">)</span>
+<span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="s1">&#39;my_username&#39;</span><span class="p">,</span> <span class="s1">&#39;secret_password&#39;</span><span class="p">)</span>
+<span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">yard_uid</span><span class="o">=</span><span class="s1">&#39;yard_A&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;free&#39;</span><span class="p">)</span>  <span class="c1">#  &lt;===</span>
+<span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>                               <span class="c1">#  &lt;===</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -192,13 +202,16 @@ as <cite>checkin_data</cite>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.publish">
 <span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.ul'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.publish" title="Permalink to this definition"></a></dt>
-<dd><p>Publish message in RabbitMQ
-:param routing_key: RabbitMQ routing_key 
-:type routing_key: str
-:param encrypted: If this message should be encrypted, defaults to False
-:type encrypted: str
-:param exchange: RabbitMQ exchange, defaults to env.AGENTS_UL_EXCHANGE
-:type exchange: str</p>
+<dd><p>Publish message in RabbitMQ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>routing_key</strong> (<em>str</em>) – RabbitMQ routing_key</p></li>
+<li><p><strong>encrypted</strong> (<em>str</em>) – If this message should be encrypted, defaults to False</p></li>
+<li><p><strong>exchange</strong> (<em>str</em>) – RabbitMQ exchange, defaults to env.AGENTS_UL_EXCHANGE</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

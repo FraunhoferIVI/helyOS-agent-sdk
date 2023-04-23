@@ -1,11 +1,10 @@
 from datetime import datetime as dt
 from functools import wraps
 import pika
-from .exceptions import *
-
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
-import os, json
+import os, json, ssl
+from .exceptions import *
 
 AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', "xchange_helyos.agents.ul")
 AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', "xchange_helyos.agents.dl")
@@ -13,12 +12,29 @@ AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', "xchange_h
 REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN','0000-0000-0000-0000-0000')
 
 
-def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, temporary=False):
+def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=False, ca_certificate=None, temporary=False):
     credentials = pika.PlainCredentials(username, passwd)
-    if temporary:
-        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=60, blocked_connection_timeout=60)
+    if enable_ssl:
+        context = ssl.create_default_context(cadata=ca_certificate)
+        if ca_certificate is not None:
+            context.check_hostname = True
+            context.verify_mode =  ssl.CERT_REQUIRED
+        else:
+            context.check_hostname = False
+            context.verify_mode =  ssl.CERT_NONE
+
+        ssl_options = pika.SSLOptions(context, rabbitmq_host)
     else:
-        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=3600,blocked_connection_timeout=300)
+        ssl_options = None
+
+
+
+    if temporary:
+        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=60, blocked_connection_timeout=60,
+                                            ssl_options=ssl_options)
+    else:
+        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=3600,blocked_connection_timeout=300,
+                                            ssl_options=ssl_options )
     _connection = pika.BlockingConnection(params)
     return _connection    
 
@@ -32,18 +48,14 @@ def generate_private_public_keys():
 
 
 class HelyOSClient():
-    connection = None
-    channel = None
-    checkin_data = None
-    tries = 0
-    rbmq_username = None
+
     
-    def __init__(self, rabbitmq_host, rabbitmq_port=5672, uuid=None, pubkey=None):
+    def __init__(self, rabbitmq_host, rabbitmq_port=5672, uuid=None, enable_ssl=False, ca_certificate=None,  pubkey=None):
         """ HelyOS client class
 
-            The client implements several functions to make it easier to
-            interact with rabbitMQ. It reads the rabbitMQ exchange names from environment variables
-            and it encloses the routing-key names as properties.
+            The client implements several functions to facilitate the
+            interaction with RabbitMQ. It reads the RabbitMQ exchange names from environment variables
+            and it provides the helyOS routing-key names as properties.
 
             :param rabbitmq_host: RabbitMQ host name (e.g rabbitmq.mydomain.com)
             :type rabbitmq_host: str
@@ -51,13 +63,26 @@ class HelyOSClient():
             :type rabbitmq_port: int
             :param uuid: universal unique identifier fot the agent
             :type uuid: str
-            :param pubkey: RSA public key to be saved in helyOS core, defaults to None
-            :type pubkey: str, optional
+            :param enable_ssl: Enable rabbitmq SSL connection, default False.
+            :type enable_ssl: boolean, optional
+            :param ca_certificate: Certificate authority of the RabbitMQ server, defaults to None
+            :type ca_certificate: string (PEM format), optional
+            :param pubkey: RSA public key can be saved in helyOS core, defaults to None
+            :type pubkey:  string (PEM format), optional
 
         """
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
+        self.ca_certificate = ca_certificate
         self.uuid = uuid
+        self.enable_ssl = enable_ssl
+
+        self.connection = None
+        self.channel = None
+        self.checkin_data = None
+        self.tries = 0
+        self.rbmq_username = None
+        self.rbmq_password = None
         
         if pubkey is None:
             self.private_key, self.public_key = generate_private_public_keys()
@@ -134,7 +159,7 @@ class HelyOSClient():
 
         # step 1 - connect anonymously
         try:
-            temp_connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port,'anonymous', 'anonymous', temporary=True)        
+            temp_connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port,'anonymous', 'anonymous', self.enable_ssl, temporary=True)        
             self.guest_channel = temp_connection.channel()
         except Exception as inst:
             print(inst)
@@ -158,8 +183,15 @@ class HelyOSClient():
 
 
     def connect_rabbitmq(self, username, password):
-        """ Connect to RabbitMQ 
+        """
+        Creates the connection between agent and the RabbitMQ server.
+        
+        .. code-block:: python
 
+            helyos_client = HelyOSClient(host='myrabbitmq.com', port=5672, uuid='3452345-52453-43525')
+            helyos_client.connect_rabbitmq('my_username', 'secret_password') #  <===
+                      
+        
         :param username:  username previously registered in RabbitMQ server
         :type username: str
         :param password: password previously registered in RabbitMQ server'
@@ -167,7 +199,8 @@ class HelyOSClient():
         """
 
         try:
-            self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, username, password) 
+            self.connection = connect_rabbitmq(self.rabbitmq_host, 
+            self.rabbitmq_port, username, password, self.enable_ssl, self.ca_certificate) 
             self.channel = self.connection.channel()
             self.rbmq_username = username
 
@@ -179,9 +212,21 @@ class HelyOSClient():
 
 
     def perform_checkin(self, yard_uid, status='free', agent_data={}):
-        """ Check in the agent: The checkin procedure registers an agent to a specific yard, and retrives the data about this yard. 
-            If the agent does not have a rabbitMQ account, helyOS will create an rabbitmq account using the agent's uuid as username.
-            Username and password are transmitted to the agent inside the check-in data.
+        """ 
+        The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard 
+        and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
+
+        The method `connect_rabbitmq()` should run before the check-in, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
+        In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the 
+        uuid as username and returns a password, which can be found in the property `rbmq_password`. This password should be safely stored.
+
+        .. code-block:: python
+
+            helyos_client = HelyOSClient(host='myrabbitmq.com', port=5672, uuid='3452345-52453-43525')
+            helyos_client.connect_rabbitmq('my_username', 'secret_password')
+            helyos_client.perform_checkin(yard_uid='yard_A', status='free')  #  <===
+            helyOS_client.get_checkin_result()                               #  <===
+                       
 
         :param yard_uid: Yard UID
         :type yard_uid: str
@@ -228,19 +273,24 @@ class HelyOSClient():
             message  = body.get('message', "Check in refused")
             raise HelyOSCheckinError(f"{message}: code {response_code}")
             
-        password = body.get('rbmq_password', None)
+        password = body.pop('rbmq_password', None)
+        self.ca_certificate =  body.get('ca_certificate', self.ca_certificate)
+        
         try:
             if password:
-                self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password)
+                self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password, self.enable_ssl, self.ca_certificate)
                 self.channel = self.connection.channel()
                 self.rbmq_username = body['rbmq_username']
+                self.rbmq_password = password
+
+                print('uuid', self.uuid)
                 print('username', body['rbmq_username'])
-                print('password', body['rbmq_password'])
+                print('password', len(password)*'*')
+
             self.uuid = received_message['uuid']
             self.checkin_data = body
             ch.stop_consuming()
             
-            print('uuid', self.uuid)
 
         except  Exception as inst: 
             self.tries += 1
@@ -252,6 +302,7 @@ class HelyOSClient():
     @auth_required            
     def publish(self, routing_key, message, encrypted=False, exchange=AGENTS_UL_EXCHANGE):
         """ Publish message in RabbitMQ
+
             :param routing_key: RabbitMQ routing_key 
             :type routing_key: str
             :param encrypted: If this message should be encrypted, defaults to False

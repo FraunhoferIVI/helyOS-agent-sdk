@@ -79,8 +79,20 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="s2">&quot;dev2.rabbitmq.net&quot;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;secret_password&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data returned from helyOS containing yard information.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard information.</span>
+</pre></div>
+</div>
+<p>If the agent does not have an account yet, you can call perform_checkin() method without run the connect_rabbitmq().
+helyOS will automatically create a Rabbitmq account using the uuid as username.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="s2">&quot;dev2.rabbitmq.net&quot;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard and authentication information</span>
 </pre></div>
 </div>
 </section>

@@ -9,8 +9,23 @@ Create a HelyOS Client
     >>> from agent_helyos_sdk import HelyOSClient
     >>>
     >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
+    >>> helyos_client.connect_rabbitmq(username="01234-01234-01234", password="secret_password")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> print(helyos_client.checkin_data) # Data returned from helyOS containing yard information.
+    >>> helyOS_client.get_checkin_result()
+    >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
+
+
+If the agent does not have an account yet, you can call perform_checkin() method without run the connect_rabbitmq().
+helyOS will automatically create a Rabbitmq account using the uuid as username.
+
+.. code-block:: python
+
+    >>> from agent_helyos_sdk import HelyOSClient
+    >>>
+    >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
+    >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
+    >>> helyOS_client.get_checkin_result()
+    >>> print(helyos_client.checkin_data) # Data from helyOS containing yard and authentication information   
 
 Create an Agent Connector and publish messages to helyOS
 ----------------------------------------------------------
