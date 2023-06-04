@@ -8,10 +8,14 @@ from .models import (ASSIGNMENT_STATUS, AGENT_STATE, Pose, ASSIGNMENT_MESSAGE_TY
 
             
 
-def parse_assignment_message(self, ch, method, properties, received_str):    
+def parse_assignment_message(self, ch, properties, received_str):    
     received_message_str = json.loads(received_str)['message']    
     received_message = json.loads(received_message_str)
     action_type = received_message.get('type', None)
+    sender = None
+    if hasattr(properties, 'user_id'):
+        sender =  properties.user_id
+
     
     if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
         command_message = { 'type' : received_message['type'],
@@ -21,15 +25,20 @@ def parse_assignment_message(self, ch, method, properties, received_str):
                             '_version': received_message['_version'] }
                                                                           
         inst_assignm_exec = AssignmentCommandMessage(**command_message)
-        return self.assignment_callback(ch, method, properties, inst_assignm_exec)
+        return self.assignment_callback(ch, sender, inst_assignm_exec)
         
-    return self.other_assignment_callback(ch, method, properties, received_str)
+    return self.other_assignment_callback(ch,  sender, received_str)
     
+
+
     
-def parse_instant_actions(self, ch, method, properties, received_str):
+def parse_instant_actions(self, ch, properties, received_str):
     received_message_str = json.loads(received_str)['message']    
     received_message = json.loads(received_message_str)
     action_type = received_message.get('type', None)
+    sender = None
+    if hasattr(properties, 'user_id'):
+        sender =  properties.user_id
 
     if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
         command_message = { 'type' : received_message['type'],
@@ -39,15 +48,15 @@ def parse_instant_actions(self, ch, method, properties, received_str):
                             '_version': received_message['_version'] }
         inst_assignm_cancel = AssignmentCancelMessage(**command_message)      
         print("call cancel callback")
-        return self.cancel_callback(ch, method, properties, inst_assignm_cancel)
+        return self.cancel_callback(ch, sender, inst_assignm_cancel)
 
     if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
         inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
-        return self.reserve_callback(ch, method, properties, inst_wp_clearance)
+        return self.reserve_callback(ch, sender, inst_wp_clearance)
 
     if action_type == INSTANT_ACTIONS_TYPE.RELEASE:
         inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
-        return self.release_callback(ch, method, properties, inst_wp_clearance)   
+        return self.release_callback(ch, sender, inst_wp_clearance)   
         
     if action_type == INSTANT_ACTIONS_TYPE.WPCLEREANCE:  # Backward compatibility
         work_process_id = received_message['body']['wp_id']        
@@ -55,11 +64,11 @@ def parse_instant_actions(self, ch, method, properties, received_str):
         reserved = received_message['body']['reserved']
         inst_wp_clearance = WorkProcessResourcesRequest(work_process_id, operation_types_required, reserved)
         if reserved:
-            return self.reserve_callback(ch, method, properties, inst_wp_clearance)
+            return self.reserve_callback(ch, sender, inst_wp_clearance)
         else:
-            return self.release_callback(ch, method, properties, inst_wp_clearance)
+            return self.release_callback(ch, sender, inst_wp_clearance)
 
-    return self.other_instant_actions_callback(ch, method, properties, received_str)
+    return self.other_instant_actions_callback(ch, sender, received_str)
     
 
 
@@ -106,25 +115,25 @@ class AgentConnector():
 
     __instant_actions_callback = parse_instant_actions
     __assignment_callback = parse_assignment_message
-    assignment_callback = lambda  self, ch, method, properties, received_msg : print("assignment", received_msg)
-    cancel_callback = lambda self, ch, method, properties, received_msg : print("cancel callback", received_msg)
-    reserve_callback = lambda self, ch, method, properties, received_msg : print("reserve callback", received_msg)
-    release_callback = lambda self, ch, method, properties, received_msg : print("release callback", received_msg)
-    other_instant_actions_callback = lambda self, ch, method, properties, received_msg : print("instant_action_callback", received_msg)
-    other_assignment_callback = lambda self, ch, method, properties, received_msg : print("other_assignment_callback", received_msg)
+    assignment_callback = lambda  self, ch, sender, received_msg : print("assignment", sender, received_msg)
+    cancel_callback = lambda self, ch, sender, received_msg : print("cancel callback", sender, received_msg)
+    reserve_callback = lambda self, ch, sender, received_msg : print("reserve callback", sender, received_msg)
+    release_callback = lambda self, ch, sender, received_msg : print("release callback", sender, received_msg)
+    other_instant_actions_callback = lambda self, ch, sender, received_msg : print("instant_action_callback", sender, received_msg)
+    other_assignment_callback = lambda self, ch, sender, received_msg : print("other_assignment_callback", sender,  received_msg)
         
 
     def consume_instant_action_messages(self, reserve_callback=None, release_callback=None, cancel_callback=None,  other_callback=None):
         """Register the callback functions for instant actions
         
-            :param reserve_callback: reserve_callback(ch, method, properties, received_str) 
+            :param reserve_callback: reserve_callback(ch:Channel , sender: string, message: WorkProcessResourcesRequest) 
             :type reserve_callback: func
-            :param release_callback: release_callback(ch, method, properties, received_str) 
+            :param release_callback: release_callback(ch, sender, message: WorkProcessResourcesRequest) 
             :type release_callback: func 
             :param cancel_callback: cancel_callback 
-            :type cancel_callback: func(ch, method, properties, received_str)
+            :type cancel_callback: func(ch, sender, message: AssignmentCancelMessage)
             :param other_callback: Non-helyOS related instant action
-            :type other_callback: func(ch, method, properties, received_str) 
+            :type other_callback: func(ch: Channel, sender:string, message: string) 
 
         """
 
@@ -133,6 +142,18 @@ class AgentConnector():
         if reserve_callback is not None: self.reserve_callback = reserve_callback
         if release_callback is not None: self.release_callback = release_callback
         if other_callback is not None: self.other_instant_actions_callback = other_callback
+
+        def amqp_callback(ch, method, properties, message): 
+            return parse_instant_actions(self, ch, properties, received_str=message)
+        
+        def mqtt_callback(ch, userdata, message): 
+            return parse_instant_actions(self, ch, {'user_id': None}, received_str= message.payload.decode())
+        
+        if self.helyos_client._protocol == 'AMQP':
+            self.__instant_actions_callback = amqp_callback
+
+        if self.helyos_client._protocol == 'MQTT':
+            self.__instant_actions_callback = mqtt_callback
 
         self.helyos_client.consume_instant_actions_messages(self.__instant_actions_callback)
         
@@ -149,14 +170,26 @@ class AgentConnector():
         if assignment_callback is not None: self.assignment_callback = assignment_callback 
         if other_callback is not None: self.other_assignment_callback = other_callback
 
+        def amqp_callback(ch, method, properties, message): 
+            return parse_assignment_message(self, ch, properties, received_str=message)
+        
+        def mqtt_callback(ch, userdata, message): 
+            return parse_assignment_message(self, ch, {'user_id': None}, received_str= message.payload.decode())
+        
+        if self.helyos_client._protocol == 'AMQP':
+            self.__assignment_callback = amqp_callback
+
+        if self.helyos_client._protocol == 'MQTT':
+            self.__assignment_callback = mqtt_callback
+
         self.helyos_client.consume_assignment_messages(self.__assignment_callback)
 
-    def start_consuming(self):
-        self.helyos_client.channel.start_consuming()
+    def start_listening(self):
+        self.helyos_client.start_listening()
         
         
-    def stop_consuming(self):
-        self.helyos_client.channel.stop_consuming()
+    def stop_listening(self):
+        self.helyos_client.stop_listening()
 
 
     def publish_general_updates(self, body={}):
