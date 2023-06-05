@@ -31,7 +31,7 @@ The helyos-agent-sdk python package encloses methods and data structures definit
 ### List of features
 
 *   RabbitMQ client to communicate with helyOS. 
-*   Check-in method.
+*   AMQP and  MQTT Protocol.
 *   Agent and assignment status definitions. 
 *   Easy access to helyOS assignments via callbacks. 
 *   Application-level encryption.
@@ -45,17 +45,21 @@ pip install helyos_agent_sdk
 ### Usage
 
 ```python
-os.environ['AGENTS_UL_EXCHANGE'] = "xchange_helyos.agents.ul"
-os.environ['AGENTS_DL_EXCHANGE'] = "xchange_helyos.agents.dl"
-os.environ['AGENT_ANONYMOUS_EXCHANGE'] = "xchange_helyos.agents.anonymous"
+
 from helyos_agent_sdk import HelyOSClient, AgentConnector
 
-# Check in
-initial_agent_data = {'name': "vehicle name", 'pose': {'x':-30167, 'y':-5415, 'orientations':[0, 0]}, 'geometry':{"my_custom_format": {}}}
+# Connect via AMQP
 helyOS_client = HelyOSClient(rabbitmq_host, rabbitmq_port, uuid=AGENT_UID)
-helyOS_client.perform_checkin(yard_uid='1', agent_data=initial_agent_data, status="free")
-helyOS_client.get_checkin_result()
 
+# Or connect via MQTT
+# helyOS_client = HelyOSMQTTClient(rabbitmq_host, rabbitmq_port, uuid=AGENT_UID)
+
+helyOS_client.connnect(username, password)
+
+# Check in yard
+initial_agent_data = {'name': "vehicle name", 'pose': {'x':-30167, 'y':-5415, 'orientations':[0, 0]}, 'geometry':{"my_custom_format": {}}}
+helyOS_client.perform_checkin(yard_uid='1', agent_data=initial_agent_data, status="free")
+helyOS_client.get_checkin_result() # yard data
 
 # Communication
 agent_connector = AgentConnector(helyOS_client)
@@ -63,13 +67,13 @@ agent_connector.publish_sensors(x=-30167, y=3000, z=0, orientations=[1500, 0], s
 
 # ... #
 
-agentConnector.publish_state(status, resources, assignment_status)
+agent_connector.publish_state(status, resources, assignment_status)
 
 # ... #
 
-agentConnector.consume_instant_action_messages(my_reserve_callback, my_release_callback, my_cancel_assignm_callback, any_other_callback)
-agentConnector.consume_assignment_messages(my_assignment_callback)
-agentConnector.start_consuming()
+agent_connector.consume_instant_action_messages(my_reserve_callback, my_release_callback, my_cancel_assignm_callback, any_other_callback)
+agent_connector.consume_assignment_messages(my_assignment_callback)
+agent_connector.start_listening()
 
 
 ```
