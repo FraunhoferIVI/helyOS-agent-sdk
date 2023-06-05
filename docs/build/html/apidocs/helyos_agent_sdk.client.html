@@ -95,7 +95,7 @@ and it provides the helyOS routing-key names as properties.</p>
 <li><p><strong>rabbitmq_host</strong> (<em>str</em>) – RabbitMQ host name (e.g rabbitmq.mydomain.com)</p></li>
 <li><p><strong>rabbitmq_port</strong> (<em>int</em>) – RabbitMQ port, defaults to 5672</p></li>
 <li><p><strong>uuid</strong> (<em>str</em>) – universal unique identifier fot the agent</p></li>
-<li><p><strong>enalble_ssl</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Enable rabbitmq SSL connection, default False.</p></li>
+<li><p><strong>enable_ssl</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Enable rabbitmq SSL connection, default False.</p></li>
 <li><p><strong>ca_certificate</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – Certificate authority of the RabbitMQ server, defaults to None</p></li>
 <li><p><strong>pubkey</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – RSA public key can be saved in helyOS core, defaults to None</p></li>
 </ul>
@@ -160,6 +160,11 @@ as <cite>checkin_data</cite>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.connect_rabbitmq">
 <span class="sig-name descname"><span class="pre">connect_rabbitmq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.connect_rabbitmq" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.connect" title="Permalink to this definition"></a></dt>
 <dd><p>Creates the connection between agent and the RabbitMQ server.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;myrabbitmq.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5672</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3452345-52453-43525&#39;</span><span class="p">)</span>
 <span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="s1">&#39;my_username&#39;</span><span class="p">,</span> <span class="s1">&#39;secret_password&#39;</span><span class="p">)</span> <span class="c1">#  &lt;===</span>
@@ -240,6 +245,16 @@ Instant actions are used by helyOS to reserve, release or cancel an assignment.<
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.start_listening">
+<span class="sig-name descname"><span class="pre">start_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.start_listening" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.stop_listening">
+<span class="sig-name descname"><span class="pre">stop_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.stop_listening" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

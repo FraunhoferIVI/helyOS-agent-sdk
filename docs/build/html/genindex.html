@@ -40,6 +40,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">helyos_agent_sdk</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apidocs/helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
+</ul>
 
         </div>
       </div>
@@ -124,6 +132,8 @@
 </li>
         <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessResourcesRequest.__init__">(helyos_agent_sdk.models.WorkProcessResourcesRequest method)</a>
 </li>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -157,10 +167,10 @@
 </li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateBody">AgentStateBody (class in helyos_agent_sdk.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage">AgentStateMessage (class in helyos_agent_sdk.models)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateBody.assignment">assignment (helyos_agent_sdk.models.AgentStateBody attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.assignment_callback">assignment_callback() (helyos_agent_sdk.connector.AgentConnector method)</a>
@@ -174,7 +184,11 @@
 </li>
       </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.assignment_routing_key">assignment_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.assignment_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.ASSIGNMENT_STATUS">ASSIGNMENT_STATUS (class in helyos_agent_sdk.models)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage">AssignmentCancelMessage (class in helyos_agent_sdk.models)</a>
@@ -186,7 +200,11 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentMetadata">AssignmentMetadata (class in helyos_agent_sdk.models)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.auth_required">auth_required() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.auth_required">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -224,27 +242,45 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.CHECKIN">CHECKIN (helyos_agent_sdk.models.AGENT_MESSAGE_TYPE attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.checking_routing_key">checking_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentCheckinData.code">code (helyos_agent_sdk.models.AgentCheckinData attribute)</a>
 </li>
+      <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.connect">connect() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.connect_mqtt">connect_mqtt() (in module helyos_agent_sdk.mqtt_client)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.connect_rabbitmq">connect_rabbitmq() (helyos_agent_sdk.client.HelyOSClient method)</a>
 
       <ul>
         <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.connect_rabbitmq">(in module helyos_agent_sdk.client)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.consume_assignment_messages">consume_assignment_messages() (helyos_agent_sdk.client.HelyOSClient method)</a>
 
       <ul>
         <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.consume_assignment_messages">(helyos_agent_sdk.connector.AgentConnector method)</a>
 </li>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_assignment_messages">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
+</li>
       </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.consume_instant_action_messages">consume_instant_action_messages() (helyos_agent_sdk.connector.AgentConnector method)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.consume_instant_actions_messages">consume_instant_actions_messages() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_instant_actions_messages">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentMetadata.context">context (helyos_agent_sdk.models.AssignmentMetadata attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.current_assignment">current_assignment (helyos_agent_sdk.connector.AgentConnector attribute)</a>
@@ -302,11 +338,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.generate_private_public_keys">generate_private_public_keys() (in module helyos_agent_sdk.client)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.generate_private_public_keys">(in module helyos_agent_sdk.mqtt_client)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.get_checkin_result">get_checkin_result() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.get_checkin_result">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -341,13 +385,20 @@
         <li><a href="apidocs/helyos_agent_sdk.exceptions.html#module-helyos_agent_sdk.exceptions">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     helyos_agent_sdk.models
 
       <ul>
         <li><a href="apidocs/helyos_agent_sdk.models.html#module-helyos_agent_sdk.models">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    helyos_agent_sdk.mqtt_client
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#module-helyos_agent_sdk.mqtt_client">module</a>
 </li>
       </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.exceptions.html#helyos_agent_sdk.exceptions.HelyOSAccountConnectionError">HelyOSAccountConnectionError</a>
@@ -359,6 +410,8 @@
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient">HelyOSClient (class in helyos_agent_sdk.client)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.exceptions.html#helyos_agent_sdk.exceptions.HelyOSClientAutheticationError">HelyOSClientAutheticationError</a>
+</li>
+      <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient">HelyOSMQTTClient (class in helyos_agent_sdk.mqtt_client)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -372,10 +425,14 @@
         <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentMetadata.id">(helyos_agent_sdk.models.AssignmentMetadata attribute)</a>
 </li>
       </ul></li>
+      <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.instant_actions_routing_key">instant_actions_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.instant_actions_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.instant_actions_routing_key">instant_actions_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
-</li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE">INSTANT_ACTIONS_TYPE (class in helyos_agent_sdk.models)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentCheckinData.is_actuator">is_actuator (helyos_agent_sdk.models.AgentCheckinData attribute)</a>
@@ -389,7 +446,11 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.MISSION">MISSION (helyos_agent_sdk.models.AGENT_MESSAGE_TYPE attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.mission_routing_key">mission_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.mission_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage">MissionRequestMessage (class in helyos_agent_sdk.models)</a>
 </li>
       <li>
@@ -405,6 +466,8 @@
         <li><a href="apidocs/helyos_agent_sdk.exceptions.html#module-helyos_agent_sdk.exceptions">helyos_agent_sdk.exceptions</a>
 </li>
         <li><a href="apidocs/helyos_agent_sdk.models.html#module-helyos_agent_sdk.models">helyos_agent_sdk.models</a>
+</li>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#module-helyos_agent_sdk.mqtt_client">helyos_agent_sdk.mqtt_client</a>
 </li>
       </ul></li>
   </ul></td>
@@ -448,7 +511,11 @@
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.parse_instant_actions">parse_instant_actions() (in module helyos_agent_sdk.connector)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.perform_checkin">perform_checkin() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.perform_checkin">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.Pose">Pose (class in helyos_agent_sdk.models)</a>
 </li>
   </ul></td>
@@ -456,7 +523,11 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentCheckinData.pose">pose (helyos_agent_sdk.models.AgentCheckinData attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.publish">publish() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.publish_general_updates">publish_general_updates() (helyos_agent_sdk.connector.AgentConnector method)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.publish_sensors">publish_sensors() (helyos_agent_sdk.connector.AgentConnector method)</a>
@@ -508,13 +579,31 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.SENSORS">SENSORS (helyos_agent_sdk.models.AGENT_MESSAGE_TYPE attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.sensors_routing_key">sensors_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.sensors_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.set_assignment_queue">set_assignment_queue() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.set_instant_actions_queue">set_instant_actions_queue() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
 </li>
-      <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.start_consuming">start_consuming() (helyos_agent_sdk.connector.AgentConnector method)</a>
+      </ul></li>
+      <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.start_listening">start_listening() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.start_listening">(helyos_agent_sdk.connector.AgentConnector method)</a>
 </li>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.start_listening">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentMetadata.start_time_stamp">start_time_stamp (helyos_agent_sdk.models.AssignmentMetadata attribute)</a>
@@ -530,9 +619,19 @@
 </li>
       </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.status_routing_key">status_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.status_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
-      <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.stop_consuming">stop_consuming() (helyos_agent_sdk.connector.AgentConnector method)</a>
+      </ul></li>
+      <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.stop_listening">stop_listening() (helyos_agent_sdk.client.HelyOSClient method)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.stop_listening">(helyos_agent_sdk.connector.AgentConnector method)</a>
 </li>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient method)</a>
+</li>
+      </ul></li>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.ASSIGNMENT_STATUS.SUCCEEDED">SUCCEEDED (helyos_agent_sdk.models.ASSIGNMENT_STATUS attribute)</a>
 </li>
   </ul></td>
@@ -580,7 +679,11 @@
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.UPDATE">UPDATE (helyos_agent_sdk.models.AGENT_MESSAGE_TYPE attribute)</a>
 </li>
       <li><a href="apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.update_routing_key">update_routing_key (helyos_agent_sdk.client.HelyOSClient property)</a>
+
+      <ul>
+        <li><a href="apidocs/helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.update_routing_key">(helyos_agent_sdk.mqtt_client.HelyOSMQTTClient property)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.uuid">uuid (helyos_agent_sdk.models.AgentStateMessage attribute)</a>

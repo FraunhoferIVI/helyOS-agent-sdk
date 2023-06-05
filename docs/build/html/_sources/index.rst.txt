@@ -27,6 +27,7 @@ Check out for versions `Here <https://>`_
 
  pip install --index-url https://test.pypi.org/simple/  --extra-index-url https://pypi.org/simple helyos_agent_sdk
    
+   helyos_agent_sdk.models
 
 
 .. toctree::
@@ -35,6 +36,23 @@ Check out for versions `Here <https://>`_
    :caption: Usage Examples:
 
    examples/index
+
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Modules:
+
+   apidocs/modules
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Models:
+
+   apidocs/helyos_agent_sdk.models
+
+
 
 
 

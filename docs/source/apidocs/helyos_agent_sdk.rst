@@ -11,6 +11,7 @@ Submodules
    helyos_agent_sdk.connector
    helyos_agent_sdk.exceptions
    helyos_agent_sdk.models
+   helyos_agent_sdk.mqtt_client
 
 Module contents
 ---------------

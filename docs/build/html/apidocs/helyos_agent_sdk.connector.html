@@ -70,12 +70,12 @@
 <span id="helyos-agent-sdk-connector-module"></span><h1>helyos_agent_sdk.connector module<a class="headerlink" href="#module-helyos_agent_sdk.connector" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.parse_assignment_message">
-<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_assignment_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_assignment_message" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_assignment_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_assignment_message" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.parse_instant_actions">
-<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_instant_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_instant_actions" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.connector.</span></span><span class="sig-name descname"><span class="pre">parse_instant_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.parse_instant_actions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -130,32 +130,32 @@ It implements the data formating compatible with helyOS.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.assignment_callback">
-<span class="sig-name descname"><span class="pre">assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.assignment_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.assignment_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.cancel_callback">
-<span class="sig-name descname"><span class="pre">cancel_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.cancel_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">cancel_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.cancel_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.reserve_callback">
-<span class="sig-name descname"><span class="pre">reserve_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.reserve_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reserve_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.reserve_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.release_callback">
-<span class="sig-name descname"><span class="pre">release_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.release_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">release_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.release_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.other_instant_actions_callback">
-<span class="sig-name descname"><span class="pre">other_instant_actions_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_instant_actions_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">other_instant_actions_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_instant_actions_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.other_assignment_callback">
-<span class="sig-name descname"><span class="pre">other_assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_assignment_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">other_assignment_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">received_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.other_assignment_callback" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -165,10 +165,10 @@ It implements the data formating compatible with helyOS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reserve_callback</strong> (<em>func</em>) – reserve_callback(ch, method, properties, received_str)</p></li>
-<li><p><strong>release_callback</strong> (<em>func</em>) – release_callback(ch, method, properties, received_str)</p></li>
-<li><p><strong>cancel_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>method</em><em>, </em><em>properties</em><em>, </em><em>received_str</em><em>)</em>) – cancel_callback</p></li>
-<li><p><strong>other_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>method</em><em>, </em><em>properties</em><em>, </em><em>received_str</em><em>)</em>) – Non-helyOS related instant action</p></li>
+<li><p><strong>reserve_callback</strong> (<em>func</em>) – reserve_callback(ch:Channel , sender: string, message: WorkProcessResourcesRequest)</p></li>
+<li><p><strong>release_callback</strong> (<em>func</em>) – release_callback(ch, sender, message: WorkProcessResourcesRequest)</p></li>
+<li><p><strong>cancel_callback</strong> (<em>func</em><em>(</em><em>ch</em><em>, </em><em>sender</em><em>, </em><em>message: AssignmentCancelMessage</em><em>)</em>) – cancel_callback</p></li>
+<li><p><strong>other_callback</strong> (<em>func</em><em>(</em><em>ch: Channel</em><em>, </em><em>sender:string</em><em>, </em><em>message: string</em><em>)</em>) – Non-helyOS related instant action</p></li>
 </ul>
 </dd>
 </dl>
@@ -189,13 +189,13 @@ It implements the data formating compatible with helyOS.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.start_consuming">
-<span class="sig-name descname"><span class="pre">start_consuming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.start_consuming" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.start_listening">
+<span class="sig-name descname"><span class="pre">start_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.start_listening" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.stop_consuming">
-<span class="sig-name descname"><span class="pre">stop_consuming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.stop_consuming" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="helyos_agent_sdk.connector.AgentConnector.stop_listening">
+<span class="sig-name descname"><span class="pre">stop_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.connector.AgentConnector.stop_listening" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

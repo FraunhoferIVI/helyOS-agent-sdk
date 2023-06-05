@@ -20,6 +20,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="helyos_agent_sdk" href="../apidocs/modules.html" />
     <link rel="prev" title="Welcome to HelyOS Agent helper library’s documentation!" href="../index.html" /> 
 </head>
 
@@ -41,11 +42,20 @@
               <p class="caption" role="heading"><span class="caption-text">Usage Examples:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#create-a-helyos-client">Create a HelyOS Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connect-to-helyos-via-amqp">Connect to helyOS via AMQP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connect-to-helyos-via-mqtt">Connect to helyOS via MQTT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-an-agent-connector-and-publish-messages-to-helyos">Create an Agent Connector and publish messages to helyOS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-the-agent-connector-to-receive-messsages-from-helyos">Use the agent connector to receive messsages from helyOS</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">helyos_agent_sdk</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 </ul>
 
         </div>
@@ -74,18 +84,18 @@
              
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
-<section id="create-a-helyos-client">
-<h2>Create a HelyOS Client<a class="headerlink" href="#create-a-helyos-client" title="Permalink to this heading"></a></h2>
+<section id="connect-to-helyos-via-amqp">
+<h2>Connect to helyOS via AMQP<a class="headerlink" href="#connect-to-helyos-via-amqp" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="s2">&quot;dev2.rabbitmq.net&quot;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;secret_password&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;secret_password&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard information.</span>
 </pre></div>
 </div>
-<p>If the agent does not have an account yet, you can call perform_checkin() method without run the connect_rabbitmq().
+<p>If the agent does not have an account yet, you can call perform_checkin() method without run the connect() method.
 helyOS will automatically create a Rabbitmq account using the uuid as username.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSClient</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -93,6 +103,18 @@ helyOS will automatically create a Rabbitmq account using the uuid as username.<
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard and authentication information</span>
+</pre></div>
+</div>
+</section>
+<section id="connect-to-helyos-via-mqtt">
+<h2>Connect to helyOS via MQTT<a class="headerlink" href="#connect-to-helyos-via-mqtt" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">agent_helyos_sdk</span> <span class="kn">import</span> <span class="n">HelyOSMQTTClient</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSMQTTClient</span><span class="p">(</span><span class="s2">&quot;dev2.rabbitmq.net&quot;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;01234-01234-01234&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;secret_password&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyos_client</span><span class="o">.</span><span class="n">perform_checkin</span><span class="p">(</span><span class="n">agent_data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s2">&quot;my truck&quot;</span><span class="p">,</span> <span class="s1">&#39;factsheet&#39;</span><span class="p">:</span><span class="n">factsheet_dict</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">helyos_client</span><span class="o">.</span><span class="n">checkin_data</span><span class="p">)</span> <span class="c1"># Data from helyOS containing yard information.</span>
 </pre></div>
 </div>
 </section>
@@ -104,7 +126,20 @@ helyOS will automatically create a Rabbitmq account using the uuid as username.<
 <span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">publish_sensors</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">43243</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">423423</span><span class="p">,</span> <span class="n">sensors</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">36</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>The parameter sensors has an arbrittary data format.
+</section>
+<section id="use-the-agent-connector-to-receive-messsages-from-helyos">
+<h2>Use the agent connector to receive messsages from helyOS<a class="headerlink" href="#use-the-agent-connector-to-receive-messsages-from-helyos" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">example_callback</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ch</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">received_str</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">received_str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">consume_assignments</span><span class="p">(</span><span class="n">assignment_callback</span><span class="o">=</span><span class="n">example_callback</span><span class="p">)</span> <span class="c1"># assignment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">consume_instant_actions</span><span class="p">(</span> <span class="n">reserve_callback</span><span class="o">=</span><span class="n">example_callback</span><span class="p">,</span><span class="c1"># reserve for mission</span>
+<span class="go">                                             release_callback=example_callback,# release from mission</span>
+<span class="go">                                             cancel_callback=example_callback) # cancel assignment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">start_listening</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In the <cite>example_callback()</cite>, the parameter sender is the validated username of the rabbitmq account of the client that sent the message.
+This parameter is not available when use MQTT; sender=`None`.</p>
+<p>In the <cite>publish_sensors()</cite>, the parameter sensors has an arbrittary data format.
 If you don’t have any strict requirement, you may use the
 helyos-native data format:</p>
 <blockquote>
@@ -123,6 +158,7 @@ helyos-native data format:</p>
 </div>
 </div>
 </div></blockquote>
+<p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sensors</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">&quot;sensor_set_2&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;velocity_01&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -144,16 +180,6 @@ helyos-native data format:</p>
  <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="use-the-agent-connector-to-receive-messsages-from-helyos">
-<h2>Use the agent connector to receive messsages from helyOS<a class="headerlink" href="#use-the-agent-connector-to-receive-messsages-from-helyos" title="Permalink to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">example_callback</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">received_str</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;callback&quot;</span><span class="p">,</span> <span class="n">received_str</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">consume_assignments</span><span class="p">(</span><span class="n">assignment_callback</span><span class="o">=</span><span class="n">example_callback</span><span class="p">)</span> <span class="c1"># assignment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">agent_connector</span><span class="o">.</span><span class="n">consume_instant_actions</span><span class="p">(</span> <span class="n">reserve_callback</span><span class="o">=</span><span class="n">example_callback</span><span class="p">,</span><span class="c1"># reserve for mission</span>
-<span class="go">                                             release_callback=example_callback,# release from mission</span>
-<span class="go">                                             cancel_callback=example_callback) # cancel assignment</span>
-</pre></div>
-</div>
 <p>You may check <a class="reference internal" href="../apidocs/helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient" title="helyos_agent_sdk.client.HelyOSClient"><code class="xref py py-mod docutils literal notranslate"><span class="pre">helyos_agent_sdk.client.HelyOSClient</span></code></a> for more details regarding the current methods.</p>
 <p>For resource attributes you may refer to <a class="reference internal" href="../apidocs/helyos_agent_sdk.models.html#module-helyos_agent_sdk.models" title="helyos_agent_sdk.models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">helyos_agent_sdk.models</span></code></a></p>
 </section>
@@ -164,6 +190,7 @@ helyos-native data format:</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to HelyOS Agent helper library’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../apidocs/modules.html" class="btn btn-neutral float-right" title="helyos_agent_sdk" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
