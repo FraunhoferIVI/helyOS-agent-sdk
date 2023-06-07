@@ -323,7 +323,3 @@ def agent_checkin_to_helyos(uuid, yard_uid, agent_data, status="free", pubkey=No
     client_obj.get_checkin_result()
     
     return client_obj 
-
-
-
-
