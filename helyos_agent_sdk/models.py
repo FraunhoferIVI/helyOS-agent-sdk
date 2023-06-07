@@ -9,7 +9,7 @@ from enum import Enum
     
 # ---- CONSTANTS ------ #
 
-VERSION = "3.0.0"
+VERSION = '3.0.0'
 
 class ASSIGNMENT_STATUS(Enum):
     ACTIVE = 'active'
@@ -29,7 +29,7 @@ class AGENT_STATE(Enum):
     
 
 class ASSIGNMENT_MESSAGE_TYPE(str, Enum):
-    EXECUTION = "assignment_execution"
+    EXECUTION = 'assignment_execution'
 
     
 class INSTANT_ACTIONS_TYPE(str, Enum):
@@ -100,13 +100,13 @@ class Pose:
 # not used in the code, fields must be optional        
 @dataclass
 class AgentCheckinData:
-    name: str = ""
-    code: str = ""
+    name: str = ''
+    code: str = ''
     factsheet: dict = field(default_factory=dict) 
     pose: Pose = Pose
-    data_format: str = ""
+    data_format: str = ''
     is_actuator: bool = True
-    unit: str = "mm"
+    unit: str = 'mm'
         
 
 # ----   Messages From Agent to helyOS ------ #

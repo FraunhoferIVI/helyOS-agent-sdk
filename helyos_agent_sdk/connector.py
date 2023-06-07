@@ -47,7 +47,7 @@ def parse_instant_actions(self, ch, properties, received_str):
                             'body': received_message['body'],
                             '_version': received_message['_version'] }
         inst_assignm_cancel = AssignmentCancelMessage(**command_message)      
-        print("call cancel callback")
+        print('call cancel callback')
         return self.cancel_callback(ch, sender, inst_assignm_cancel)
 
     if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
@@ -115,12 +115,12 @@ class AgentConnector():
 
     __instant_actions_callback = parse_instant_actions
     __assignment_callback = parse_assignment_message
-    assignment_callback = lambda  self, ch, sender, received_msg : print("assignment", sender, received_msg)
-    cancel_callback = lambda self, ch, sender, received_msg : print("cancel callback", sender, received_msg)
-    reserve_callback = lambda self, ch, sender, received_msg : print("reserve callback", sender, received_msg)
-    release_callback = lambda self, ch, sender, received_msg : print("release callback", sender, received_msg)
-    other_instant_actions_callback = lambda self, ch, sender, received_msg : print("instant_action_callback", sender, received_msg)
-    other_assignment_callback = lambda self, ch, sender, received_msg : print("other_assignment_callback", sender,  received_msg)
+    assignment_callback = lambda  self, ch, sender, received_msg : print('assignment', sender, received_msg)
+    cancel_callback = lambda self, ch, sender, received_msg : print('cancel callback', sender, received_msg)
+    reserve_callback = lambda self, ch, sender, received_msg : print('reserve callback', sender, received_msg)
+    release_callback = lambda self, ch, sender, received_msg : print('release callback', sender, received_msg)
+    other_instant_actions_callback = lambda self, ch, sender, received_msg : print('instant_action_callback', sender, received_msg)
+    other_assignment_callback = lambda self, ch, sender, received_msg : print('other_assignment_callback', sender,  received_msg)
         
 
     def consume_instant_action_messages(self, reserve_callback=None, release_callback=None, cancel_callback=None,  other_callback=None):
@@ -302,7 +302,7 @@ class AgentConnector():
   
         
 
-def agent_checkin_to_helyos(uuid, yard_uid, agent_data, status="free", pubkey=None):
+def agent_checkin_to_helyos(uuid, yard_uid, agent_data, status='free', pubkey=None):
     '''
     agent_checkin_helyos(uuid, yard_uid, agent_data, status="free", pubkey=None)   
     Helper to perform the check in of the agent {uuid} to helyOS at the yard {yard_uid}.
