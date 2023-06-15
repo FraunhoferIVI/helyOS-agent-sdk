@@ -1,0 +1,20 @@
+name: Run pre-commit hooks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install apt dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python3-pip
+      - name: Install pip dependencies
+        run: pip install pre-commit
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: helyos_agent_sdk
+      - name: Run pre-commit hooks
+        run: |
+          cd helyos_agent_sdk
+          pre-commit run -a
