@@ -30,10 +30,10 @@ The helyos-agent-sdk python package encloses methods and data structures definit
 
 ### List of features
 
-*   RabbitMQ client to communicate with helyOS. 
+*   RabbitMQ client to communicate with helyOS.
 *   AMQP and  MQTT Protocol.
-*   Agent and assignment status definitions. 
-*   Easy access to helyOS assignments via callbacks. 
+*   Agent and assignment status definitions.
+*   Easy access to helyOS assignments via callbacks.
 *   Application-level encryption.
 
 ### Install
@@ -83,7 +83,30 @@ agent_connector.start_listening()
 
 Keep it simple. Keep it minimal.
 
-### Authors 
+### pre-commit Formatting Checks
+----------------------------
+
+This repo has a [pre-commit](https://pre-commit.com/) check.
+The check runs in CI. It is advised to use it locally and set it up to run automatically before you commit
+something. Installation and basic usage is:
+
+```bash
+pip3 install --user pre-commit
+```
+
+To run over all the files in the repo manually:
+
+```bash
+pre-commit run -a
+```
+
+To run pre-commit automatically before committing, install the git hooks:
+
+```bash
+pre-commit install
+```
+
+### Authors
 
 *   Carlos E. Viol Barbosa
 *   ...
