@@ -1,4 +1,3 @@
-from datetime import datetime as dt
 from functools import wraps
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
@@ -137,7 +136,13 @@ class HelyOSMQTTClient():
     def mission_routing_key(self):
         """ MQTT Topic value used to publish mission requests  """
 
-        return f"agent/{self.uuid}/mission"
+        return f"agent/{self.uuid}/mission_req"
+    
+    @property    
+    def summary_routing_key(self):
+        """ MQTT Topic value used to publish summary requests  """
+
+        return f"agent/{self.uuid}/summary_req"
 
     @property    
     def instant_actions_routing_key(self):
@@ -260,6 +265,7 @@ class HelyOSMQTTClient():
                                   'public_key_format': 'PEM', 
                                   'registration_token': REGISTRATION_TOKEN,
                                   **agent_data},
+                         'header': {'timestamp':int(time.time()*1000)}
                        }
 
         self.guest_channel.publish(self.checking_routing_key,payload=json.dumps(checkin_msg))

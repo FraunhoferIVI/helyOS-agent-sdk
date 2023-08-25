@@ -11,7 +11,7 @@ Connect to helyOS via AMQP
     >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
     >>> helyos_client.connect(username="01234-01234-01234", password="secret_password")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyOS_client.get_checkin_result()
+    >>> helyos_client.get_checkin_result()
     >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
 
 
@@ -24,7 +24,7 @@ helyOS will automatically create a Rabbitmq account using the uuid as username.
     >>>
     >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyOS_client.get_checkin_result()
+    >>> helyos_client.get_checkin_result()
     >>> print(helyos_client.checkin_data) # Data from helyOS containing yard and authentication information   
 
 Connect to helyOS via MQTT
@@ -36,7 +36,7 @@ Connect to helyOS via MQTT
     >>> helyos_client = HelyOSMQTTClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
     >>> helyos_client.connect(username="01234-01234-01234", password="secret_password")
     >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyOS_client.get_checkin_result()
+    >>> helyos_client.get_checkin_result()
     >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
 
 

@@ -1,6 +1,6 @@
 import pika
 import uuid, json
-
+import time
 
 class SummaryRPC():
     """
@@ -77,6 +77,7 @@ class SummaryRPC():
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
                 user_id=self.username,
+                timestamp=int(time.time()*1000),
             ),
             body=json.dumps({'body':request}))
         self.connection.process_data_events(time_limit=None)

@@ -1,4 +1,4 @@
-from datetime import datetime as dt
+import logging
 import json
 from .exceptions import *
 from .client import HelyOSClient
@@ -8,68 +8,79 @@ from .models import (ASSIGNMENT_STATUS, AGENT_STATE, Pose, ASSIGNMENT_MESSAGE_TY
 
             
 
-def parse_assignment_message(self, ch, properties, received_str):    
-    received_message_str = json.loads(received_str)['message']    
-    received_message = json.loads(received_message_str)
-    action_type = received_message.get('type', None)
-    sender = None
-    if hasattr(properties, 'user_id'):
-        sender =  properties.user_id
+def parse_assignment_message(self, ch, properties, received_str):  
+    try:  
+        received_message_str = json.loads(received_str)['message']    
+        received_message = json.loads(received_message_str)
+        action_type = received_message.get('type', None)
+        sender = None
+        if hasattr(properties, 'user_id'):
+            sender =  properties.user_id
 
-    
-    if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
-        command_message = { 'type' : received_message['type'],
-                            'work_process_id': received_message['work_process_id'],
-                            'assignment_metadata': AssignmentMetadata(**received_message['assignment_metadata']),
-                            'body': received_message['body'],
-                            '_version': received_message['_version'] }
-                                                                          
-        inst_assignm_exec = AssignmentCommandMessage(**command_message)
-        return self.assignment_callback(ch, sender, inst_assignm_exec)
         
-    return self.other_assignment_callback(ch,  sender, received_str)
+        if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
+            assignment_metadata = received_message.get('metadata',received_message['assignment_metadata']) # compatibility < 0.5.0
+            command_message = { 'type' : received_message['type'],
+                                'work_process_id': received_message['work_process_id'],
+                                'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                                'body': received_message['body'],
+                                '_version': received_message['_version'] }
+                                                                            
+            inst_assignm_exec = AssignmentCommandMessage(**command_message)
+            return self.assignment_callback(ch, sender, inst_assignm_exec)
+            
+        return self.other_assignment_callback(ch,  sender, received_str)
+    except Exception as Argument:
+        logging.exception("Error occurred while receiving assignment.")
+        return None
     
 
 
     
 def parse_instant_actions(self, ch, properties, received_str):
-    received_message_str = json.loads(received_str)['message']    
-    received_message = json.loads(received_message_str)
-    action_type = received_message.get('type', None)
-    sender = None
-    if hasattr(properties, 'user_id'):
-        sender =  properties.user_id
+    try:
+        received_message_str = json.loads(received_str)['message']    
+        received_message = json.loads(received_message_str)
+        action_type = received_message.get('type', None)
+        sender = None
+        if hasattr(properties, 'user_id'):
+            sender =  properties.user_id
 
-    if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
-        command_message = { 'type' : received_message['type'],
-                            'work_process_id': received_message['work_process_id'],
-                            'assignment_metadata': AssignmentMetadata(**received_message['assignment_metadata']),
-                            'body': received_message['body'],
-                            '_version': received_message['_version'] }
-        inst_assignm_cancel = AssignmentCancelMessage(**command_message)      
-        print("call cancel callback")
-        return self.cancel_callback(ch, sender, inst_assignm_cancel)
+        if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
+            assignment_metadata = received_message.get('metadata',received_message['assignment_metadata']) # compatibility < 0.5.0
+            command_message = { 'type' : received_message['type'],
+                                'work_process_id': received_message['work_process_id'],
+                                'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                                'body': received_message['body'],
+                                '_version': received_message['_version'] }
+            inst_assignm_cancel = AssignmentCancelMessage(**command_message)      
+            print("call cancel callback")
+            return self.cancel_callback(ch, sender, inst_assignm_cancel)
 
-    if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
-        inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
-        return self.reserve_callback(ch, sender, inst_wp_clearance)
-
-    if action_type == INSTANT_ACTIONS_TYPE.RELEASE:
-        inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
-        return self.release_callback(ch, sender, inst_wp_clearance)   
-        
-    if action_type == INSTANT_ACTIONS_TYPE.WPCLEREANCE:  # Backward compatibility
-        work_process_id = received_message['body']['wp_id']        
-        operation_types_required = received_message['body']['operation_types_required']
-        reserved = received_message['body']['reserved']
-        inst_wp_clearance = WorkProcessResourcesRequest(work_process_id, operation_types_required, reserved)
-        if reserved:
+        if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
+            inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
             return self.reserve_callback(ch, sender, inst_wp_clearance)
-        else:
-            return self.release_callback(ch, sender, inst_wp_clearance)
 
-    return self.other_instant_actions_callback(ch, sender, received_str)
-    
+        if action_type == INSTANT_ACTIONS_TYPE.RELEASE:
+            inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
+            return self.release_callback(ch, sender, inst_wp_clearance)   
+            
+        if action_type == INSTANT_ACTIONS_TYPE.WPCLEREANCE:  # Backward compatibility
+            work_process_id = received_message['body'].get('wp_id', None)
+            if work_process_id is None: work_process_id = received_message['body'].get('work_process_id', None)
+            operation_types_required = received_message['body']['operation_types_required']
+            reserved = received_message['body']['reserved']
+            inst_wp_clearance = WorkProcessResourcesRequest(work_process_id, operation_types_required, reserved)
+            if reserved:
+                return self.reserve_callback(ch, sender, inst_wp_clearance)
+            else:
+                return self.release_callback(ch, sender, inst_wp_clearance)
+
+        return self.other_instant_actions_callback(ch, sender, received_str)
+    except Exception as Argument:
+        logging.exception("Error occurred while receiving instan action.")
+        return None
+        
 
 
 class AgentConnector():

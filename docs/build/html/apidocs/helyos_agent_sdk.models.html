@@ -19,7 +19,9 @@
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="helyos_agent_sdk.mqtt_client module" href="helyos_agent_sdk.mqtt_client.html" />
+    <link rel="prev" title="helyos_agent_sdk.exceptions module" href="helyos_agent_sdk.exceptions.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,6 +43,156 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">helyos_agent_sdk</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Models:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">helyos_agent_sdk.models module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.ACTIVE"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.ACTIVE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.SUCCEEDED"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.SUCCEEDED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.CANCELED"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.CANCELED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.ABORTED"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.ABORTED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.FAILED"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.FAILED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.TO_EXECUTE"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.TO_EXECUTE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_STATUS.EXECUTING"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_STATUS.EXECUTING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_STATE"><code class="docutils literal notranslate"><span class="pre">AGENT_STATE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_STATE.NOT_AUTO"><code class="docutils literal notranslate"><span class="pre">AGENT_STATE.NOT_AUTO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_STATE.FREE"><code class="docutils literal notranslate"><span class="pre">AGENT_STATE.FREE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_STATE.BUSY"><code class="docutils literal notranslate"><span class="pre">AGENT_STATE.BUSY</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_STATE.READY"><code class="docutils literal notranslate"><span class="pre">AGENT_STATE.READY</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_MESSAGE_TYPE"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_MESSAGE_TYPE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.ASSIGNMENT_MESSAGE_TYPE.EXECUTION"><code class="docutils literal notranslate"><span class="pre">ASSIGNMENT_MESSAGE_TYPE.EXECUTION</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE"><code class="docutils literal notranslate"><span class="pre">INSTANT_ACTIONS_TYPE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE.CANCEL"><code class="docutils literal notranslate"><span class="pre">INSTANT_ACTIONS_TYPE.CANCEL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE.WPCLEREANCE"><code class="docutils literal notranslate"><span class="pre">INSTANT_ACTIONS_TYPE.WPCLEREANCE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE.RESERVE"><code class="docutils literal notranslate"><span class="pre">INSTANT_ACTIONS_TYPE.RESERVE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.INSTANT_ACTIONS_TYPE.RELEASE"><code class="docutils literal notranslate"><span class="pre">INSTANT_ACTIONS_TYPE.RELEASE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.MISSION"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE.MISSION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.STATE"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE.STATE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.SENSORS"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE.SENSORS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.UPDATE"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE.UPDATE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AGENT_MESSAGE_TYPE.CHECKIN"><code class="docutils literal notranslate"><span class="pre">AGENT_MESSAGE_TYPE.CHECKIN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCurrentResources"><code class="docutils literal notranslate"><span class="pre">AgentCurrentResources</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCurrentResources.operation_types_available"><code class="docutils literal notranslate"><span class="pre">AgentCurrentResources.operation_types_available</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCurrentResources.work_process_id"><code class="docutils literal notranslate"><span class="pre">AgentCurrentResources.work_process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCurrentResources.reserved"><code class="docutils literal notranslate"><span class="pre">AgentCurrentResources.reserved</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCurrentResources.__init__"><code class="docutils literal notranslate"><span class="pre">AgentCurrentResources.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCurrentStatus"><code class="docutils literal notranslate"><span class="pre">AssignmentCurrentStatus</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCurrentStatus.id"><code class="docutils literal notranslate"><span class="pre">AssignmentCurrentStatus.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCurrentStatus.status"><code class="docutils literal notranslate"><span class="pre">AssignmentCurrentStatus.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCurrentStatus.result"><code class="docutils literal notranslate"><span class="pre">AssignmentCurrentStatus.result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCurrentStatus.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentCurrentStatus.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateBody"><code class="docutils literal notranslate"><span class="pre">AgentStateBody</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateBody.status"><code class="docutils literal notranslate"><span class="pre">AgentStateBody.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateBody.resources"><code class="docutils literal notranslate"><span class="pre">AgentStateBody.resources</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateBody.assignment"><code class="docutils literal notranslate"><span class="pre">AgentStateBody.assignment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateBody.__init__"><code class="docutils literal notranslate"><span class="pre">AgentStateBody.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.id"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.work_process_id"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.work_process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.yard_id"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.yard_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.status"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.start_time_stamp"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.start_time_stamp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.context"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentMetadata.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentMetadata.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest"><code class="docutils literal notranslate"><span class="pre">WorkProcessResourcesRequest</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.work_process_id"><code class="docutils literal notranslate"><span class="pre">WorkProcessResourcesRequest.work_process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.operation_types_required"><code class="docutils literal notranslate"><span class="pre">WorkProcessResourcesRequest.operation_types_required</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.reserved"><code class="docutils literal notranslate"><span class="pre">WorkProcessResourcesRequest.reserved</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.__init__"><code class="docutils literal notranslate"><span class="pre">WorkProcessResourcesRequest.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.Pose"><code class="docutils literal notranslate"><span class="pre">Pose</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.Pose.x"><code class="docutils literal notranslate"><span class="pre">Pose.x</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.Pose.y"><code class="docutils literal notranslate"><span class="pre">Pose.y</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.Pose.z"><code class="docutils literal notranslate"><span class="pre">Pose.z</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.Pose.orientations"><code class="docutils literal notranslate"><span class="pre">Pose.orientations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.Pose.__init__"><code class="docutils literal notranslate"><span class="pre">Pose.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.name"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.code"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.code</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.factsheet"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.factsheet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.pose"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.pose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.data_format"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.data_format</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.is_actuator"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.is_actuator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.unit"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.unit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentCheckinData.__init__"><code class="docutils literal notranslate"><span class="pre">AgentCheckinData.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.type"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.uuid"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.uuid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.body"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.from_dict"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.from_json"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.schema"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.schema()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.to_dict"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AgentStateMessage.to_json"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.type"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.uuid"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.uuid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.body"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.__init__"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.from_dict"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.from_json"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.schema"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.schema()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.to_dict"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.MissionRequestMessage.to_json"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage.work_process_id"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.work_process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage.assignment_metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.assignment_metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage.body"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCommandMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage.work_process_id"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.work_process_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage.assignment_metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.assignment_metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage.body"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.AssignmentCancelMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessClearanceMessage"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessClearanceMessage.type"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessClearanceMessage.uuid"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.uuid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessClearanceMessage.body"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helyos_agent_sdk.models.WorkProcessClearanceMessage.__init__"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
         </div>
       </div>
@@ -56,6 +208,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">helyos_agent_sdk</a> &raquo;</li>
+          <li><a href="helyos_agent_sdk.html">helyos_agent_sdk package</a> &raquo;</li>
       <li>helyos_agent_sdk.models module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/apidocs/helyos_agent_sdk.models.rst.txt" rel="nofollow"> View page source</a>
@@ -288,7 +442,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.models.</span></span><span class="sig-name descname"><span class="pre">AssignmentMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yard_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time_stamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.models.</span></span><span class="sig-name descname"><span class="pre">AssignmentMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work_process_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yard_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;ASSIGNMENT_STATUS.TO_EXECUTE:</span> <span class="pre">'to_execute'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time_stamp:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">datetime.datetime(2023</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">36</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">56</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">900730)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.id">
@@ -296,18 +450,23 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.work_process_id">
+<span class="sig-name descname"><span class="pre">work_process_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.work_process_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.yard_id">
-<span class="sig-name descname"><span class="pre">yard_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.yard_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">yard_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.yard_id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.status">
-<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.status" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'to_execute'</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.status" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.start_time_stamp">
-<span class="sig-name descname"><span class="pre">start_time_stamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.start_time_stamp" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_time_stamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">datetime.datetime(2023,</span> <span class="pre">8,</span> <span class="pre">25,</span> <span class="pre">16,</span> <span class="pre">36,</span> <span class="pre">56,</span> <span class="pre">900730)</span></em><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.start_time_stamp" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -317,14 +476,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.AssignmentMetadata.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yard_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time_stamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work_process_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yard_id:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">ASSIGNMENT_STATUS.TO_EXECUTE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time_stamp:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">datetime.datetime(2023</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">36</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">56</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">900730)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#helyos_agent_sdk.models.AssignmentMetadata.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.WorkProcessResourcesRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.models.</span></span><span class="sig-name descname"><span class="pre">WorkProcessResourcesRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">work_process_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_types_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reserved</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.models.</span></span><span class="sig-name descname"><span class="pre">WorkProcessResourcesRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">work_process_id:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_types_required:</span> <span class="pre">List[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reserved:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.WorkProcessResourcesRequest.work_process_id">
@@ -338,12 +497,12 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.WorkProcessResourcesRequest.reserved">
-<span class="sig-name descname"><span class="pre">reserved</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.reserved" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reserved</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.reserved" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.models.WorkProcessResourcesRequest.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">work_process_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_types_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reserved</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">work_process_id:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_types_required:</span> <span class="pre">~typing.List[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reserved:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#helyos_agent_sdk.models.WorkProcessResourcesRequest.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -622,7 +781,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="helyos_agent_sdk.exceptions.html" class="btn btn-neutral float-left" title="helyos_agent_sdk.exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="helyos_agent_sdk.mqtt_client.html" class="btn btn-neutral float-right" title="helyos_agent_sdk.mqtt_client module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

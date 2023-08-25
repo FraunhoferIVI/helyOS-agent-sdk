@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 from typing_extensions import Literal
 from enum import Enum
+from datetime import datetime
 
 
     
@@ -12,20 +13,20 @@ from enum import Enum
 VERSION = "3.0.0"
 
 class ASSIGNMENT_STATUS(Enum):
-    ACTIVE = 'active'
-    SUCCEEDED = 'succeeded' 
-    CANCELED = 'canceled'
-    ABORTED = 'aborted' 
-    FAILED = 'failed'
-    TO_EXECUTE ='to_execute' 
-    EXECUTING = 'executing' 
+    ACTIVE = "active"
+    SUCCEEDED = "succeeded" 
+    CANCELED = "canceled"
+    ABORTED = "aborted" 
+    FAILED = "failed"
+    TO_EXECUTE ="to_execute" 
+    EXECUTING = "executing" 
 
 
 class AGENT_STATE(Enum):
-    NOT_AUTO = 'not_automatable'
-    FREE = 'free' 
-    BUSY = 'busy'
-    READY = 'ready' 
+    NOT_AUTO = "not_automatable"
+    FREE = "free" 
+    BUSY = "busy"
+    READY = "ready" 
     
 
 class ASSIGNMENT_MESSAGE_TYPE(str, Enum):
@@ -33,18 +34,18 @@ class ASSIGNMENT_MESSAGE_TYPE(str, Enum):
 
     
 class INSTANT_ACTIONS_TYPE(str, Enum):
-    CANCEL = 'assignment_cancel'
-    WPCLEREANCE = 'wp_clearance_request' # AT MOMENT USED TO RESERVE 
-    RESERVE = 'reserve_for_mission' # IT WILL SUBSTITUTE WPCLEREANCE
-    RELEASE = 'release_from_mission' 
+    CANCEL = "assignment_cancel"
+    WPCLEREANCE = "wp_clearance_request" # AT MOMENT USED TO RESERVE 
+    RESERVE = "reserve_for_mission" # IT WILL SUBSTITUTE WPCLEREANCE
+    RELEASE = "release_from_mission" 
     
 
 class AGENT_MESSAGE_TYPE(Enum):
-    MISSION = 'mission_request'
-    STATE = 'agent_state' 
-    SENSORS = 'agent_sensors'
-    UPDATE = 'agent_update' 
-    CHECKIN = 'checkin'
+    MISSION = "mission_request"
+    STATE = "agent_state" 
+    SENSORS = "agent_sensors"
+    UPDATE = "agent_update" 
+    CHECKIN = "checkin"
     
     
         
@@ -75,17 +76,18 @@ class AgentStateBody:
 @dataclass
 class AssignmentMetadata:
     id: int
-    yard_id: int
-    status: str
-    start_time_stamp: float
-    context: dict
+    work_process_id: int = 0
+    yard_id: int = 0 
+    status: str = ASSIGNMENT_STATUS.TO_EXECUTE
+    start_time_stamp: float = datetime.now()
+    context: dict = field(default_factory=dict) 
         
 
 @dataclass
 class WorkProcessResourcesRequest:
     work_process_id: int
-    operation_types_required: List[str]
-    reserved: bool
+    operation_types_required: List[str] = field(default_factory=list)
+    reserved: bool = False
 
         
 # -------- Agent Data ------------ #

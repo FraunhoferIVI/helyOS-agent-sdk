@@ -1,4 +1,4 @@
-from datetime import datetime as dt
+import time
 from functools import wraps
 import pika
 from Crypto.PublicKey import RSA
@@ -9,7 +9,7 @@ from .exceptions import *
 AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', "xchange_helyos.agents.ul")
 AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', "xchange_helyos.agents.dl")
 AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', "xchange_helyos.agents.anonymous")
-REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN','0000-0000-0000-0000-0000')
+REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN',"0000-0000-0000-0000-0000")
 
 
 def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=False, ca_certificate=None, temporary=False):
@@ -114,7 +114,13 @@ class HelyOSClient():
     def mission_routing_key(self):
         """ Routing key value used to publish mission requests  """
 
-        return f"agent.{self.uuid}.mission"
+        return f"agent.{self.uuid}.mission_req"
+    
+    @property    
+    def summary_routing_key(self):
+        """ Routing key value used to publish summary requests  """
+
+        return f"agent.{self.uuid}.summary_req"
 
     @property    
     def instant_actions_routing_key(self):
@@ -256,7 +262,7 @@ class HelyOSClient():
 
         self.guest_channel.basic_publish(exchange = AGENT_ANONYMOUS_EXCHANGE,
                                   routing_key =  self.checking_routing_key,
-                                  properties=pika.BasicProperties(reply_to = self.checkin_response_queue, user_id = username),
+                                  properties=pika.BasicProperties(reply_to = self.checkin_response_queue, user_id = username, timestamp=int(time.time()*1000)),
                                   body=json.dumps(checkin_msg))
         
 
@@ -320,23 +326,25 @@ class HelyOSClient():
         """
 
         try:
-            self.channel.basic_publish(exchange, routing_key, properties=pika.BasicProperties(user_id = self.rbmq_username), body=message)
+            self.channel.basic_publish(exchange, routing_key,
+                                       properties=pika.BasicProperties(user_id = self.rbmq_username, timestamp=int(time.time()*1000)),
+                                       body=message)
         except ConnectionResetError:
             self.channel = self.connection.channel()
             self.channel.basic_publish(exchange, routing_key,
-                                       properties=pika.BasicProperties(user_id = self.rbmq_username),
+                                       properties=pika.BasicProperties(user_id = self.rbmq_username, timestamp=int(time.time()*1000)),
                                        body=message)
 
     @auth_required            
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        self.assignment_queue = self.channel.queue_declare(queue='')        
+        self.assignment_queue = self.channel.queue_declare(queue="")        
         self.channel.queue_bind(queue=self.assignment_queue.method.queue,
                                 exchange=exchange, routing_key=self.assignment_routing_key) 
         return self.assignment_queue
 
     @auth_required            
     def set_instant_actions_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        self.instant_actions_queue = self.channel.queue_declare(queue='')        
+        self.instant_actions_queue = self.channel.queue_declare(queue="")        
         self.channel.queue_bind(queue=self.instant_actions_queue.method.queue, 
                                 exchange=exchange, routing_key=self.instant_actions_routing_key)   
         return self.instant_actions_queue
