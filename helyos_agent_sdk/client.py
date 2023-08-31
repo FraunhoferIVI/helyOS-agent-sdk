@@ -3,13 +3,19 @@ from functools import wraps
 import pika
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
-import os, json, ssl
+import os
+import json
+import ssl
 from .exceptions import *
 
-AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
-AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', 'xchange_helyos.agents.dl')
-AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', 'xchange_helyos.agents.anonymous')
-REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN','0000-0000-0000-0000-0000')
+AGENTS_UL_EXCHANGE = os.environ.get(
+    'AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
+AGENTS_DL_EXCHANGE = os.environ.get(
+    'AGENTS_DL_EXCHANGE', 'xchange_helyos.agents.dl')
+AGENT_ANONYMOUS_EXCHANGE = os.environ.get(
+    'AGENT_ANONYMOUS_EXCHANGE', 'xchange_helyos.agents.anonymous')
+REGISTRATION_TOKEN = os.environ.get(
+    'REGISTRATION_TOKEN', '0000-0000-0000-0000-0000')
 
 
 def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=False, ca_certificate=None, temporary=False):
@@ -18,21 +24,21 @@ def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=
         context = ssl.create_default_context(cadata=ca_certificate)
         if ca_certificate is not None:
             context.check_hostname = True
-            context.verify_mode =  ssl.CERT_REQUIRED
+            context.verify_mode = ssl.CERT_REQUIRED
         else:
             context.check_hostname = False
-            context.verify_mode =  ssl.CERT_NONE
+            context.verify_mode = ssl.CERT_NONE
 
         ssl_options = pika.SSLOptions(context, rabbitmq_host)
     else:
         ssl_options = None
 
     if temporary:
-        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=60, blocked_connection_timeout=60,
-                                            ssl_options=ssl_options)
+        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials, heartbeat=60, blocked_connection_timeout=60,
+                                           ssl_options=ssl_options)
     else:
-        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials,heartbeat=3600,blocked_connection_timeout=300,
-                                            ssl_options=ssl_options )
+        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials, heartbeat=3600, blocked_connection_timeout=300,
+                                           ssl_options=ssl_options)
     _connection = pika.BlockingConnection(params)
     return _connection
 
@@ -44,9 +50,7 @@ def generate_private_public_keys():
     return priv, pub
 
 
-
 class HelyOSClient():
-
 
     def __init__(self, rabbitmq_host, rabbitmq_port=5672, uuid=None, enable_ssl=False, ca_certificate=None,  pubkey=None):
         """ HelyOS client class
@@ -91,7 +95,6 @@ class HelyOSClient():
 
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
-
 
     @property
     def checking_routing_key(self):
@@ -149,11 +152,10 @@ class HelyOSClient():
         self.tries = 0
         self.guest_channel.start_consuming()
 
-
     def auth_required(func):  # pylint: disable=no-self-argument
         @wraps(func)
         def wrap(*args, **kwargs):
-            if not args[0].connection :
+            if not args[0].connection:
                 raise HelyOSClientAutheticationError(
                     'HelyOSClient is not authenticated. Check the HelyosClient.perform_checkin() method.'
                 )
@@ -165,28 +167,28 @@ class HelyOSClient():
 
         # step 1 - connect anonymously
         try:
-            temp_connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port,'anonymous', 'anonymous', self.enable_ssl, temporary=True)
+            temp_connection = connect_rabbitmq(
+                self.rabbitmq_host, self.rabbitmq_port, 'anonymous', 'anonymous', self.enable_ssl, temporary=True)
             self.guest_channel = temp_connection.channel()
         except Exception as inst:
             print(inst)
             raise HelyOSAnonymousConnectionError(
-                    'Not able to connect as anonymous to rabbitMQ to perform check in.')
-
+                'Not able to connect as anonymous to rabbitMQ to perform check in.')
 
         # step 2 - creates a temporary queue to receive checkin response
         temp_queue = self.guest_channel.queue_declare(queue='', exclusive=True)
         self.checkin_response_queue = temp_queue.method.queue
-        self.guest_channel.basic_consume(queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback_wrapper)
-
+        self.guest_channel.basic_consume(
+            queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback_wrapper)
 
     def __prepare_checkin_for_already_connected(self):
-         # step 1 - use existent connection
+        # step 1 - use existent connection
         self.guest_channel = self.channel
         # step 2 - creates a temporary queue to receive checkin response
         temp_queue = self.guest_channel.queue_declare(queue='', exclusive=True)
         self.checkin_response_queue = temp_queue.method.queue
-        self.guest_channel.basic_consume(queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback_wrapper)
-
+        self.guest_channel.basic_consume(
+            queue=self.checkin_response_queue, auto_ack=True, on_message_callback=self.__checkin_callback_wrapper)
 
     def connect_rabbitmq(self, username, password):
         return self.connect(username, password)
@@ -209,16 +211,14 @@ class HelyOSClient():
 
         try:
             self.connection = connect_rabbitmq(self.rabbitmq_host,
-            self.rabbitmq_port, username, password, self.enable_ssl, self.ca_certificate)
+                                               self.rabbitmq_port, username, password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection.channel()
             self.rbmq_username = username
 
         except Exception as inst:
             print(inst)
             raise HelyOSAccountConnectionError(
-                    f'Not able to connect as {username} to rabbitMQ to perform check in.')
-
-
+                f'Not able to connect as {username} to rabbitMQ to perform check in.')
 
     def perform_checkin(self, yard_uid, status='free', agent_data={}):
         """
@@ -250,33 +250,31 @@ class HelyOSClient():
             username = 'anonymous'
 
         self.yard_uid = yard_uid
-        checkin_msg = {  'type': 'checkin',
-                         'uuid': self.uuid,
-                         'status': status,
-                         'body': {'yard_uid': yard_uid,
-                                  'public_key':self.public_key.decode('utf-8'),
-                                  'public_key_format': 'PEM',
-                                  'registration_token': REGISTRATION_TOKEN,
-                                  **agent_data},
+        checkin_msg = {'type': 'checkin',
+                       'uuid': self.uuid,
+                       'status': status,
+                       'body': {'yard_uid': yard_uid,
+                                'public_key': self.public_key.decode('utf-8'),
+                                'public_key_format': 'PEM',
+                                'registration_token': REGISTRATION_TOKEN,
+                                **agent_data},
                        }
 
-        self.guest_channel.basic_publish(exchange = AGENT_ANONYMOUS_EXCHANGE,
-                                  routing_key =  self.checking_routing_key,
-                                  properties=pika.BasicProperties(reply_to = self.checkin_response_queue, user_id = username, timestamp=int(time.time()*1000)),
-                                  body=json.dumps(checkin_msg))
-
+        self.guest_channel.basic_publish(exchange=AGENT_ANONYMOUS_EXCHANGE,
+                                         routing_key=self.checking_routing_key,
+                                         properties=pika.BasicProperties(
+                                             reply_to=self.checkin_response_queue, user_id=username, timestamp=int(time.time()*1000)),
+                                         body=json.dumps(checkin_msg))
 
     def __checkin_callback_wrapper(self, channel, method, properties, received_str):
         try:
             self.__checkin_callback(received_str)
             channel.stop_consuming()
-        except  Exception as inst:
+        except Exception as inst:
             self.tries += 1
             print(f'try {self.tries}')
             if self.tries > 3:
                 channel.stop_consuming()
-
-
 
     def __checkin_callback(self, received_str):
         received_message_str = json.loads(received_str)['message']
@@ -289,16 +287,17 @@ class HelyOSClient():
 
         body = received_message['body']
         response_code = body.get('response_code', 500)
-        if response_code!='200':
+        if response_code != '200':
             print(body)
-            message  = body.get('message', 'Check in refused')
+            message = body.get('message', 'Check in refused')
             raise HelyOSCheckinError(f'{message}: code {response_code}')
 
         password = body.pop('rbmq_password', None)
-        self.ca_certificate =  body.get('ca_certificate', self.ca_certificate)
+        self.ca_certificate = body.get('ca_certificate', self.ca_certificate)
 
         if password:
-            self.connection = connect_rabbitmq(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password, self.enable_ssl, self.ca_certificate)
+            self.connection = connect_rabbitmq(
+                self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection.channel()
             self.rbmq_username = body['rbmq_username']
             self.rbmq_password = password
@@ -309,9 +308,6 @@ class HelyOSClient():
 
         self.uuid = received_message['uuid']
         self.checkin_data = body
-
-
-
 
     @auth_required
     def publish(self, routing_key, message, encrypted=False, exchange=AGENTS_UL_EXCHANGE):
@@ -327,12 +323,14 @@ class HelyOSClient():
 
         try:
             self.channel.basic_publish(exchange, routing_key,
-                                       properties=pika.BasicProperties(user_id = self.rbmq_username, timestamp=int(time.time()*1000)),
+                                       properties=pika.BasicProperties(
+                                           user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
                                        body=message)
         except ConnectionResetError:
             self.channel = self.connection.channel()
             self.channel.basic_publish(exchange, routing_key,
-                                       properties=pika.BasicProperties(user_id = self.rbmq_username, timestamp=int(time.time()*1000)),
+                                       properties=pika.BasicProperties(
+                                           user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
                                        body=message)
 
     @auth_required
@@ -354,6 +352,7 @@ class HelyOSClient():
         self.set_assignment_queue()
         self.channel.basic_consume(queue=self.assignment_queue.method.queue, auto_ack=True,
                                    on_message_callback=assignment_callback)
+
     @auth_required
     def consume_instant_actions_messages(self, instant_actions_callback):
         """ Receive instant actions messages.
@@ -368,10 +367,8 @@ class HelyOSClient():
         self.channel.basic_consume(queue=self.instant_actions_queue.method.queue, auto_ack=True,
                                    on_message_callback=instant_actions_callback)
 
-
     def start_listening(self):
         self.channel.start_consuming()
 
     def stop_listening(self):
         self.channel.stop_consuming()
-

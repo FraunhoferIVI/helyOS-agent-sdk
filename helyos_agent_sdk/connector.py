@@ -3,9 +3,8 @@ import json
 from .exceptions import *
 from .client import HelyOSClient
 from .models import (ASSIGNMENT_STATUS, AGENT_STATE, Pose, ASSIGNMENT_MESSAGE_TYPE, INSTANT_ACTIONS_TYPE, WorkProcessResourcesRequest,
-                    AssignmentCommandMessage, AssignmentMetadata, AssignmentCancelMessage, AgentCurrentResources, AgentStateBody,
-                    AgentStateMessage, AssignmentCurrentStatus)
-
+                     AssignmentCommandMessage, AssignmentMetadata, AssignmentCancelMessage, AgentCurrentResources, AgentStateBody,
+                     AgentStateMessage, AssignmentCurrentStatus)
 
 
 def parse_assignment_message(self, ch, properties, received_str):
@@ -15,16 +14,16 @@ def parse_assignment_message(self, ch, properties, received_str):
         action_type = received_message.get('type', None)
         sender = None
         if hasattr(properties, 'user_id'):
-            sender =  properties.user_id
-
+            sender = properties.user_id
 
         if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
-            assignment_metadata = received_message.get('metadata',received_message['assignment_metadata']) # compatibility < 0.5.0
-            command_message = { 'type' : received_message['type'],
-                                'work_process_id': received_message['work_process_id'],
-                                'assignment_metadata': AssignmentMetadata(**assignment_metadata),
-                                'body': received_message['body'],
-                                '_version': received_message['_version'] }
+            assignment_metadata = received_message.get(
+                'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
+            command_message = {'type': received_message['type'],
+                               'work_process_id': received_message['work_process_id'],
+                               'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                               'body': received_message['body'],
+                               '_version': received_message['_version']}
 
             inst_assignm_exec = AssignmentCommandMessage(**command_message)
             return self.assignment_callback(ch, sender, inst_assignm_exec)
@@ -35,8 +34,6 @@ def parse_assignment_message(self, ch, properties, received_str):
         return None
 
 
-
-
 def parse_instant_actions(self, ch, properties, received_str):
     try:
         received_message_str = json.loads(received_str)['message']
@@ -44,33 +41,39 @@ def parse_instant_actions(self, ch, properties, received_str):
         action_type = received_message.get('type', None)
         sender = None
         if hasattr(properties, 'user_id'):
-            sender =  properties.user_id
+            sender = properties.user_id
 
         if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
-            assignment_metadata = received_message.get('metadata',received_message['assignment_metadata']) # compatibility < 0.5.0
-            command_message = { 'type' : received_message['type'],
-                                'work_process_id': received_message['work_process_id'],
-                                'assignment_metadata': AssignmentMetadata(**assignment_metadata),
-                                'body': received_message['body'],
-                                '_version': received_message['_version'] }
+            assignment_metadata = received_message.get(
+                'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
+            command_message = {'type': received_message['type'],
+                               'work_process_id': received_message['work_process_id'],
+                               'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                               'body': received_message['body'],
+                               '_version': received_message['_version']}
             inst_assignm_cancel = AssignmentCancelMessage(**command_message)
             print('call cancel callback')
             return self.cancel_callback(ch, sender, inst_assignm_cancel)
 
         if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
-            inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
+            inst_wp_clearance = WorkProcessResourcesRequest(
+                **received_message['body'])
             return self.reserve_callback(ch, sender, inst_wp_clearance)
 
         if action_type == INSTANT_ACTIONS_TYPE.RELEASE:
-            inst_wp_clearance = WorkProcessResourcesRequest(**received_message['body'])
+            inst_wp_clearance = WorkProcessResourcesRequest(
+                **received_message['body'])
             return self.release_callback(ch, sender, inst_wp_clearance)
 
         if action_type == INSTANT_ACTIONS_TYPE.WPCLEREANCE:  # Backward compatibility
             work_process_id = received_message['body'].get('wp_id', None)
-            if work_process_id is None: work_process_id = received_message['body'].get('work_process_id', None)
+            if work_process_id is None:
+                work_process_id = received_message['body'].get(
+                    'work_process_id', None)
             operation_types_required = received_message['body']['operation_types_required']
             reserved = received_message['body']['reserved']
-            inst_wp_clearance = WorkProcessResourcesRequest(work_process_id, operation_types_required, reserved)
+            inst_wp_clearance = WorkProcessResourcesRequest(
+                work_process_id, operation_types_required, reserved)
             if reserved:
                 return self.reserve_callback(ch, sender, inst_wp_clearance)
             else:
@@ -80,7 +83,6 @@ def parse_instant_actions(self, ch, properties, received_str):
     except Exception as Argument:
         logging.exception('Error occurred while receiving instan action.')
         return None
-
 
 
 class AgentConnector():
@@ -96,8 +98,6 @@ class AgentConnector():
                 return AGENT_STATE.READY
 
         return AGENT_STATE.FREE
-
-
 
     def __init__(self, helyos_client, pose=None, encrypted=False):
         """ Agent Connector class
@@ -123,16 +123,26 @@ class AgentConnector():
         if pose:
             self.agent_pose = pose
 
-
     __instant_actions_callback = parse_instant_actions
     __assignment_callback = parse_assignment_message
-    assignment_callback = lambda  self, ch, sender, received_msg : print('assignment', sender, received_msg)
-    cancel_callback = lambda self, ch, sender, received_msg : print('cancel callback', sender, received_msg)
-    reserve_callback = lambda self, ch, sender, received_msg : print('reserve callback', sender, received_msg)
-    release_callback = lambda self, ch, sender, received_msg : print('release callback', sender, received_msg)
-    other_instant_actions_callback = lambda self, ch, sender, received_msg : print('instant_action_callback', sender, received_msg)
-    other_assignment_callback = lambda self, ch, sender, received_msg : print('other_assignment_callback', sender,  received_msg)
 
+    def assignment_callback(self, ch, sender, received_msg): return print(
+        'assignment', sender, received_msg)
+
+    def cancel_callback(self, ch, sender, received_msg): return print(
+        'cancel callback', sender, received_msg)
+
+    def reserve_callback(self, ch, sender, received_msg): return print(
+        'reserve callback', sender, received_msg)
+
+    def release_callback(self, ch, sender, received_msg): return print(
+        'release callback', sender, received_msg)
+
+    def other_instant_actions_callback(self, ch, sender, received_msg): return print(
+        'instant_action_callback', sender, received_msg)
+
+    def other_assignment_callback(self, ch, sender, received_msg): return print(
+        'other_assignment_callback', sender,  received_msg)
 
     def consume_instant_action_messages(self, reserve_callback=None, release_callback=None, cancel_callback=None,  other_callback=None):
         """Register the callback functions for instant actions
@@ -148,17 +158,20 @@ class AgentConnector():
 
         """
 
-
-        if cancel_callback is not None: self.cancel_callback = cancel_callback
-        if reserve_callback is not None: self.reserve_callback = reserve_callback
-        if release_callback is not None: self.release_callback = release_callback
-        if other_callback is not None: self.other_instant_actions_callback = other_callback
+        if cancel_callback is not None:
+            self.cancel_callback = cancel_callback
+        if reserve_callback is not None:
+            self.reserve_callback = reserve_callback
+        if release_callback is not None:
+            self.release_callback = release_callback
+        if other_callback is not None:
+            self.other_instant_actions_callback = other_callback
 
         def amqp_callback(ch, method, properties, message):
             return parse_instant_actions(self, ch, properties, received_str=message)
 
         def mqtt_callback(ch, userdata, message):
-            return parse_instant_actions(self, ch, {'user_id': None}, received_str= message.payload.decode())
+            return parse_instant_actions(self, ch, {'user_id': None}, received_str=message.payload.decode())
 
         if self.helyos_client._protocol == 'AMQP':
             self.__instant_actions_callback = amqp_callback
@@ -166,8 +179,8 @@ class AgentConnector():
         if self.helyos_client._protocol == 'MQTT':
             self.__instant_actions_callback = mqtt_callback
 
-        self.helyos_client.consume_instant_actions_messages(self.__instant_actions_callback)
-
+        self.helyos_client.consume_instant_actions_messages(
+            self.__instant_actions_callback)
 
     def consume_assignment_messages(self, assignment_callback=None, other_callback=None):
         """Register the callback functions for assignments or order (VDA5050)
@@ -178,14 +191,16 @@ class AgentConnector():
             :type other_callback: func(ch, method, properties, received_str)
         """
 
-        if assignment_callback is not None: self.assignment_callback = assignment_callback
-        if other_callback is not None: self.other_assignment_callback = other_callback
+        if assignment_callback is not None:
+            self.assignment_callback = assignment_callback
+        if other_callback is not None:
+            self.other_assignment_callback = other_callback
 
         def amqp_callback(ch, method, properties, message):
             return parse_assignment_message(self, ch, properties, received_str=message)
 
         def mqtt_callback(ch, userdata, message):
-            return parse_assignment_message(self, ch, {'user_id': None}, received_str= message.payload.decode())
+            return parse_assignment_message(self, ch, {'user_id': None}, received_str=message.payload.decode())
 
         if self.helyos_client._protocol == 'AMQP':
             self.__assignment_callback = amqp_callback
@@ -193,15 +208,14 @@ class AgentConnector():
         if self.helyos_client._protocol == 'MQTT':
             self.__assignment_callback = mqtt_callback
 
-        self.helyos_client.consume_assignment_messages(self.__assignment_callback)
+        self.helyos_client.consume_assignment_messages(
+            self.__assignment_callback)
 
     def start_listening(self):
         self.helyos_client.start_listening()
 
-
     def stop_listening(self):
         self.helyos_client.stop_listening()
-
 
     def publish_general_updates(self, body={}):
         """
@@ -212,15 +226,15 @@ class AgentConnector():
 
         """
         self.helyos_client.publish(
-                                      routing_key = self.helyos_client.update_routing_key,
-                                      message=json.dumps(
-                                              {'type': 'agent_update',
-                                              'uuid': self.helyos_client.uuid,
-                                              'body': body,
-                                               })
-                                     )
+            routing_key=self.helyos_client.update_routing_key,
+            message=json.dumps(
+                {'type': 'agent_update',
+                 'uuid': self.helyos_client.uuid,
+                 'body': body,
+                 })
+        )
 
-    def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources=None, assignment_status: AssignmentCurrentStatus=None):
+    def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources = None, assignment_status: AssignmentCurrentStatus = None):
         """
             Updates agent and the work processes status. For a good design, this method should be triggered by events.
             The data is published in a priviledged queue to helyOS and the message is always available for helyOS consumption.
@@ -236,18 +250,19 @@ class AgentConnector():
 
         """
         self.agent_status = status
-        if resources: self.agent_resources = resources
-        if assignment_status: self.current_assignment = assignment_status
-
+        if resources:
+            self.agent_resources = resources
+        if assignment_status:
+            self.current_assignment = assignment_status
 
         agent_state_body = AgentStateBody(status, resources, assignment_status)
-        message = AgentStateMessage(uuid=self.helyos_client.uuid, body= agent_state_body)
+        message = AgentStateMessage(
+            uuid=self.helyos_client.uuid, body=agent_state_body)
 
         self.helyos_client.publish(
-                                      routing_key = self.helyos_client.status_routing_key,
-                                      message= message.to_json()
-                                     )
-
+            routing_key=self.helyos_client.status_routing_key,
+            message=message.to_json()
+        )
 
     def publish_sensors(self, x, y, z, orientations, sensors={}):
         """ Publishes agent position and sensors. The sensor data format is freely defined by the application.
@@ -267,19 +282,19 @@ class AgentConnector():
 
         """
 
-        self.agent_pose = Pose(x,y,z,orientations)
+        self.agent_pose = Pose(x, y, z, orientations)
         self.helyos_client.publish(
-                                      routing_key = self.helyos_client.sensors_routing_key,
-                                      message= json.dumps(
-                                               {   'type': 'agent_sensors',
-                                                   'uuid': self.helyos_client.uuid,
-                                                   'body': { 'pose': {'x':x,'y':y, 'z':z, 'orientations': orientations},
-                                                             'sensors': sensors
-                                                           }
-                                                })
-                                     )
+            routing_key=self.helyos_client.sensors_routing_key,
+            message=json.dumps(
+                {'type': 'agent_sensors',
+                 'uuid': self.helyos_client.uuid,
+                 'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
+                          'sensors': sensors
+                          }
+                 })
+        )
 
-    def request_mission(self, mission_name, data, tools_uuids = [], sched_start_at=None):
+    def request_mission(self, mission_name, data, tools_uuids=[], sched_start_at=None):
         """ Request a mission to helyOS. The mission data is freely defined by the application.
             As example, this method could be triggered in the scenario where the agent needs an extra assignments to complete
             a mission, or when it delegates to other agents. Other rabbitmq clients can tap this information by using the
@@ -296,21 +311,18 @@ class AgentConnector():
 
         """
         self.helyos_client.publish(
-                                      routing_key = self.helyos_client.mission_routing_key,
-                                      message=  json.dumps(
-                                                  {'type': 'mission_request',
-                                                   'uuid': self.helyos_client.uuid,
-                                                   'body': { 'work_process_type_name': mission_name,
-                                                             'data': data,
-                                                             'tools_uuids': tools_uuids,
-                                                             'yard_uid': self.helyos_client.yard_uid,
-                                                             'sched_start_at': sched_start_at
-                                                           }
-                                                })
-                                     )
-
-
-
+            routing_key=self.helyos_client.mission_routing_key,
+            message=json.dumps(
+                {'type': 'mission_request',
+                 'uuid': self.helyos_client.uuid,
+                 'body': {'work_process_type_name': mission_name,
+                          'data': data,
+                          'tools_uuids': tools_uuids,
+                          'yard_uid': self.helyos_client.yard_uid,
+                          'sched_start_at': sched_start_at
+                          }
+                 })
+        )
 
 
 def agent_checkin_to_helyos(uuid, yard_uid, agent_data, status='free', pubkey=None):

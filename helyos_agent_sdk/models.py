@@ -7,10 +7,10 @@ from enum import Enum
 from datetime import datetime
 
 
-
 # ---- CONSTANTS ------ #
 
 VERSION = '3.0.0'
+
 
 class ASSIGNMENT_STATUS(Enum):
     ACTIVE = 'active'
@@ -18,7 +18,7 @@ class ASSIGNMENT_STATUS(Enum):
     CANCELED = 'canceled'
     ABORTED = 'aborted'
     FAILED = 'failed'
-    TO_EXECUTE ='to_execute'
+    TO_EXECUTE = 'to_execute'
     EXECUTING = 'executing'
 
 
@@ -35,8 +35,8 @@ class ASSIGNMENT_MESSAGE_TYPE(str, Enum):
 
 class INSTANT_ACTIONS_TYPE(str, Enum):
     CANCEL = 'assignment_cancel'
-    WPCLEREANCE = 'wp_clearance_request' # AT MOMENT USED TO RESERVE
-    RESERVE = 'reserve_for_mission' # IT WILL SUBSTITUTE WPCLEREANCE
+    WPCLEREANCE = 'wp_clearance_request'  # AT MOMENT USED TO RESERVE
+    RESERVE = 'reserve_for_mission'  # IT WILL SUBSTITUTE WPCLEREANCE
     RELEASE = 'release_from_mission'
 
 
@@ -46,7 +46,6 @@ class AGENT_MESSAGE_TYPE(Enum):
     SENSORS = 'agent_sensors'
     UPDATE = 'agent_update'
     CHECKIN = 'checkin'
-
 
 
 # ---- DATA MODELS ------ #
@@ -131,12 +130,11 @@ class MissionRequestMessage:
     _version = VERSION
 
 
-
 # ----   Messages From helyOS to Agent ------ #
 
 @dataclass
 class AssignmentCommandMessage:
-    type: ASSIGNMENT_MESSAGE_TYPE # = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
+    type: ASSIGNMENT_MESSAGE_TYPE  # = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
     work_process_id: int
     assignment_metadata: AssignmentMetadata
     body: dict
@@ -145,7 +143,7 @@ class AssignmentCommandMessage:
 
 @dataclass
 class AssignmentCancelMessage:
-    type: INSTANT_ACTIONS_TYPE # = INSTANT_ACTIONS_TYPE.CANCEL
+    type: INSTANT_ACTIONS_TYPE  # = INSTANT_ACTIONS_TYPE.CANCEL
     work_process_id: int
     assignment_metadata: AssignmentMetadata
     body: dict
@@ -158,9 +156,3 @@ class WorkProcessClearanceMessage:
     uuid: str
     body: WorkProcessResourcesRequest
     _version: str
-
-
-
-
-
-
