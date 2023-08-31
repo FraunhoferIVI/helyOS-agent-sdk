@@ -20,8 +20,8 @@ def parse_assignment_message(self, ch, properties, received_str):
             assignment_metadata = received_message.get(
                 'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
             command_message = {'type': received_message['type'],
-                               'work_process_id': received_message['work_process_id'],
-                               'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                               'uuid': received_message['uuid'],
+                               'metadata': AssignmentMetadata(**assignment_metadata),
                                'body': received_message['body'],
                                '_version': received_message['_version']}
 
@@ -47,8 +47,8 @@ def parse_instant_actions(self, ch, properties, received_str):
             assignment_metadata = received_message.get(
                 'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
             command_message = {'type': received_message['type'],
-                               'work_process_id': received_message['work_process_id'],
-                               'assignment_metadata': AssignmentMetadata(**assignment_metadata),
+                               'uuid': received_message['uuid'],
+                               'metadata': AssignmentMetadata(**assignment_metadata),
                                'body': received_message['body'],
                                '_version': received_message['_version']}
             inst_assignm_cancel = AssignmentCancelMessage(**command_message)
@@ -231,7 +231,7 @@ class AgentConnector():
                 {'type': 'agent_update',
                  'uuid': self.helyos_client.uuid,
                  'body': body,
-                 })
+                 }, sort_keys=True)
         )
 
     def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources = None, assignment_status: AssignmentCurrentStatus = None):
@@ -258,10 +258,11 @@ class AgentConnector():
         agent_state_body = AgentStateBody(status, resources, assignment_status)
         message = AgentStateMessage(
             uuid=self.helyos_client.uuid, body=agent_state_body)
+        message_dict = json.loads(message.to_json())
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.status_routing_key,
-            message=message.to_json()
+            message=json.dumps(message_dict, sort_keys=True)
         )
 
     def publish_sensors(self, x, y, z, orientations, sensors={}):
@@ -291,7 +292,7 @@ class AgentConnector():
                  'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
                           'sensors': sensors
                           }
-                 })
+                 }, sort_keys=True)
         )
 
     def request_mission(self, mission_name, data, tools_uuids=[], sched_start_at=None):
@@ -321,7 +322,7 @@ class AgentConnector():
                           'yard_uid': self.helyos_client.yard_uid,
                           'sched_start_at': sched_start_at
                           }
-                 })
+                 }, sort_keys=True)
         )
 
 

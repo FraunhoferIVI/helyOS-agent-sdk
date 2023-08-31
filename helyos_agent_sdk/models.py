@@ -135,8 +135,7 @@ class MissionRequestMessage:
 @dataclass
 class AssignmentCommandMessage:
     type: ASSIGNMENT_MESSAGE_TYPE  # = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
-    work_process_id: int
-    assignment_metadata: AssignmentMetadata
+    metadata: AssignmentMetadata
     body: dict
     _version: str
 
