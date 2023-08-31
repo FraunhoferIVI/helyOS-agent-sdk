@@ -252,8 +252,8 @@ class HelyOSClient():
         self.yard_uid = yard_uid
         checkin_msg = {'type': 'checkin',
                        'uuid': self.uuid,
-                       'status': status,
                        'body': {'yard_uid': yard_uid,
+                                'status': status,
                                 'public_key': self.public_key.decode('utf-8'),
                                 'public_key_format': 'PEM',
                                 'registration_token': REGISTRATION_TOKEN,
@@ -264,7 +264,7 @@ class HelyOSClient():
                                          routing_key=self.checking_routing_key,
                                          properties=pika.BasicProperties(
                                              reply_to=self.checkin_response_queue, user_id=username, timestamp=int(time.time()*1000)),
-                                         body=json.dumps(checkin_msg))
+                                         body=json.dumps(checkin_msg, sort_keys=True))
 
     def __checkin_callback_wrapper(self, channel, method, properties, received_str):
         try:
