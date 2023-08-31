@@ -34,8 +34,8 @@ class SummaryRPC():
     """
 
     def __init__(self, helyos_client):
-        if helyos_client._protocol == "MQTT":
-            raise Exception("Use AMQP protocol for remote procedure call.")
+        if helyos_client._protocol == 'MQTT':
+            raise Exception('Use AMQP protocol for remote procedure call.')
         self.connection = helyos_client.connection
         self.routing_key= helyos_client.summary_routing_key
         self.username = helyos_client.rbmq_username

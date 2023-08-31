@@ -6,24 +6,24 @@ from .exceptions import *
 import paho.mqtt.client as mqtt
 import time
 
-AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', "xchange_helyos.agents.ul")
-AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', "xchange_helyos.agents.dl")
-AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', "xchange_helyos.agents.anonymous")
+AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
+AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', 'xchange_helyos.agents.dl')
+AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', 'xchange_helyos.agents.anonymous')
 REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN','0000-0000-0000-0000-0000')
-AGENTS_MQTT_EXCHANGE =  os.environ.get('AGENTS_MQTT_EXCHANGE', "xchange_helyos.agents.mqtt")
+AGENTS_MQTT_EXCHANGE =  os.environ.get('AGENTS_MQTT_EXCHANGE', 'xchange_helyos.agents.mqtt')
 
 def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=False, ca_certificate=None, temporary=False):
     global mqtt_msg
-    LOGMSG = [  "success, connection accepted",
-                "connection refused, bad protocol",
-                "refused, client-id error",
-                "refused, service unavailable",
-                "refused, bad username or password",
-                "refused, not authorized"
+    LOGMSG = [  'success, connection accepted',
+                'connection refused, bad protocol',
+                'refused, client-id error',
+                'refused, service unavailable',
+                'refused, bad username or password',
+                'refused, not authorized'
         ]
     mqtt_client = mqtt.Client()
     mqtt_client.username_pw_set(username, passwd)
-    mqtt_msg = "not connected"
+    mqtt_msg = 'not connected'
 
     def on_connect(client, userdata, flags, rc):
         global mqtt_msg
@@ -118,49 +118,49 @@ class HelyOSMQTTClient():
     @property
     def checking_routing_key(self):
         """ MQTT Topic value used for check in messages """
-        return f"agent/{self.uuid}/checkin"
+        return f'agent/{self.uuid}/checkin'
 
     @property
     def status_routing_key(self):
         """ MQTT Topic value used to publish agent and assigment states  """
 
-        return f"agent/{self.uuid}/state"
+        return f'agent/{self.uuid}/state'
 
     @property
     def sensors_routing_key(self):
         """ MQTT Topic value used for broadingcasting of positions and sensors  """
 
-        return f"agent/{self.uuid}/visualization"
+        return f'agent/{self.uuid}/visualization'
 
     @property
     def mission_routing_key(self):
         """ MQTT Topic value used to publish mission requests  """
 
-        return f"agent/{self.uuid}/mission_req"
+        return f'agent/{self.uuid}/mission_req'
 
     @property
     def summary_routing_key(self):
         """ MQTT Topic value used to publish summary requests  """
 
-        return f"agent/{self.uuid}/summary_req"
+        return f'agent/{self.uuid}/summary_req'
 
     @property
     def instant_actions_routing_key(self):
         """ MQTT Topic value used to read instant actions  """
 
-        return f"agent/{self.uuid}/instantActions"
+        return f'agent/{self.uuid}/instantActions'
 
     @property
     def update_routing_key(self):
         """ MQTT Topic value used for agent update messages  """
 
-        return f"agent/{self.uuid}/update"
+        return f'agent/{self.uuid}/update'
 
     @property
     def assignment_routing_key(self):
         """ MQTT Topic value used to read assigment messages  """
 
-        return f"agent/{self.uuid}/assignment"
+        return f'agent/{self.uuid}/assignment'
 
     def get_checkin_result(self):
         """ get_checkin_result() read the checkin data published by helyOS and save into the HelyOSClient instance
@@ -175,7 +175,7 @@ class HelyOSMQTTClient():
         def wrap(*args, **kwargs):
             if not args[0].connection :
                 raise HelyOSClientAutheticationError(
-                    "HelyOSClient is not authenticated. Check the HelyosClient.connect() method."
+                    'HelyOSClient is not authenticated. Check the HelyosClient.connect() method.'
                 )
             return func(*args, **kwargs)  # pylint: a disable=not-callable
 
@@ -183,14 +183,14 @@ class HelyOSMQTTClient():
 
     def __connect_as_anonymous(self):
         raise HelyOSAnonymousConnectionError(
-                "Anonymous check-in is implemented only for AMPQ agents. You must manually create an account.")
+                'Anonymous check-in is implemented only for AMPQ agents. You must manually create an account.')
 
 
     def __prepare_checkin_for_already_connected(self):
          # step 1 - use existent connection
         self.guest_channel = self.channel
         # step 2 - creates a temporary topic to receive checkin response
-        temp_topic = f"agent/{self.uuid}/checkinresponse"
+        temp_topic = f'agent/{self.uuid}/checkinresponse'
         self.checkin_response_queue = temp_topic
         self.guest_channel.subscribe(temp_topic)
         self.guest_channel.message_callback_add(temp_topic, self.__checkin_callback_wrapper)
@@ -222,7 +222,7 @@ class HelyOSMQTTClient():
         except Exception as inst:
             print(inst)
             raise HelyOSAccountConnectionError(
-                    f"Not able to connect as {username}.")
+                    f'Not able to connect as {username}.')
 
 
 
@@ -261,7 +261,7 @@ class HelyOSMQTTClient():
                          'status': status,
                          'replyTo': self.checkin_response_queue ,
                          'body': {'yard_uid': yard_uid,
-                                  'public_key':self.public_key.decode("utf-8"),
+                                  'public_key':self.public_key.decode('utf-8'),
                                   'public_key_format': 'PEM',
                                   'registration_token': REGISTRATION_TOKEN,
                                   **agent_data},
@@ -276,7 +276,7 @@ class HelyOSMQTTClient():
             self.__checkin_callback(str(message.payload.decode()))
             # self.channel.loop_stop()   COMMENT: After the loop stop, I am not able to publish
         except Exception as inst:
-            print("error check-in callback", inst)
+            print('error check-in callback', inst)
             client.loop_stop()
 
 
@@ -286,15 +286,15 @@ class HelyOSMQTTClient():
 
         msg_type = received_message['type']
         if msg_type != 'checkin':
-            print("waiting response...")
+            print('waiting response...')
             return
 
         body = received_message['body']
         response_code = body.get('response_code', 500)
         if response_code!='200':
             print(body)
-            message  = body.get('message', "Check in refused")
-            raise HelyOSCheckinError(f"{message}: code {response_code}")
+            message  = body.get('message', 'Check in refused')
+            raise HelyOSCheckinError(f'{message}: code {response_code}')
 
         password = body.pop('rbmq_password', None)
         self.ca_certificate =  body.get('ca_certificate', self.ca_certificate)

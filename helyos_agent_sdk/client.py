@@ -6,10 +6,10 @@ from Crypto.Cipher import PKCS1_OAEP
 import os, json, ssl
 from .exceptions import *
 
-AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', "xchange_helyos.agents.ul")
-AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', "xchange_helyos.agents.dl")
-AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', "xchange_helyos.agents.anonymous")
-REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN',"0000-0000-0000-0000-0000")
+AGENTS_UL_EXCHANGE = os.environ.get('AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
+AGENTS_DL_EXCHANGE = os.environ.get('AGENTS_DL_EXCHANGE', 'xchange_helyos.agents.dl')
+AGENT_ANONYMOUS_EXCHANGE = os.environ.get('AGENT_ANONYMOUS_EXCHANGE', 'xchange_helyos.agents.anonymous')
+REGISTRATION_TOKEN = os.environ.get('REGISTRATION_TOKEN','0000-0000-0000-0000-0000')
 
 
 def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=False, ca_certificate=None, temporary=False):
@@ -96,49 +96,49 @@ class HelyOSClient():
     @property
     def checking_routing_key(self):
         """ Routing key value used for check in messages """
-        return f"agent.{self.uuid}.checkin"
+        return f'agent.{self.uuid}.checkin'
 
     @property
     def status_routing_key(self):
         """ Routing key value used to publish agent and assigment states  """
 
-        return f"agent.{self.uuid}.state"
+        return f'agent.{self.uuid}.state'
 
     @property
     def sensors_routing_key(self):
         """ Routing key value used for broadingcasting of positions and sensors  """
 
-        return f"agent.{self.uuid}.visualization"
+        return f'agent.{self.uuid}.visualization'
 
     @property
     def mission_routing_key(self):
         """ Routing key value used to publish mission requests  """
 
-        return f"agent.{self.uuid}.mission_req"
+        return f'agent.{self.uuid}.mission_req'
 
     @property
     def summary_routing_key(self):
         """ Routing key value used to publish summary requests  """
 
-        return f"agent.{self.uuid}.summary_req"
+        return f'agent.{self.uuid}.summary_req'
 
     @property
     def instant_actions_routing_key(self):
         """ Routing key value used to read instant actions  """
 
-        return f"agent.{self.uuid}.instantActions"
+        return f'agent.{self.uuid}.instantActions'
 
     @property
     def update_routing_key(self):
         """ Routing key value used for agent update messages  """
 
-        return f"agent.{self.uuid}.update"
+        return f'agent.{self.uuid}.update'
 
     @property
     def assignment_routing_key(self):
         """ Routing key value used to read assigment messages  """
 
-        return f"agent.{self.uuid}.assignment"
+        return f'agent.{self.uuid}.assignment'
 
     def get_checkin_result(self):
         """ get_checkin_result() read the checkin data published by helyOS and save into the HelyOSClient instance
@@ -155,7 +155,7 @@ class HelyOSClient():
         def wrap(*args, **kwargs):
             if not args[0].connection :
                 raise HelyOSClientAutheticationError(
-                    "HelyOSClient is not authenticated. Check the HelyosClient.perform_checkin() method."
+                    'HelyOSClient is not authenticated. Check the HelyosClient.perform_checkin() method.'
                 )
             return func(*args, **kwargs)  # pylint: a disable=not-callable
 
@@ -170,7 +170,7 @@ class HelyOSClient():
         except Exception as inst:
             print(inst)
             raise HelyOSAnonymousConnectionError(
-                    "Not able to connect as anonymous to rabbitMQ to perform check in.")
+                    'Not able to connect as anonymous to rabbitMQ to perform check in.')
 
 
         # step 2 - creates a temporary queue to receive checkin response
@@ -216,7 +216,7 @@ class HelyOSClient():
         except Exception as inst:
             print(inst)
             raise HelyOSAccountConnectionError(
-                    f"Not able to connect as {username} to rabbitMQ to perform check in.")
+                    f'Not able to connect as {username} to rabbitMQ to perform check in.')
 
 
 
@@ -254,7 +254,7 @@ class HelyOSClient():
                          'uuid': self.uuid,
                          'status': status,
                          'body': {'yard_uid': yard_uid,
-                                  'public_key':self.public_key.decode("utf-8"),
+                                  'public_key':self.public_key.decode('utf-8'),
                                   'public_key_format': 'PEM',
                                   'registration_token': REGISTRATION_TOKEN,
                                   **agent_data},
@@ -272,7 +272,7 @@ class HelyOSClient():
             channel.stop_consuming()
         except  Exception as inst:
             self.tries += 1
-            print(f"try {self.tries}")
+            print(f'try {self.tries}')
             if self.tries > 3:
                 channel.stop_consuming()
 
@@ -284,15 +284,15 @@ class HelyOSClient():
 
         msg_type = received_message['type']
         if msg_type != 'checkin':
-            print("waiting response...")
+            print('waiting response...')
             return
 
         body = received_message['body']
         response_code = body.get('response_code', 500)
         if response_code!='200':
             print(body)
-            message  = body.get('message', "Check in refused")
-            raise HelyOSCheckinError(f"{message}: code {response_code}")
+            message  = body.get('message', 'Check in refused')
+            raise HelyOSCheckinError(f'{message}: code {response_code}')
 
         password = body.pop('rbmq_password', None)
         self.ca_certificate =  body.get('ca_certificate', self.ca_certificate)
@@ -337,14 +337,14 @@ class HelyOSClient():
 
     @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        self.assignment_queue = self.channel.queue_declare(queue="")
+        self.assignment_queue = self.channel.queue_declare(queue='')
         self.channel.queue_bind(queue=self.assignment_queue.method.queue,
                                 exchange=exchange, routing_key=self.assignment_routing_key)
         return self.assignment_queue
 
     @auth_required
     def set_instant_actions_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        self.instant_actions_queue = self.channel.queue_declare(queue="")
+        self.instant_actions_queue = self.channel.queue_declare(queue='')
         self.channel.queue_bind(queue=self.instant_actions_queue.method.queue,
                                 exchange=exchange, routing_key=self.instant_actions_routing_key)
         return self.instant_actions_queue

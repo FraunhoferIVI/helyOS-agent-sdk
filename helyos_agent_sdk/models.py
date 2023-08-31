@@ -10,42 +10,42 @@ from datetime import datetime
 
 # ---- CONSTANTS ------ #
 
-VERSION = "3.0.0"
+VERSION = '3.0.0'
 
 class ASSIGNMENT_STATUS(Enum):
-    ACTIVE = "active"
-    SUCCEEDED = "succeeded"
-    CANCELED = "canceled"
-    ABORTED = "aborted"
-    FAILED = "failed"
-    TO_EXECUTE ="to_execute"
-    EXECUTING = "executing"
+    ACTIVE = 'active'
+    SUCCEEDED = 'succeeded'
+    CANCELED = 'canceled'
+    ABORTED = 'aborted'
+    FAILED = 'failed'
+    TO_EXECUTE ='to_execute'
+    EXECUTING = 'executing'
 
 
 class AGENT_STATE(Enum):
-    NOT_AUTO = "not_automatable"
-    FREE = "free"
-    BUSY = "busy"
-    READY = "ready"
+    NOT_AUTO = 'not_automatable'
+    FREE = 'free'
+    BUSY = 'busy'
+    READY = 'ready'
 
 
 class ASSIGNMENT_MESSAGE_TYPE(str, Enum):
-    EXECUTION = "assignment_execution"
+    EXECUTION = 'assignment_execution'
 
 
 class INSTANT_ACTIONS_TYPE(str, Enum):
-    CANCEL = "assignment_cancel"
-    WPCLEREANCE = "wp_clearance_request" # AT MOMENT USED TO RESERVE
-    RESERVE = "reserve_for_mission" # IT WILL SUBSTITUTE WPCLEREANCE
-    RELEASE = "release_from_mission"
+    CANCEL = 'assignment_cancel'
+    WPCLEREANCE = 'wp_clearance_request' # AT MOMENT USED TO RESERVE
+    RESERVE = 'reserve_for_mission' # IT WILL SUBSTITUTE WPCLEREANCE
+    RELEASE = 'release_from_mission'
 
 
 class AGENT_MESSAGE_TYPE(Enum):
-    MISSION = "mission_request"
-    STATE = "agent_state"
-    SENSORS = "agent_sensors"
-    UPDATE = "agent_update"
-    CHECKIN = "checkin"
+    MISSION = 'mission_request'
+    STATE = 'agent_state'
+    SENSORS = 'agent_sensors'
+    UPDATE = 'agent_update'
+    CHECKIN = 'checkin'
 
 
 
@@ -102,13 +102,13 @@ class Pose:
 # not used in the code, fields must be optional
 @dataclass
 class AgentCheckinData:
-    name: str = ""
-    code: str = ""
+    name: str = ''
+    code: str = ''
     factsheet: dict = field(default_factory=dict)
     pose: Pose = Pose
-    data_format: str = ""
+    data_format: str = ''
     is_actuator: bool = True
-    unit: str = "mm"
+    unit: str = 'mm'
 
 
 # ----   Messages From Agent to helyOS ------ #
