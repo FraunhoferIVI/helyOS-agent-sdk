@@ -7,6 +7,7 @@ import os
 import json
 import ssl
 from .exceptions import *
+from helyos_agent_sdk.models import AGENT_STATE
 
 AGENTS_UL_EXCHANGE = os.environ.get(
     'AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
@@ -219,7 +220,7 @@ class HelyOSClient():
             raise HelyOSAccountConnectionError(
                 f'Not able to connect as {username} to rabbitMQ. {inst}')
 
-    def perform_checkin(self, yard_uid, status='free', agent_data={}):
+    def perform_checkin(self, yard_uid, status=AGENT_STATE.FREE, agent_data={}):
         """
         The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
         and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
