@@ -216,9 +216,8 @@ class HelyOSClient():
             self.rbmq_username = username
 
         except Exception as inst:
-            print(inst)
             raise HelyOSAccountConnectionError(
-                f'Not able to connect as {username} to rabbitMQ to perform check in.')
+                f'Not able to connect as {username} to rabbitMQ. {inst}')
 
     def perform_checkin(self, yard_uid, status='free', agent_data={}):
         """
