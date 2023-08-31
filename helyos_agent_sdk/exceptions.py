@@ -1,5 +1,5 @@
 
-    
+
 
 class HelyOSAnonymousConnectionError(Exception):
     """ Raised on anonymous connection during checkin procedure. """

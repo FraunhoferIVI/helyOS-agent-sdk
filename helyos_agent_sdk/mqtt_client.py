@@ -17,7 +17,7 @@ def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=Fals
     LOGMSG = [  "success, connection accepted",
                 "connection refused, bad protocol",
                 "refused, client-id error",
-                "refused, service unavailable", 
+                "refused, service unavailable",
                 "refused, bad username or password",
                 "refused, not authorized"
         ]
@@ -25,7 +25,7 @@ def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=Fals
     mqtt_client.username_pw_set(username, passwd)
     mqtt_msg = "not connected"
 
-    def on_connect(client, userdata, flags, rc): 
+    def on_connect(client, userdata, flags, rc):
         global mqtt_msg
         mqtt_msg = LOGMSG[rc]
 
@@ -52,11 +52,11 @@ def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=Fals
     while time.time() - started < 3.0:
         mqtt_client.loop()
         if mqtt_client.is_connected():
-            return mqtt_client    
+            return mqtt_client
 
     raise Exception(mqtt_msg)
 
- 
+
 
 
 def generate_private_public_keys():
@@ -64,12 +64,12 @@ def generate_private_public_keys():
     priv = key.export_key(format='PEM')
     pub = key.publickey().export_key(format='PEM')
     return priv, pub
-    
+
 
 
 class HelyOSMQTTClient():
 
-    
+
     def __init__(self, rabbitmq_host, rabbitmq_port=1883, uuid=None, enable_ssl=False, ca_certificate=None,  pubkey=None):
         """ HelyOS MQTT client class
 
@@ -105,63 +105,63 @@ class HelyOSMQTTClient():
         self.tries = 0
         self.rbmq_username = None
         self.rbmq_password = None
-        
+
         if pubkey is None:
             self.private_key, self.public_key = generate_private_public_keys()
         else:
             self.public_key = pubkey
 
-        self.rabbitmq_host = rabbitmq_host    
-        self.rabbitmq_port = rabbitmq_port    
+        self.rabbitmq_host = rabbitmq_host
+        self.rabbitmq_port = rabbitmq_port
 
 
-    @property    
+    @property
     def checking_routing_key(self):
         """ MQTT Topic value used for check in messages """
         return f"agent/{self.uuid}/checkin"
 
-    @property    
+    @property
     def status_routing_key(self):
         """ MQTT Topic value used to publish agent and assigment states  """
 
         return f"agent/{self.uuid}/state"
 
-    @property    
+    @property
     def sensors_routing_key(self):
         """ MQTT Topic value used for broadingcasting of positions and sensors  """
 
         return f"agent/{self.uuid}/visualization"
 
-    @property    
+    @property
     def mission_routing_key(self):
         """ MQTT Topic value used to publish mission requests  """
 
         return f"agent/{self.uuid}/mission_req"
-    
-    @property    
+
+    @property
     def summary_routing_key(self):
         """ MQTT Topic value used to publish summary requests  """
 
         return f"agent/{self.uuid}/summary_req"
 
-    @property    
+    @property
     def instant_actions_routing_key(self):
         """ MQTT Topic value used to read instant actions  """
 
         return f"agent/{self.uuid}/instantActions"
-    
-    @property    
+
+    @property
     def update_routing_key(self):
         """ MQTT Topic value used for agent update messages  """
 
         return f"agent/{self.uuid}/update"
-    
-    @property    
+
+    @property
     def assignment_routing_key(self):
         """ MQTT Topic value used to read assigment messages  """
 
         return f"agent/{self.uuid}/assignment"
-          
+
     def get_checkin_result(self):
         """ get_checkin_result() read the checkin data published by helyOS and save into the HelyOSClient instance
             as `checkin_data`.
@@ -169,7 +169,7 @@ class HelyOSMQTTClient():
         self.tries = 0
         self.guest_channel.loop_start()
 
-  
+
     def auth_required(func):  # pylint: disable=no-self-argument
         @wraps(func)
         def wrap(*args, **kwargs):
@@ -191,7 +191,7 @@ class HelyOSMQTTClient():
         self.guest_channel = self.channel
         # step 2 - creates a temporary topic to receive checkin response
         temp_topic = f"agent/{self.uuid}/checkinresponse"
-        self.checkin_response_queue = temp_topic 
+        self.checkin_response_queue = temp_topic
         self.guest_channel.subscribe(temp_topic)
         self.guest_channel.message_callback_add(temp_topic, self.__checkin_callback_wrapper)
 
@@ -200,13 +200,13 @@ class HelyOSMQTTClient():
     def connect(self, username, password):
         """
         Creates the connection between agent and the message broker server.
-        
+
         .. code-block:: python
 
             helyos_client = HelyOSClient(host='myrabbitmq.com', port=5672, uuid='3452345-52453-43525')
             helyos_client.connect_rabbitmq('my_username', 'secret_password') #  <===
-                      
-        
+
+
         :param username:  username previously registered in RabbitMQ server
         :type username: str
         :param password: password previously registered in RabbitMQ server'
@@ -215,7 +215,7 @@ class HelyOSMQTTClient():
 
         try:
             self.connection = connect_mqtt(self.rabbitmq_host, self.rabbitmq_port,
-                                          username, password, self.enable_ssl, self.ca_certificate) 
+                                          username, password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection
             self.rbmq_username = username
 
@@ -227,12 +227,12 @@ class HelyOSMQTTClient():
 
 
     def perform_checkin(self, yard_uid, status='free', agent_data={}):
-        """ 
-        The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard 
+        """
+        The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
         and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
 
         The method `connect()` should run before the `perform_checkin()`, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
-        In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the 
+        In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the
         uuid as username and returns a password, which can be found in the property `rbmq_password`. This password should be safely stored.
 
         .. code-block:: python
@@ -241,7 +241,7 @@ class HelyOSMQTTClient():
             helyos_client.connect('my_username', 'secret_password')
             helyos_client.perform_checkin(yard_uid='yard_A', status='free')  #  <===
             helyOS_client.get_checkin_result()                               #  <===
-                       
+
 
         :param yard_uid: Yard UID
         :type yard_uid: str
@@ -260,16 +260,16 @@ class HelyOSMQTTClient():
                          'uuid': self.uuid,
                          'status': status,
                          'replyTo': self.checkin_response_queue ,
-                         'body': {'yard_uid': yard_uid, 
-                                  'public_key':self.public_key.decode("utf-8"),  
-                                  'public_key_format': 'PEM', 
+                         'body': {'yard_uid': yard_uid,
+                                  'public_key':self.public_key.decode("utf-8"),
+                                  'public_key_format': 'PEM',
                                   'registration_token': REGISTRATION_TOKEN,
                                   **agent_data},
                          'header': {'timestamp':int(time.time()*1000)}
                        }
 
         self.guest_channel.publish(self.checking_routing_key,payload=json.dumps(checkin_msg))
-        
+
 
     def __checkin_callback_wrapper(self, client, userdata, message):
         try:
@@ -281,24 +281,24 @@ class HelyOSMQTTClient():
 
 
     def __checkin_callback(self, received_str):
-        received_message_str = json.loads(received_str)['message']    
+        received_message_str = json.loads(received_str)['message']
         received_message = json.loads(received_message_str)
-        
+
         msg_type = received_message['type']
         if msg_type != 'checkin':
             print("waiting response...")
             return
-        
+
         body = received_message['body']
         response_code = body.get('response_code', 500)
         if response_code!='200':
             print(body)
             message  = body.get('message', "Check in refused")
             raise HelyOSCheckinError(f"{message}: code {response_code}")
-            
+
         password = body.pop('rbmq_password', None)
         self.ca_certificate =  body.get('ca_certificate', self.ca_certificate)
-        
+
         if password:
             self.connection = connect_mqtt(self.rabbitmq_host, self.rabbitmq_port, body['rbmq_username'], password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection.channel()
@@ -311,14 +311,14 @@ class HelyOSMQTTClient():
 
         self.uuid = received_message['uuid']
         self.checkin_data = body
-            
 
 
-    @auth_required            
+
+    @auth_required
     def publish(self, routing_key, message, encrypted=False, exchange=AGENTS_MQTT_EXCHANGE):
         """ Publish message in RabbitMQ
 
-            :param routing_key: MQTT topic name 
+            :param routing_key: MQTT topic name
             :type routing_key: str
             :param encrypted: If this message should be encrypted, defaults to False
             :type encrypted: str
@@ -328,25 +328,25 @@ class HelyOSMQTTClient():
 
         self.channel.publish(routing_key, payload=message)
 
-    @auth_required            
+    @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
         """ There is no queues in MQTT protocol """
         return None
 
-    @auth_required            
+    @auth_required
     def set_instant_actions_queue(self, exchange=AGENTS_DL_EXCHANGE):
         """ There is no queues in MQTT protocol """
         return None
 
-    @auth_required            
+    @auth_required
     def consume_assignment_messages(self, assignment_callback):
         """ Subscribe to the MQTT assignment topic """
         mqtt_topic = self.assignment_routing_key
         self.channel.subscribe(mqtt_topic)
         self.channel.message_callback_add(mqtt_topic, assignment_callback)
 
-     
-    @auth_required            
+
+    @auth_required
     def consume_instant_actions_messages(self, instant_actions_callback):
         """ Receive instant actions messages.
             Instant actions are used by helyOS to reserve, release or cancel an assignment.
@@ -355,7 +355,7 @@ class HelyOSMQTTClient():
             :type instant_actions_callback: func
 
         """
-        
+
         mqtt_topic = self.instant_actions_routing_key
         self.channel.subscribe(mqtt_topic)
         self.channel.message_callback_add(mqtt_topic, instant_actions_callback)

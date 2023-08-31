@@ -6,9 +6,9 @@ class SummaryRPC():
     """
     This module defines the SummaryRPC class.
 
-    The class is responsible for handling remote procedure calls (RPCs) using the AMQP protocol. 
+    The class is responsible for handling remote procedure calls (RPCs) using the AMQP protocol.
     It connects to a Helyos client and makes requests to helyOS database.
-    
+
     Attributes:
     connection (obj): The pika RabbitMQ connection object .
     helyos_client (obj): The Helyos client object.

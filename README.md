@@ -30,10 +30,10 @@ The helyos-agent-sdk python package encloses methods and data structures definit
 
 ### List of features
 
-*   RabbitMQ client to communicate with helyOS. 
+*   RabbitMQ client to communicate with helyOS.
 *   AMQP and  MQTT Protocol.
-*   Agent and assignment status definitions. 
-*   Easy access to helyOS assignments via callbacks. 
+*   Agent and assignment status definitions.
+*   Easy access to helyOS assignments via callbacks.
 *   Application-level encryption.
 
 ### Install
@@ -83,7 +83,7 @@ agent_connector.start_listening()
 
 Keep it simple. Keep it minimal.
 
-### Authors 
+### Authors
 
 *   Carlos E. Viol Barbosa
 *   ...
