@@ -22,6 +22,14 @@ def generate_private_public_keys():
 
 class Signing:
     def __init__(self, private_key=None) -> None:
+        """ Signing class
+
+            Implements several functions to facilitate the handling of private keys and the signing of messages.
+
+            :param private_key: The private key for signing the messages
+            :type private_key: bytes, str, _RSAPrivateKey
+
+        """
 
         if type(private_key) is bytes:
             self.private_key_string = private_key.decode('utf-8')
@@ -62,8 +70,17 @@ class Signing:
                                                                        format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
     def verify_own_signature(self, message_string, signature):
-        # Verification only
-        # Function that verifies the signature of a message signed with the own private key
+        """ Verify the signature of a message signed with the private key provided
+
+            Verification only
+            Implements the function that verifies the signature of a message signed with the own private key
+
+            :param message_string: The message
+            :type message_string: str
+            :param signature: The signature of the message
+            :type signature: list
+
+        """
         try:
             # Verify the signature
             # Padding: PSS is the recommended choice for any new protocols or applications, PKCS1v15 should only be used to support legacy protocols.
@@ -80,6 +97,16 @@ class Signing:
             raise Exception(f'Error verifying signature: {e}')
 
     def return_signed_message_dict(self, message_dict):
+        """ Signs the message dictionary provided and returns a new dictionary
+
+            Takes a dictionary, serializes it into a json formatted string.
+            Generates the signature of that json formatted string.
+            Returns a dictionary with the keys: <message> and <signature>.
+
+            :param message_dict: The message dictionary
+            :type message_dict: dict
+
+        """
         try:
             message_string = json.dumps(message_dict, sort_keys=True)
 
@@ -110,6 +137,18 @@ class Signing:
         return signature
 
     def verify_signature(self, message_string, signature, public_key):
+        """ Verify the signature of a message with the public key provided
+
+            Implements the function that verifies the signature of a message
+
+            :param message_string: The message
+            :type message_string: str
+            :param signature: The signature of the message
+            :type signature: list
+            :param public_key: The public key for verifying the signature of the message
+            :type public_key: bytes, str, list
+
+        """
         try:
             # Load the public key from PEM format
             if type(public_key) is bytes:
