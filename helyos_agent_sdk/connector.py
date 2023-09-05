@@ -2,7 +2,7 @@ import logging
 import json
 from .exceptions import *
 from .client import HelyOSClient
-from .models import (ASSIGNMENT_STATUS, AGENT_STATE, Pose, ASSIGNMENT_MESSAGE_TYPE, INSTANT_ACTIONS_TYPE, WorkProcessResourcesRequest,
+from .models import (ASSIGNMENT_STATUS, AGENT_STATE, AGENT_MESSAGE_TYPE, Pose, ASSIGNMENT_MESSAGE_TYPE, INSTANT_ACTIONS_TYPE, WorkProcessResourcesRequest,
                      AssignmentCommandMessage, AssignmentMetadata, AssignmentCancelMessage, AgentCurrentResources, AgentStateBody,
                      AgentStateMessage, AssignmentCurrentStatus)
 
@@ -225,13 +225,15 @@ class AgentConnector():
             Any other client can tap this information by use the routing key = 'agent.{uuid}.update'.
 
         """
-        self.helyos_client.publish(
-            routing_key=self.helyos_client.update_routing_key,
-            message=json.dumps(
-                {'type': 'agent_update',
+
+        message_dict = {'type': AGENT_MESSAGE_TYPE.UPDATE,
                  'uuid': self.helyos_client.uuid,
                  'body': body,
-                 }, sort_keys=True)
+                 }
+
+        self.helyos_client.publish(
+            routing_key=self.helyos_client.update_routing_key,
+            message=message_dict
         )
 
     def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources = None, assignment_status: AssignmentCurrentStatus = None):
@@ -262,7 +264,7 @@ class AgentConnector():
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.status_routing_key,
-            message=json.dumps(message_dict, sort_keys=True)
+            message=message_dict
         )
 
     def publish_sensors(self, x, y, z, orientations, sensors={}):
@@ -284,15 +286,17 @@ class AgentConnector():
         """
 
         self.agent_pose = Pose(x, y, z, orientations)
-        self.helyos_client.publish(
-            routing_key=self.helyos_client.sensors_routing_key,
-            message=json.dumps(
-                {'type': 'agent_sensors',
+
+        message_dict = {'type': AGENT_MESSAGE_TYPE.SENSORS,
                  'uuid': self.helyos_client.uuid,
                  'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
                           'sensors': sensors
                           }
-                 }, sort_keys=True)
+                 }
+
+        self.helyos_client.publish(
+            routing_key=self.helyos_client.sensors_routing_key,
+            message=message_dict
         )
 
     def request_mission(self, mission_name, data, tools_uuids=[], sched_start_at=None):
@@ -311,10 +315,7 @@ class AgentConnector():
             :type sched_start_at: DateTime
 
         """
-        self.helyos_client.publish(
-            routing_key=self.helyos_client.mission_routing_key,
-            message=json.dumps(
-                {'type': 'mission_request',
+        message_dict = {'type': AGENT_MESSAGE_TYPE.MISSION,
                  'uuid': self.helyos_client.uuid,
                  'body': {'work_process_type_name': mission_name,
                           'data': data,
@@ -322,7 +323,11 @@ class AgentConnector():
                           'yard_uid': self.helyos_client.yard_uid,
                           'sched_start_at': sched_start_at
                           }
-                 }, sort_keys=True)
+                 }
+
+        self.helyos_client.publish(
+            routing_key=self.helyos_client.mission_routing_key,
+            message=message_dict
         )
 
 
