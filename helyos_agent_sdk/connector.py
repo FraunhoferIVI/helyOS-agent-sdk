@@ -226,7 +226,7 @@ class AgentConnector():
 
         """
 
-        message_dict = {'type': AGENT_MESSAGE_TYPE.UPDATE,
+        message_dict = {'type': AGENT_MESSAGE_TYPE.UPDATE.value,
                  'uuid': self.helyos_client.uuid,
                  'body': body,
                  }
@@ -287,7 +287,7 @@ class AgentConnector():
 
         self.agent_pose = Pose(x, y, z, orientations)
 
-        message_dict = {'type': AGENT_MESSAGE_TYPE.SENSORS,
+        message_dict = {'type': AGENT_MESSAGE_TYPE.SENSORS.value,
                  'uuid': self.helyos_client.uuid,
                  'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
                           'sensors': sensors
@@ -315,7 +315,7 @@ class AgentConnector():
             :type sched_start_at: DateTime
 
         """
-        message_dict = {'type': AGENT_MESSAGE_TYPE.MISSION,
+        message_dict = {'type': AGENT_MESSAGE_TYPE.MISSION.value,
                  'uuid': self.helyos_client.uuid,
                  'body': {'work_process_type_name': mission_name,
                           'data': data,
