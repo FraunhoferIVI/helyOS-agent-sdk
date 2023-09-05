@@ -20,6 +20,7 @@ def generate_private_public_keys():
                                format=serialization.PublicFormat.SubjectPublicKeyInfo)
     return priv, pub
 
+
 class Signing:
     def __init__(self, private_key=None) -> None:
         """ Signing class
@@ -158,11 +159,12 @@ class Signing:
                 pubkey = serialization.load_pem_public_key(
                     public_key.encode('utf-8'), backend=default_backend())
             elif type(public_key) is list:
-                 pubkey_bytes = bytes(public_key)
-                 pubkey = serialization.load_pem_public_key(
+                pubkey_bytes = bytes(public_key)
+                pubkey = serialization.load_pem_public_key(
                     pubkey_bytes, backend=default_backend())
             else:
-                raise TypeError(f'Public key type not supported, type: {type(public_key)}, contents: {public_key}')
+                raise TypeError(
+                    f'Public key type not supported, type: {type(public_key)}, contents: {public_key}')
         except Exception as e:
             raise Exception(
                 f'Error loading public key for signature verification: {e}')
@@ -179,4 +181,5 @@ class Signing:
             return True
 
         except Exception as e:
-            raise Exception(f'Error verifying signature: {e}. Signature: {signature}, message: {message_string}')
+            raise Exception(
+                f'Error verifying signature: {e}. Signature: {signature}, message: {message_string}')

@@ -227,9 +227,9 @@ class AgentConnector():
         """
 
         message_dict = {'type': AGENT_MESSAGE_TYPE.UPDATE.value,
-                 'uuid': self.helyos_client.uuid,
-                 'body': body,
-                 }
+                        'uuid': self.helyos_client.uuid,
+                        'body': body,
+                        }
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.update_routing_key,
@@ -288,11 +288,11 @@ class AgentConnector():
         self.agent_pose = Pose(x, y, z, orientations)
 
         message_dict = {'type': AGENT_MESSAGE_TYPE.SENSORS.value,
-                 'uuid': self.helyos_client.uuid,
-                 'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
-                          'sensors': sensors
-                          }
-                 }
+                        'uuid': self.helyos_client.uuid,
+                        'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
+                                 'sensors': sensors
+                                 }
+                        }
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.sensors_routing_key,
@@ -316,14 +316,14 @@ class AgentConnector():
 
         """
         message_dict = {'type': AGENT_MESSAGE_TYPE.MISSION.value,
-                 'uuid': self.helyos_client.uuid,
-                 'body': {'work_process_type_name': mission_name,
-                          'data': data,
-                          'tools_uuids': tools_uuids,
-                          'yard_uid': self.helyos_client.yard_uid,
-                          'sched_start_at': sched_start_at
-                          }
-                 }
+                        'uuid': self.helyos_client.uuid,
+                        'body': {'work_process_type_name': mission_name,
+                                 'data': data,
+                                 'tools_uuids': tools_uuids,
+                                 'yard_uid': self.helyos_client.yard_uid,
+                                 'sched_start_at': sched_start_at
+                                 }
+                        }
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.mission_routing_key,
