@@ -1,36 +1,67 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>helyos_agent_sdk.mqtt_client module &mdash; HelyOS Agent SDK library  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>helyos_agent_sdk.mqtt_client module &mdash; HelyOS Agent SDK library  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="helyos_agent_sdk.summary_request module" href="helyos_agent_sdk.summary_request.html" />
     <link rel="prev" title="helyos_agent_sdk.models module" href="helyos_agent_sdk.models.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../index.html" class="icon icon-home"> HelyOS Agent SDK library
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -38,18 +69,29 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Usage Examples:</span></p>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Usage Examples:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<p class="caption"><span class="caption-text">Modules:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">helyos_agent_sdk</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="helyos_agent_sdk.html">helyos_agent_sdk package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="helyos_agent_sdk.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.client.html">helyos_agent_sdk.client module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.connector.html">helyos_agent_sdk.connector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.crypto.html">helyos_agent_sdk.crypto module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.exceptions.html">helyos_agent_sdk.exceptions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">helyos_agent_sdk.mqtt_client module</a></li>
@@ -62,159 +104,194 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Models:</span></p>
+<p class="caption"><span class="caption-text">Models:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 </ul>
 
+            
+          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">HelyOS Agent SDK library</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="modules.html">helyos_agent_sdk</a> &raquo;</li>
+        
           <li><a href="helyos_agent_sdk.html">helyos_agent_sdk package</a> &raquo;</li>
+        
       <li>helyos_agent_sdk.mqtt_client module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+            
             <a href="../_sources/apidocs/helyos_agent_sdk.mqtt_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
-  <section id="module-helyos_agent_sdk.mqtt_client">
-<span id="helyos-agent-sdk-mqtt-client-module"></span><h1>helyos_agent_sdk.mqtt_client module<a class="headerlink" href="#module-helyos_agent_sdk.mqtt_client" title="Permalink to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.connect_mqtt">
-<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.mqtt_client.</span></span><span class="sig-name descname"><span class="pre">connect_mqtt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passwd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.connect_mqtt" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.generate_private_public_keys">
-<span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.mqtt_client.</span></span><span class="sig-name descname"><span class="pre">generate_private_public_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.generate_private_public_keys" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helyos_agent_sdk.mqtt_client.</span></span><span class="sig-name descname"><span class="pre">HelyOSMQTTClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1883</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient" title="Permalink to this definition"></a></dt>
+            
+  <div class="section" id="module-helyos_agent_sdk.mqtt_client">
+<span id="helyos-agent-sdk-mqtt-client-module"></span><h1>helyos_agent_sdk.mqtt_client module<a class="headerlink" href="#module-helyos_agent_sdk.mqtt_client" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient">
+<em class="property">class </em><code class="descclassname">helyos_agent_sdk.mqtt_client.</code><code class="descname">HelyOSMQTTClient</code><span class="sig-paren">(</span><em>rabbitmq_host</em>, <em>rabbitmq_port=1883</em>, <em>uuid=None</em>, <em>enable_ssl=False</em>, <em>ca_certificate=None</em>, <em>pubkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabbitmq_host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rabbitmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1883</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ca_certificate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pubkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__" title="Permalink to this definition"></a></dt>
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>rabbitmq_host</em>, <em>rabbitmq_port=1883</em>, <em>uuid=None</em>, <em>enable_ssl=False</em>, <em>ca_certificate=None</em>, <em>pubkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>HelyOS MQTT client class</p>
 <p>The client implements several functions to facilitate the
 interaction with RabbitMQ. It reads the RabbitMQ exchange names from environment variables
 and it provides the helyOS routing-key names as properties.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>rabbitmq_host</strong> (<em>str</em>) – RabbitMQ host name (e.g rabbitmq.mydomain.com)</p></li>
-<li><p><strong>rabbitmq_port</strong> (<em>int</em>) – RabbitMQ port, defaults to 5672</p></li>
-<li><p><strong>uuid</strong> (<em>str</em>) – universal unique identifier fot the agent</p></li>
-<li><p><strong>enable_ssl</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Enable rabbitmq SSL connection, default False.</p></li>
-<li><p><strong>ca_certificate</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – Certificate authority of the RabbitMQ server, defaults to None</p></li>
-<li><p><strong>pubkey</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – RSA public key can be saved in helyOS core, defaults to None</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rabbitmq_host</strong> (<em>str</em>) – RabbitMQ host name (e.g rabbitmq.mydomain.com)</li>
+<li><strong>rabbitmq_port</strong> (<em>int</em>) – RabbitMQ port, defaults to 5672</li>
+<li><strong>uuid</strong> (<em>str</em>) – universal unique identifier fot the agent</li>
+<li><strong>enable_ssl</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Enable rabbitmq SSL connection, default False.</li>
+<li><strong>ca_certificate</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – Certificate authority of the RabbitMQ server, defaults to None</li>
+<li><strong>pubkey</strong> (<em>string</em><em> (</em><em>PEM format</em><em>)</em><em>, </em><em>optional</em>) – RSA public key can be saved in helyOS core, defaults to None</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checking_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used for check in messages</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.status_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">status_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.status_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used to publish agent and assigment states</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.sensors_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sensors_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.sensors_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used for broadingcasting of positions and sensors</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.mission_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mission_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.mission_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used to publish mission requests</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used to publish summary requests</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.instant_actions_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instant_actions_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.instant_actions_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used to read instant actions</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.update_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.update_routing_key" title="Permalink to this definition"></a></dt>
-<dd><p>MQTT Topic value used for agent update messages</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.assignment_routing_key">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assignment_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.assignment_routing_key" title="Permalink to this definition"></a></dt>
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.assignment_routing_key">
+<code class="descname">assignment_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.assignment_routing_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>MQTT Topic value used to read assigment messages</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.get_checkin_result">
-<span class="sig-name descname"><span class="pre">get_checkin_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.get_checkin_result" title="Permalink to this definition"></a></dt>
-<dd><p>get_checkin_result() read the checkin data published by helyOS and save into the HelyOSClient instance
-as <cite>checkin_data</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.auth_required">
-<span class="sig-name descname"><span class="pre">auth_required</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.auth_required" title="Permalink to this definition"></a></dt>
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.auth_required">
+<code class="descname">auth_required</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.auth_required" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect">
-<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect" title="Permalink to this definition"></a></dt>
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key">
+<code class="descname">checking_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used for check in messages</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the connection between agent and the message broker server.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;myrabbitmq.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5672</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3452345-52453-43525&#39;</span><span class="p">)</span>
 <span class="n">helyos_client</span><span class="o">.</span><span class="n">connect_rabbitmq</span><span class="p">(</span><span class="s1">&#39;my_username&#39;</span><span class="p">,</span> <span class="s1">&#39;secret_password&#39;</span><span class="p">)</span> <span class="c1">#  &lt;===</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>username</strong> (<em>str</em>) – username previously registered in RabbitMQ server</p></li>
-<li><p><strong>password</strong> (<em>str</em>) – password previously registered in RabbitMQ server’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>username</strong> (<em>str</em>) – username previously registered in RabbitMQ server</li>
+<li><strong>password</strong> (<em>str</em>) – password previously registered in RabbitMQ server’</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.perform_checkin">
-<span class="sig-name descname"><span class="pre">perform_checkin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yard_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'free'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.perform_checkin" title="Permalink to this definition"></a></dt>
-<dd><p>The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard 
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_assignment_messages">
+<code class="descname">consume_assignment_messages</code><span class="sig-paren">(</span><em>assignment_callback</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_assignment_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscribe to the MQTT assignment topic</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_instant_actions_messages">
+<code class="descname">consume_instant_actions_messages</code><span class="sig-paren">(</span><em>instant_actions_callback</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_instant_actions_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive instant actions messages.
+Instant actions are used by helyOS to reserve, release or cancel an assignment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instant_actions_callback</strong> (<em>func</em>) – call back for instant actions</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.get_checkin_result">
+<code class="descname">get_checkin_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.get_checkin_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_checkin_result() read the checkin data published by helyOS and save into the HelyOSClient instance
+as <cite>checkin_data</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.instant_actions_routing_key">
+<code class="descname">instant_actions_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.instant_actions_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used to read instant actions</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.mission_routing_key">
+<code class="descname">mission_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.mission_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used to publish mission requests</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.perform_checkin">
+<code class="descname">perform_checkin</code><span class="sig-paren">(</span><em>yard_uid</em>, <em>status='free'</em>, <em>agent_data={}</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.perform_checkin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
 and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method <cite>get_checkin_result()</cite> to retrieve these data.</p>
 <p>The method <cite>connect()</cite> should run before the <cite>perform_checkin()</cite>, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
-In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the 
+In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the
 uuid as username and returns a password, which can be found in the property <cite>rbmq_password</cite>. This password should be safely stored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">helyos_client</span> <span class="o">=</span> <span class="n">HelyOSClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;myrabbitmq.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">1883</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s1">&#39;3452345-52453-43525&#39;</span><span class="p">)</span>
 <span class="n">helyos_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;my_username&#39;</span><span class="p">,</span> <span class="s1">&#39;secret_password&#39;</span><span class="p">)</span>
@@ -222,104 +299,146 @@ uuid as username and returns a password, which can be found in the property <cit
 <span class="n">helyOS_client</span><span class="o">.</span><span class="n">get_checkin_result</span><span class="p">()</span>                               <span class="c1">#  &lt;===</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>yard_uid</strong> (<em>str</em>) – Yard UID</p></li>
-<li><p><strong>status</strong> (<em>str</em>) – Agent status, defaults to ‘free’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>yard_uid</strong> (<em>str</em>) – Yard UID</li>
+<li><strong>status</strong> (<em>str</em>) – Agent status, defaults to ‘free’</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish">
-<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encrypted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.mqtt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish" title="Permalink to this definition"></a></dt>
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish">
+<code class="descname">publish</code><span class="sig-paren">(</span><em>routing_key</em>, <em>message</em>, <em>encrypted=False</em>, <em>exchange='xchange_helyos.agents.mqtt'</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publish message in RabbitMQ</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>routing_key</strong> (<em>str</em>) – MQTT topic name</p></li>
-<li><p><strong>encrypted</strong> (<em>str</em>) – If this message should be encrypted, defaults to False</p></li>
-<li><p><strong>exchange</strong> (<em>str</em>) – RabbitMQ exchange, cannot be changed, fixed to env.AGENTS_MQTT_EXCHANGE</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>routing_key</strong> (<em>str</em>) – MQTT topic name</li>
+<li><strong>encrypted</strong> (<em>str</em>) – If this message should be encrypted, defaults to False</li>
+<li><strong>exchange</strong> (<em>str</em>) – RabbitMQ exchange, cannot be changed, fixed to env.AGENTS_MQTT_EXCHANGE</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue">
-<span class="sig-name descname"><span class="pre">set_assignment_queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.dl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue" title="Permalink to this definition"></a></dt>
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.sensors_routing_key">
+<code class="descname">sensors_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.sensors_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used for broadingcasting of positions and sensors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue">
+<code class="descname">set_assignment_queue</code><span class="sig-paren">(</span><em>exchange='xchange_helyos.agents.dl'</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue" title="Permalink to this definition">¶</a></dt>
 <dd><p>There is no queues in MQTT protocol</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue">
-<span class="sig-name descname"><span class="pre">set_instant_actions_queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.dl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue" title="Permalink to this definition"></a></dt>
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue">
+<code class="descname">set_instant_actions_queue</code><span class="sig-paren">(</span><em>exchange='xchange_helyos.agents.dl'</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue" title="Permalink to this definition">¶</a></dt>
 <dd><p>There is no queues in MQTT protocol</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_assignment_messages">
-<span class="sig-name descname"><span class="pre">consume_assignment_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assignment_callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_assignment_messages" title="Permalink to this definition"></a></dt>
-<dd><p>Subscribe to the MQTT assignment topic</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_instant_actions_messages">
-<span class="sig-name descname"><span class="pre">consume_instant_actions_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant_actions_callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.consume_instant_actions_messages" title="Permalink to this definition"></a></dt>
-<dd><p>Receive instant actions messages.
-Instant actions are used by helyOS to reserve, release or cancel an assignment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instant_actions_callback</strong> (<em>func</em>) – call back for instant actions</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.start_listening">
-<span class="sig-name descname"><span class="pre">start_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.start_listening" title="Permalink to this definition"></a></dt>
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.start_listening">
+<code class="descname">start_listening</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.start_listening" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening">
-<span class="sig-name descname"><span class="pre">stop_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening" title="Permalink to this definition"></a></dt>
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.status_routing_key">
+<code class="descname">status_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.status_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used to publish agent and assigment states</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening">
+<code class="descname">stop_listening</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key">
+<code class="descname">summary_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used to publish summary requests</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.update_routing_key">
+<code class="descname">update_routing_key</code><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.update_routing_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>MQTT Topic value used for agent update messages</p>
+</dd></dl>
 
 </dd></dl>
 
-</section>
+<dl class="function">
+<dt id="helyos_agent_sdk.mqtt_client.connect_mqtt">
+<code class="descclassname">helyos_agent_sdk.mqtt_client.</code><code class="descname">connect_mqtt</code><span class="sig-paren">(</span><em>rabbitmq_host</em>, <em>rabbitmq_port</em>, <em>username</em>, <em>passwd</em>, <em>enable_ssl=False</em>, <em>ca_certificate=None</em>, <em>temporary=False</em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.connect_mqtt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="helyos_agent_sdk.mqtt_client.generate_private_public_keys">
+<code class="descclassname">helyos_agent_sdk.mqtt_client.</code><code class="descname">generate_private_public_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.generate_private_public_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="helyos_agent_sdk.models.html" class="btn btn-neutral float-left" title="helyos_agent_sdk.models module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="helyos_agent_sdk.summary_request.html" class="btn btn-neutral float-right" title="helyos_agent_sdk.summary_request module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="helyos_agent_sdk.summary_request.html" class="btn btn-neutral float-right" title="helyos_agent_sdk.summary_request module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="helyos_agent_sdk.models.html" class="btn btn-neutral float-left" title="helyos_agent_sdk.models module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, HelyOS.</p>
-  </div>
+    <p>
+        &copy; Copyright 2022, HelyOS
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
