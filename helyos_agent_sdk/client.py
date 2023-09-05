@@ -84,6 +84,7 @@ class HelyOSClient():
 
         if pubkey is None:
             self.private_key, self.public_key = generate_private_public_keys()
+            self.signing_helper = Signing(self.private_key)
         else:
             self.public_key = pubkey
 
@@ -315,16 +316,20 @@ class HelyOSClient():
         """
 
         try:
+            signed_message_dict = self.signing_helper.return_signed_message_dict(
+                message_dict=message)
             self.channel.basic_publish(exchange, routing_key,
                                        properties=pika.BasicProperties(
                                            user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
-                                       body=message)
+                                       body=json.dumps(signed_message_dict, sort_keys=True))
         except ConnectionResetError:
             self.channel = self.connection.channel()
             self.channel.basic_publish(exchange, routing_key,
                                        properties=pika.BasicProperties(
                                            user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
-                                       body=message)
+                                       body=json.dumps(signed_message_dict, sort_keys=True))
+        except Exception:
+            raise
 
     @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
