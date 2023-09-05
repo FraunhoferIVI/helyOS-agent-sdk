@@ -271,7 +271,8 @@ class HelyOSClient():
                 channel.stop_consuming()
 
     def __checkin_callback(self, received_str):
-        received_message_str = json.loads(received_str)['message']
+        received_obj = json.loads(received_str)
+        received_message_str = received_obj['message']
         received_message = json.loads(received_message_str)
 
         msg_type = received_message['type']
@@ -301,7 +302,7 @@ class HelyOSClient():
             print('password', len(password)*'*')
 
         self.uuid = received_message['uuid']
-        self.checkin_data = body
+        self.checkin_data = received_obj
 
     @auth_required
     def publish(self, routing_key, message, encrypted=False, exchange=AGENTS_UL_EXCHANGE):
