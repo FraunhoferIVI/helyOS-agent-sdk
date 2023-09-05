@@ -254,11 +254,13 @@ class HelyOSClient():
                                 **agent_data},
                        }
 
+        signed_message_dict = self.signing_helper.return_signed_message_dict(message_dict=checkin_msg)
+
         self.guest_channel.basic_publish(exchange=AGENT_ANONYMOUS_EXCHANGE,
                                          routing_key=self.checking_routing_key,
                                          properties=pika.BasicProperties(
                                              reply_to=self.checkin_response_queue, user_id=username, timestamp=int(time.time()*1000)),
-                                         body=json.dumps(checkin_msg, sort_keys=True))
+                                         body=json.dumps(signed_message_dict, sort_keys=True))
 
     def __checkin_callback_wrapper(self, channel, method, properties, received_str):
         try:
