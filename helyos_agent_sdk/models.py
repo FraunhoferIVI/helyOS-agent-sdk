@@ -74,7 +74,7 @@ class AgentStateBody:
 
 @dataclass
 class AssignmentMetadata:
-    id: int
+    id: int = 0
     work_process_id: int = 0
     yard_id: int = 0
     status: str = ASSIGNMENT_STATUS.TO_EXECUTE
@@ -115,18 +115,18 @@ class AgentCheckinData:
 @dataclass_json
 @dataclass
 class AgentStateMessage:
-    type = AGENT_MESSAGE_TYPE.STATE
     uuid: str
     body: AgentStateBody
+    type = AGENT_MESSAGE_TYPE.STATE
     _version = VERSION
 
 
 @dataclass_json
 @dataclass
 class MissionRequestMessage:
-    type = AGENT_MESSAGE_TYPE.MISSION
     uuid: str
     body: dict
+    type = AGENT_MESSAGE_TYPE.MISSION
     _version = VERSION
 
 
@@ -134,19 +134,21 @@ class MissionRequestMessage:
 
 @dataclass
 class AssignmentCommandMessage:
-    type: ASSIGNMENT_MESSAGE_TYPE  # = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
-    metadata: AssignmentMetadata
+    uuid: str
     body: dict
-    _version: str
+    _version: str = ''
+    type: ASSIGNMENT_MESSAGE_TYPE = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
+    metadata: AssignmentMetadata = field(default_factory=dict)
 
 
 @dataclass
 class AssignmentCancelMessage:
-    type: INSTANT_ACTIONS_TYPE  # = INSTANT_ACTIONS_TYPE.CANCEL
-    work_process_id: int
-    assignment_metadata: AssignmentMetadata
+    uuid: str
     body: dict
-    _version: str
+    _version: str = ''
+    type: INSTANT_ACTIONS_TYPE  = INSTANT_ACTIONS_TYPE.CANCEL
+    metadata: AssignmentMetadata = field(default_factory=dict)
+
 
 
 @dataclass
@@ -154,4 +156,6 @@ class WorkProcessClearanceMessage:
     type = str
     uuid: str
     body: WorkProcessResourcesRequest
-    _version: str
+    _version: str = ''
+    metadata: AssignmentMetadata = field(default_factory=dict)
+

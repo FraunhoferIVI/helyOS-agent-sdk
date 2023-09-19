@@ -2,7 +2,7 @@ import logging
 import json
 from .exceptions import *
 from .client import HelyOSClient
-from .models import (ASSIGNMENT_STATUS, AGENT_STATE, Pose, ASSIGNMENT_MESSAGE_TYPE, INSTANT_ACTIONS_TYPE, WorkProcessResourcesRequest,
+from .models import (ASSIGNMENT_STATUS, AGENT_STATE, AGENT_MESSAGE_TYPE, Pose, ASSIGNMENT_MESSAGE_TYPE, INSTANT_ACTIONS_TYPE, WorkProcessResourcesRequest,
                      AssignmentCommandMessage, AssignmentMetadata, AssignmentCancelMessage, AgentCurrentResources, AgentStateBody,
                      AgentStateMessage, AssignmentCurrentStatus)
 
@@ -17,8 +17,7 @@ def parse_assignment_message(self, ch, properties, received_str):
             sender = properties.user_id
 
         if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
-            assignment_metadata = received_message.get(
-                'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
+            assignment_metadata = received_message.get('metadata',{}) 
             command_message = {'type': received_message['type'],
                                'uuid': received_message['uuid'],
                                'metadata': AssignmentMetadata(**assignment_metadata),
@@ -44,8 +43,7 @@ def parse_instant_actions(self, ch, properties, received_str):
             sender = properties.user_id
 
         if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
-            assignment_metadata = received_message.get(
-                'metadata', received_message['assignment_metadata'])  # compatibility < 0.5.0
+            assignment_metadata = received_message.get('metadata', {}) 
             command_message = {'type': received_message['type'],
                                'uuid': received_message['uuid'],
                                'metadata': AssignmentMetadata(**assignment_metadata),
@@ -228,7 +226,7 @@ class AgentConnector():
         self.helyos_client.publish(
             routing_key=self.helyos_client.update_routing_key,
             message=json.dumps(
-                {'type': 'agent_update',
+                {'type': AGENT_MESSAGE_TYPE.UPDATE.value,
                  'uuid': self.helyos_client.uuid,
                  'body': body,
                  }, sort_keys=True)
@@ -287,7 +285,7 @@ class AgentConnector():
         self.helyos_client.publish(
             routing_key=self.helyos_client.sensors_routing_key,
             message=json.dumps(
-                {'type': 'agent_sensors',
+                {'type': AGENT_MESSAGE_TYPE.SENSORS.value,
                  'uuid': self.helyos_client.uuid,
                  'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
                           'sensors': sensors
@@ -314,7 +312,7 @@ class AgentConnector():
         self.helyos_client.publish(
             routing_key=self.helyos_client.mission_routing_key,
             message=json.dumps(
-                {'type': 'mission_request',
+                {'type': AGENT_MESSAGE_TYPE.MISSION.value,
                  'uuid': self.helyos_client.uuid,
                  'body': {'work_process_type_name': mission_name,
                           'data': data,
