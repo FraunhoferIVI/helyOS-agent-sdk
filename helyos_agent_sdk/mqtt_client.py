@@ -1,12 +1,11 @@
 from functools import wraps
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
 import os
 import json
 import ssl
 from .exceptions import *
 import paho.mqtt.client as mqtt
 import time
+from .crypto import Signing, generate_private_public_keys
 
 AGENTS_UL_EXCHANGE = os.environ.get(
     'AGENTS_UL_EXCHANGE', 'xchange_helyos.agents.ul')
@@ -65,16 +64,10 @@ def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=Fals
     raise Exception(mqtt_msg)
 
 
-def generate_private_public_keys():
-    key = RSA.generate(2048)
-    priv = key.export_key(format='PEM')
-    pub = key.publickey().export_key(format='PEM')
-    return priv, pub
-
-
 class HelyOSMQTTClient():
 
-    def __init__(self, rabbitmq_host, rabbitmq_port=1883, uuid=None, enable_ssl=False, ca_certificate=None,  pubkey=None):
+    def __init__(self, rabbitmq_host, rabbitmq_port=1883, uuid=None, enable_ssl=False, ca_certificate=None, 
+                 helyos_public_key=None, agent_privkey=None, agent_pubkey=None ):
         """ HelyOS MQTT client class
 
             The client implements several functions to facilitate the
@@ -88,16 +81,22 @@ class HelyOSMQTTClient():
             :param uuid: universal unique identifier fot the agent
             :type uuid: str
             :param enable_ssl: Enable rabbitmq SSL connection, default False.
-            :type enable_ssl: boolean, optional
+            :type enable_ssl: bool, optional
             :param ca_certificate: Certificate authority of the RabbitMQ server, defaults to None
             :type ca_certificate: string (PEM format), optional
-            :param pubkey: RSA public key can be saved in helyOS core, defaults to None
-            :type pubkey:  string (PEM format), optional
+            :param helyos_public_key: helyOS RSA public key to verify the helyOS message signature.
+            :type helyos_public_key:  string (PEM format), optional
+            :param agent_privkey: Agent RSA private key, defaults to None
+            :type agent_privkey:  string (PEM format), optional
+            :param agent_pubkey: Agent RSA public key is saved in helyOS core, defaults to None
+            :type agent_pubkey:  string (PEM format), optional
+
 
         """
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
         self.ca_certificate = ca_certificate
+        self.helyos_public_key = helyos_public_key
         self.uuid = uuid
         self.enable_ssl = enable_ssl
 
@@ -110,10 +109,12 @@ class HelyOSMQTTClient():
         self.rbmq_username = None
         self.rbmq_password = None
 
-        if pubkey is None:
+        if agent_pubkey is None or agent_privkey is None:
             self.private_key, self.public_key = generate_private_public_keys()
         else:
-            self.public_key = pubkey
+            self.private_key, self.public_key = agent_privkey, agent_pubkey
+
+        self.signing_helper = Signing(self.private_key)
 
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
@@ -224,7 +225,7 @@ class HelyOSMQTTClient():
             raise HelyOSAccountConnectionError(
                 f'Not able to connect as {username}.')
 
-    def perform_checkin(self, yard_uid, status='free', agent_data={}):
+    def perform_checkin(self, yard_uid, status='free', agent_data={}, signed=False):
         """
         The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
         and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
@@ -265,9 +266,16 @@ class HelyOSMQTTClient():
                                 **agent_data},
                        'header': {'timestamp': int(time.time()*1000)}
                        }
+        
+        message = json.dumps(checkin_msg, sort_keys=True)
+        signature = None
+        if signed:
+            signature = list(self.signing_helper.return_signature(message))
+
+        body = json.dumps({'message': message, 'signature': signature}, sort_keys=True)
 
         self.guest_channel.publish(
-            self.checking_routing_key, payload=json.dumps(checkin_msg))
+            self.checking_routing_key, payload=body)
 
     def __checkin_callback_wrapper(self, client, userdata, message):
         try:
@@ -295,6 +303,8 @@ class HelyOSMQTTClient():
 
         password = body.pop('rbmq_password', None)
         self.ca_certificate = body.get('ca_certificate', self.ca_certificate)
+        if self.helyos_public_key is None:
+            self.helyos_public_key = body.get('helyos_public_key', self.helyos_public_key)
 
         if password:
             self.connection = connect_mqtt(self.rabbitmq_host, self.rabbitmq_port,
@@ -311,9 +321,10 @@ class HelyOSMQTTClient():
         self.checkin_data = body
 
     @auth_required
-    def publish(self, routing_key, message, encrypted=False, exchange=AGENTS_MQTT_EXCHANGE):
+    def publish(self, routing_key, message, signed=False, exchange=AGENTS_MQTT_EXCHANGE):
         """ Publish message in RabbitMQ
-
+            :param message: Message to be transmitted
+            :type message: str
             :param routing_key: MQTT topic name
             :type routing_key: str
             :param encrypted: If this message should be encrypted, defaults to False
@@ -321,8 +332,13 @@ class HelyOSMQTTClient():
             :param exchange: RabbitMQ exchange, cannot be changed, fixed to env.AGENTS_MQTT_EXCHANGE
             :type exchange: str
         """
+        signature = None
+        if signed:
+            signature = self.signing_helper.return_signature(message).hex()
+        
+        body = json.dumps({'message': message, 'signature': signature}, sort_keys=True)
 
-        self.channel.publish(routing_key, payload=message)
+        self.channel.publish(routing_key, payload=body)
 
     @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):

@@ -7,14 +7,26 @@ from .models import (ASSIGNMENT_STATUS, AGENT_STATE, AGENT_MESSAGE_TYPE, Pose, A
                      AgentStateMessage, AssignmentCurrentStatus)
 
 
+
 def parse_assignment_message(self, ch, properties, received_str):
+    """ Parse the assignment message and call the callback function.
+    :param ch: RabbitMQ channel
+    :type ch: Channel
+    :param properties: RabbitMQ properties
+    :type properties: BasicProperties
+    :param received_str: Received message
+    :type received_str: string
+    
+    """
+    sender = None
+    if hasattr(properties, 'user_id'):
+        sender = properties.user_id
+
     try:
-        received_message_str = json.loads(received_str)['message']
-        received_message = json.loads(received_message_str)
+        message_signature = json.loads(received_str).get('signature', None)
+        message_str = json.loads(received_str)['message']
+        received_message = json.loads(message_str)
         action_type = received_message.get('type', None)
-        sender = None
-        if hasattr(properties, 'user_id'):
-            sender = properties.user_id
 
         if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
             assignment_metadata = received_message.get('metadata',{}) 
@@ -25,22 +37,36 @@ def parse_assignment_message(self, ch, properties, received_str):
                                '_version': received_message['_version']}
 
             inst_assignm_exec = AssignmentCommandMessage(**command_message)
-            return self.assignment_callback(ch, sender, inst_assignm_exec)
+            return self.assignment_callback(ch, sender, inst_assignm_exec, message_str, message_signature)
 
         return self.other_assignment_callback(ch,  sender, received_str)
     except Exception as Argument:
-        logging.exception('Error occurred while receiving assignment.')
-        return None
+        if action_type == ASSIGNMENT_MESSAGE_TYPE.EXECUTION:
+            logging.exception('Error occurred while receiving assignment.')    
+            return None
+        else:
+            return self.other_assignment_callback(ch, sender, received_str)
+
 
 
 def parse_instant_actions(self, ch, properties, received_str):
+    """ Parse the instant action messages and call the callback function.
+    :param ch: RabbitMQ channel
+    :type ch: Channel
+    :param properties: RabbitMQ properties
+    :type properties: BasicProperties
+    :param received_str: Received message
+    :type received_str: string
+    """
+    sender = None; action_type = None
+    if hasattr(properties, 'user_id'):
+        sender = properties.user_id
+
     try:
-        received_message_str = json.loads(received_str)['message']
-        received_message = json.loads(received_message_str)
+        message_signature = json.loads(received_str).get('signature', None)
+        message_str = json.loads(received_str)['message']
+        received_message = json.loads(message_str)
         action_type = received_message.get('type', None)
-        sender = None
-        if hasattr(properties, 'user_id'):
-            sender = properties.user_id
 
         if action_type == INSTANT_ACTIONS_TYPE.CANCEL:
             assignment_metadata = received_message.get('metadata', {}) 
@@ -51,37 +77,27 @@ def parse_instant_actions(self, ch, properties, received_str):
                                '_version': received_message['_version']}
             inst_assignm_cancel = AssignmentCancelMessage(**command_message)
             print('call cancel callback')
-            return self.cancel_callback(ch, sender, inst_assignm_cancel)
+            return self.cancel_callback(ch, sender, inst_assignm_cancel, message_str, message_signature)
 
         if action_type == INSTANT_ACTIONS_TYPE.RESERVE:
             inst_wp_clearance = WorkProcessResourcesRequest(
                 **received_message['body'])
-            return self.reserve_callback(ch, sender, inst_wp_clearance)
+            return self.reserve_callback(ch, sender, inst_wp_clearance, message_str, message_signature)
 
         if action_type == INSTANT_ACTIONS_TYPE.RELEASE:
             inst_wp_clearance = WorkProcessResourcesRequest(
                 **received_message['body'])
-            return self.release_callback(ch, sender, inst_wp_clearance)
+            return self.release_callback(ch, sender, inst_wp_clearance, message_str, message_signature)
 
-        if action_type == INSTANT_ACTIONS_TYPE.WPCLEREANCE:  # Backward compatibility
-            work_process_id = received_message['body'].get('wp_id', None)
-            if work_process_id is None:
-                work_process_id = received_message['body'].get(
-                    'work_process_id', None)
-            operation_types_required = received_message['body']['operation_types_required']
-            reserved = received_message['body']['reserved']
-            inst_wp_clearance = WorkProcessResourcesRequest(
-                work_process_id, operation_types_required, reserved)
-            if reserved:
-                return self.reserve_callback(ch, sender, inst_wp_clearance)
-            else:
-                return self.release_callback(ch, sender, inst_wp_clearance)
-
-        return self.other_instant_actions_callback(ch, sender, received_str)
+        return self.other_instant_actions_callback(ch, sender, received_str )
+    
     except Exception as Argument:
-        logging.exception('Error occurred while receiving instan action.')
-        return None
-
+        if action_type in [INSTANT_ACTIONS_TYPE.RELEASE, INSTANT_ACTIONS_TYPE.RESERVE,  INSTANT_ACTIONS_TYPE.CANCEL]:
+            logging.exception('Error occurred while receiving instan action.')
+            return None
+        print(action_type, Argument)
+        return self.other_instant_actions_callback(ch, sender, received_str )
+    
 
 class AgentConnector():
     agent_status = AGENT_STATE.FREE
@@ -104,9 +120,10 @@ class AgentConnector():
             helyos_client = HelyOSClient('rabbitmq.host.com', 5432, uuid='123-456')
             helyos_client.perform_checkin()
             agentConnector = AgentConnector(helyos_client)
+            
 
-            The agent connector allows the developer to consume and publish messages correctly in helyOS framework.
-            It implements the data formating compatible with helyOS.
+            The Agent Connector class provides functionality for consuming and publishing messages in the helyOS framework. 
+            It ensures proper data formatting compatible with helyOS.
 
             :param helyos_client: Instance of HelyOS Client. The instance should be "checked in".
             :type helyos_client: HelyOSClient
@@ -215,12 +232,17 @@ class AgentConnector():
     def stop_listening(self):
         self.helyos_client.stop_listening()
 
-    def publish_general_updates(self, body={}):
+    def publish_general_updates(self, body={}, signed=False):
         """
-            Updates agent properties of agent: name, code, factsheet, etc.
-            This is published in a low-priority queue to helyOS; in very high load conditions, some messages
-            may be expired before helyOS consumption.
-            Any other client can tap this information by use the routing key = 'agent.{uuid}.update'.
+            Updates agent properties of agent: name, code, factsheet, x, y etc.
+            This is published in a high-priority queue; the message will not expire until helyOS consume it.
+            Therefore, it is recommended to refrain from using this method at high frequencies.
+            RabbitMQ clients can access this information by use the routing key = 'agent.{uuid}.update'.
+
+            :param body: Any property of the agent.
+            :type body: dict
+            :param signed: A boolean indicating whether the published message must be signed (defaults to False)
+            :type signed: boolean
 
         """
         self.helyos_client.publish(
@@ -229,14 +251,16 @@ class AgentConnector():
                 {'type': AGENT_MESSAGE_TYPE.UPDATE.value,
                  'uuid': self.helyos_client.uuid,
                  'body': body,
-                 }, sort_keys=True)
+                 }, sort_keys=True),
+            signed=signed
         )
 
-    def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources = None, assignment_status: AssignmentCurrentStatus = None):
+    def publish_state(self, status: AGENT_STATE, resources: AgentCurrentResources = None, assignment_status: AssignmentCurrentStatus = None, signed=False):
         """
             Updates agent and the work processes status. For a good design, this method should be triggered by events.
-            The data is published in a priviledged queue to helyOS and the message is always available for helyOS consumption.
-            Other rabbitmq clients can tap this information by using the routing key = 'agent.{uuid}.state'.
+            This is published in a high-priority queue; the message will not expire until helyOS consume it.
+            Therefore, it is recommended to refrain from using this method at high frequencies.
+            RabbitMQ clients can access this information by using the routing key = 'agent.{uuid}.state'.
 
             :param status: Agent status.
             :type status: string | AGENT_STATE
@@ -244,6 +268,8 @@ class AgentConnector():
             :type resources: AgentCurrentResources
             :param assignment_status: Information about the current (or last) assignment.
             :type assignment_status: AssignmentCurrentStatus
+            :param signed: A boolean indicating whether the published message must be signed (defaults to False)
+            :type signed: boolean
 
 
         """
@@ -260,15 +286,16 @@ class AgentConnector():
 
         self.helyos_client.publish(
             routing_key=self.helyos_client.status_routing_key,
-            message=json.dumps(message_dict, sort_keys=True)
+            message=json.dumps(message_dict, sort_keys=True),
+            signed=signed
         )
 
-    def publish_sensors(self, x, y, z, orientations, sensors={}):
-        """ Publishes agent position and sensors. The sensor data format is freely defined by the application.
-            This method should be triggered periodically to ensure the helyOS-agent connection.
-            This is published in a low-priority queue to helyOS; in very high load conditions, some of the messages
-            may be expired before the helyOS consumption. Any rabbitmq client can tap this information by using the
-            routing key = 'agent.{uuid}.visualization'.
+    def publish_sensors(self, x, y, z, orientations, sensors={}, signed=False):
+        """ Publishes agent position and sensors. The sensor data format is freely defined by the developer.
+            This method should be triggered periodically to ensure a stable helyOS-agent connection. 
+            The published information is placed in a low-priority queue and may expire under high load conditions. 
+            For high-priority updates, use the method `publish_general_updates()`.    
+            RabbitMQ clients can access this information using the routing key 'agent.{uuid}.visualization'.        
 
             :param x: Agent x position
             :type x: float
@@ -276,8 +303,10 @@ class AgentConnector():
             :type y: float
             :param orientations: Agent and trailer orientations
             :type orientations: float list
-            :param sensors: Agent sensor, user defined. defaults to {}
+            :param sensors: Agent sensor, user defined (defaults to {}).
             :type sensors: dict
+            :param signed: A boolean indicating whether the published message must be signed (defaults to False)
+            :type signed: boolean
 
         """
 
@@ -290,14 +319,15 @@ class AgentConnector():
                  'body': {'pose': {'x': x, 'y': y, 'z': z, 'orientations': orientations},
                           'sensors': sensors
                           }
-                 }, sort_keys=True)
+                 }, sort_keys=True),
+            signed=signed
         )
 
-    def request_mission(self, mission_name, data, tools_uuids=[], sched_start_at=None):
+    def request_mission(self, mission_name, data, tools_uuids=[],  signed=False):
         """ Request a mission to helyOS. The mission data is freely defined by the application.
             As example, this method could be triggered in the scenario where the agent needs an extra assignments to complete
-            a mission, or when it delegates to other agents. Other rabbitmq clients can tap this information by using the
-            routing key = 'agent.{uuid}.mission'.
+            a mission, or when it delegates an assignment to other agents.
+            RabbitMQ clients can tap this information by using the routing key = 'agent.{uuid}.mission'.
 
             :param mission_name: requested mission, as defined in helyOS dashboard.
             :type mission_name: name
@@ -305,8 +335,8 @@ class AgentConnector():
             :type data: dict
             :param tools_uuids: UUID list of agents to be reserved for the mission.
             :type tools_uuids: string list
-            :param sched_start_at: Mission starting, user defined. defaults to None
-            :type sched_start_at: DateTime
+            :param signed: A boolean indicating whether the published message must be signed (defaults to False)
+            :type signed: boolean
 
         """
         self.helyos_client.publish(
@@ -318,30 +348,10 @@ class AgentConnector():
                           'data': data,
                           'tools_uuids': tools_uuids,
                           'yard_uid': self.helyos_client.yard_uid,
-                          'sched_start_at': sched_start_at
                           }
-                 }, sort_keys=True)
+                 }, sort_keys=True),
+            signed=signed
+
         )
 
 
-def agent_checkin_to_helyos(uuid, yard_uid, agent_data, status='free', pubkey=None):
-    '''
-    agent_checkin_helyos(uuid, yard_uid, agent_data, status="free", pubkey=None)
-    Helper to perform the check in of the agent {uuid} to helyOS at the yard {yard_uid}.
-    It excutes the following operations:
-
-    * step 1 - instantiate client object (this will connect anonously to rabbitmq to exchange checkin data.
-               The anononymous connection last 60 seconds.
-    * step 2 - send the check-in data
-    * step 3 - subscribe to the temporary queue to get checkin results
-
-    '''
-
-    # step 1 - create connection object
-    client_obj = HelyOSClient(uuid, pubkey)
-    # step 2 - send the check-in data
-    client_obj.perform_checkin(yard_uid, status, agent_data)
-    # step 3 - load checkin result
-    client_obj.get_checkin_result()
-
-    return client_obj

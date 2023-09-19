@@ -50,10 +50,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.client.html">helyos_agent_sdk.client module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.connector.html">helyos_agent_sdk.connector module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.crypto.html">helyos_agent_sdk.crypto module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.exceptions.html">helyos_agent_sdk.exceptions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html">helyos_agent_sdk.mqtt_client module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.summary_request.html">helyos_agent_sdk.summary_request module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.utils.html">helyos_agent_sdk.utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-helyos_agent_sdk">Module contents</a></li>
@@ -100,7 +102,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.client.html">helyos_agent_sdk.client module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.connect_rabbitmq"><code class="docutils literal notranslate"><span class="pre">connect_rabbitmq()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.generate_private_public_keys"><code class="docutils literal notranslate"><span class="pre">generate_private_public_keys()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient"><code class="docutils literal notranslate"><span class="pre">HelyOSClient</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.__init__"><code class="docutils literal notranslate"><span class="pre">HelyOSClient.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.client.html#helyos_agent_sdk.client.HelyOSClient.checking_routing_key"><code class="docutils literal notranslate"><span class="pre">HelyOSClient.checking_routing_key</span></code></a></li>
@@ -153,7 +154,17 @@
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.AgentConnector.request_mission"><code class="docutils literal notranslate"><span class="pre">AgentConnector.request_mission()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.connector.html#helyos_agent_sdk.connector.agent_checkin_to_helyos"><code class="docutils literal notranslate"><span class="pre">agent_checkin_to_helyos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.crypto.html">helyos_agent_sdk.crypto module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.generate_private_public_keys"><code class="docutils literal notranslate"><span class="pre">generate_private_public_keys()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.verify_signature"><code class="docutils literal notranslate"><span class="pre">verify_signature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.Signing"><code class="docutils literal notranslate"><span class="pre">Signing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.Signing.__init__"><code class="docutils literal notranslate"><span class="pre">Signing.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.Signing.verify_own_signature"><code class="docutils literal notranslate"><span class="pre">Signing.verify_own_signature()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.crypto.html#helyos_agent_sdk.crypto.Signing.return_signature"><code class="docutils literal notranslate"><span class="pre">Signing.return_signature()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.exceptions.html">helyos_agent_sdk.exceptions module</a><ul>
@@ -258,9 +269,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.type"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.uuid"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.uuid</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.body"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.type"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.from_dict"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.from_dict()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AgentStateMessage.from_json"><code class="docutils literal notranslate"><span class="pre">AgentStateMessage.from_json()</span></code></a></li>
@@ -270,9 +281,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.type"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.uuid"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.uuid</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.body"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.type"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.__init__"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.from_dict"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.from_dict()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.MissionRequestMessage.from_json"><code class="docutils literal notranslate"><span class="pre">MissionRequestMessage.from_json()</span></code></a></li>
@@ -282,18 +293,18 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.type</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.work_process_id"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.work_process_id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.assignment_metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.assignment_metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.uuid"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.uuid</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.body"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.metadata</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCommandMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentCommandMessage.__init__()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.type</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.work_process_id"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.work_process_id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.assignment_metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.assignment_metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.uuid"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.uuid</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.body"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.type"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.metadata"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.metadata</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.AssignmentCancelMessage.__init__"><code class="docutils literal notranslate"><span class="pre">AssignmentCancelMessage.__init__()</span></code></a></li>
 </ul>
 </li>
@@ -301,6 +312,7 @@
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessClearanceMessage.type"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessClearanceMessage.uuid"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.uuid</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessClearanceMessage.body"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessClearanceMessage.metadata"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.metadata</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.models.html#helyos_agent_sdk.models.WorkProcessClearanceMessage.__init__"><code class="docutils literal notranslate"><span class="pre">WorkProcessClearanceMessage.__init__()</span></code></a></li>
 </ul>
 </li>
@@ -308,7 +320,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html">helyos_agent_sdk.mqtt_client module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.connect_mqtt"><code class="docutils literal notranslate"><span class="pre">connect_mqtt()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.generate_private_public_keys"><code class="docutils literal notranslate"><span class="pre">generate_private_public_keys()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient"><code class="docutils literal notranslate"><span class="pre">HelyOSMQTTClient</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.__init__"><code class="docutils literal notranslate"><span class="pre">HelyOSMQTTClient.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key"><code class="docutils literal notranslate"><span class="pre">HelyOSMQTTClient.checking_routing_key</span></code></a></li>
@@ -341,6 +352,10 @@
 <li class="toctree-l3"><a class="reference internal" href="helyos_agent_sdk.summary_request.html#helyos_agent_sdk.summary_request.SummaryRPC.call"><code class="docutils literal notranslate"><span class="pre">SummaryRPC.call()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="helyos_agent_sdk.utils.html">helyos_agent_sdk.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="helyos_agent_sdk.utils.html#helyos_agent_sdk.utils.replicate_helyos_client"><code class="docutils literal notranslate"><span class="pre">replicate_helyos_client()</span></code></a></li>
 </ul>
 </li>
 </ul>

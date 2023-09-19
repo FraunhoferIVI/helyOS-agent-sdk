@@ -1,4 +1,5 @@
 sphinxcontrib-apidoc==0.3.0
 sphinx_rtd_theme
 dataclasses_json
+cryptography==41.0.3
 paho
