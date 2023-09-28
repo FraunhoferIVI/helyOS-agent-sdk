@@ -131,6 +131,26 @@ class HelyOSClient():
         return f'agent.{self.uuid}.summary_req'
 
     @property
+    def database_routing_key(self):
+        """ Routing key value used to publish summary requests  """
+
+        return f'agent.{self.uuid}.database_req'
+    
+    @property
+    def yard_visualization_routing_key(self):
+        """ Routing key value used to broadcast yard visualization data """
+        if self.yard_uid:
+            return f'yard.{self.yard_uid}.visualization'
+        return None
+    
+    @property
+    def yard_update_routing_key(self):
+        """ Routing key value used to publish updates for the yard  """
+        if self.yard_uid:
+            return f'yard.{self.yard_uid}.update'
+        return None
+
+    @property
     def instant_actions_routing_key(self):
         """ Routing key value used to read instant actions  """
 

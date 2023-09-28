@@ -2,7 +2,7 @@ import pika
 import uuid
 import json
 import time
-
+import warnings
 
 class SummaryRPC():
     """
@@ -36,6 +36,9 @@ class SummaryRPC():
     """
 
     def __init__(self, helyos_client):
+        #  log out the want that this class is deprecated and DatabaseConnector should be used instead
+        warnings.warn("SummaryRPC is deprecated and will be removed in future versions. Use DatabaseConnector instead.", DeprecationWarning)
+        
         if helyos_client._protocol == 'MQTT':
             raise Exception('Remote procedure call should use AMQP protocoll.')
         self.connection = helyos_client.connection
