@@ -64,7 +64,10 @@ def parse_instant_actions(self, ch, properties, received_str):
 
     try:
         message_signature = json.loads(received_str).get('signature', None)
-        message_str = json.loads(received_str)['message']
+        message_str = json.loads(received_str).get('message', None)
+        if message_str is None:
+             return self.other_instant_actions_callback(ch, sender, received_str)
+        
         received_message = json.loads(message_str)
         action_type = received_message.get('type', None)
 
@@ -96,7 +99,7 @@ def parse_instant_actions(self, ch, properties, received_str):
             logging.exception('Error occurred while receiving instan action.')
             return None
         print(action_type, Argument)
-        return self.other_instant_actions_callback(ch, sender, received_str )
+        return self.other_instant_actions_callback(ch, sender, received_str)
     
 
 class AgentConnector():
