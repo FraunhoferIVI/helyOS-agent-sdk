@@ -51,6 +51,7 @@
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.client.html">helyos_agent_sdk.client module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.connector.html">helyos_agent_sdk.connector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.crypto.html">helyos_agent_sdk.crypto module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.database_connector.html">helyos_agent_sdk.database_connector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.exceptions.html">helyos_agent_sdk.exceptions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">helyos_agent_sdk.mqtt_client module</a></li>
@@ -157,6 +158,24 @@ and it provides the helyOS routing-key names as properties.</p>
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.summary_routing_key" title="Permalink to this definition"></a></dt>
 <dd><p>MQTT Topic value used to publish summary requests</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.database_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.database_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>MQTT Topic value used to publish database requests</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.yard_visualization_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">yard_visualization_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.yard_visualization_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>MQTT Topic value used to broadcast yard visualization data</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.yard_update_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">yard_update_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.yard_update_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>MQTT Topic value used to publish updates for the yard</p>
 </dd></dl>
 
 <dl class="py property">
@@ -284,6 +303,12 @@ Instant actions are used by helyOS to reserve, release or cancel an assignment.<
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening">
 <span class="sig-name descname"><span class="pre">stop_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.stop_listening" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.close_connection">
+<span class="sig-name descname"><span class="pre">close_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.close_connection" title="Permalink to this definition"></a></dt>
+<dd><p>Close the MQTT connection with RabbitMQ server</p>
+</dd></dl>
 
 </dd></dl>
 

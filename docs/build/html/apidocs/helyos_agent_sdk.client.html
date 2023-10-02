@@ -51,6 +51,7 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">helyos_agent_sdk.client module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.connector.html">helyos_agent_sdk.connector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.crypto.html">helyos_agent_sdk.crypto module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.database_connector.html">helyos_agent_sdk.database_connector module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.exceptions.html">helyos_agent_sdk.exceptions module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.models.html">helyos_agent_sdk.models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="helyos_agent_sdk.mqtt_client.html">helyos_agent_sdk.mqtt_client module</a></li>
@@ -160,6 +161,24 @@ If the helyOS public key is not provided, it is retrieved during the check-in pr
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.summary_routing_key">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.summary_routing_key" title="Permalink to this definition"></a></dt>
 <dd><p>Routing key value used to publish summary requests</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.database_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.database_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>Routing key value used to publish summary requests</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.yard_visualization_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">yard_visualization_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.yard_visualization_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>Routing key value used to broadcast yard visualization data</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.yard_update_routing_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">yard_update_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.yard_update_routing_key" title="Permalink to this definition"></a></dt>
+<dd><p>Routing key value used to publish updates for the yard</p>
 </dd></dl>
 
 <dl class="py property">
@@ -288,6 +307,11 @@ Instant actions are used by helyOS to reserve, release or cancel an assignment.<
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.stop_listening">
 <span class="sig-name descname"><span class="pre">stop_listening</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.stop_listening" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.close_connection">
+<span class="sig-name descname"><span class="pre">close_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.close_connection" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
