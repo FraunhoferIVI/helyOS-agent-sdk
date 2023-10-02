@@ -411,3 +411,7 @@ class HelyOSClient():
 
     def stop_listening(self):
         self.channel.stop_consuming()
+
+    def close_connection(self):
+        self.connection.close()
+    

@@ -398,3 +398,9 @@ class HelyOSMQTTClient():
 
     def stop_listening(self):
         self.channel.loop_stop()
+
+
+    def close_connection(self):
+        """ Close the MQTT connection with RabbitMQ server """
+        self.connection.disconnect()
+        
