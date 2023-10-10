@@ -37,7 +37,7 @@ def connect_rabbitmq(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=
         params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials, heartbeat=60, blocked_connection_timeout=60,
                                            ssl_options=ssl_options)
     else:
-        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials, heartbeat=3600, blocked_connection_timeout=300,
+        params = pika.ConnectionParameters(rabbitmq_host,  rabbitmq_port, '/', credentials, heartbeat=3600,
                                            ssl_options=ssl_options)
     _connection = pika.BlockingConnection(params)
     return _connection
