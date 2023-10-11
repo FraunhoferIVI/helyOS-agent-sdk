@@ -271,6 +271,13 @@ class HelyOSMQTTClient():
         :type yard_uid: str
         :param status: Agent status, defaults to 'free'
         :type status: str
+        :param agent_data: Additional data to be sent with the check-in message, defaults to an empty dictionary
+        :type agent_data: dict
+        :param signed: Whether or not to sign the check-in message, defaults to False
+        :type signed: bool
+        :param checkin_guard_interceptor: An optional interceptor function to be called to validate the check-in response, returning True or False, defaults to None
+        :type checkin_guard_interceptor: function
+
         """
         if self.connection:
             self.__prepare_checkin_for_already_connected()

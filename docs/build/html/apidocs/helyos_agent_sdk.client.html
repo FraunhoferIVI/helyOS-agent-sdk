@@ -236,9 +236,9 @@ as <cite>checkin_data</cite>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.perform_checkin">
-<span class="sig-name descname"><span class="pre">perform_checkin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yard_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AGENT_STATE.FREE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.perform_checkin" title="Permalink to this definition"></a></dt>
-<dd><p>The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
-and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method <cite>get_checkin_result()</cite> to retrieve these data.</p>
+<span class="sig-name descname"><span class="pre">perform_checkin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yard_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AGENT_STATE.FREE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkin_guard_interceptor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.perform_checkin" title="Permalink to this definition"></a></dt>
+<dd><p>Registers the agent to a specific yard and retrieves relevant data about the yard and the CA certificate of the RabbitMQ server,
+which is relevant for SSL connections. Use the method <cite>get_checkin_result()</cite> to retrieve these data.</p>
 <p>The method <cite>connect_rabbitmq()</cite> should run before the check-in, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
 In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the
 uuid as username and returns a password, which can be found in the property <cite>rbmq_password</cite>. This password should be safely stored.</p>
@@ -253,6 +253,9 @@ uuid as username and returns a password, which can be found in the property <cit
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>yard_uid</strong> (<em>str</em>) – Yard UID</p></li>
 <li><p><strong>status</strong> (<em>str</em>) – Agent status, defaults to ‘free’</p></li>
+<li><p><strong>agent_data</strong> (<em>dict</em>) – Additional data to be sent with the check-in message, defaults to an empty dictionary</p></li>
+<li><p><strong>signed</strong> (<em>bool</em>) – Whether or not to sign the check-in message, defaults to False</p></li>
+<li><p><strong>checkin_guard_interceptor</strong> (<em>function</em>) – An optional interceptor function to be called to validate the check-in response, returning True or False, defaults to None</p></li>
 </ul>
 </dd>
 </dl>
