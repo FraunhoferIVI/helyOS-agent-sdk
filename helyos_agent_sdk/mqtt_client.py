@@ -2,6 +2,8 @@ from functools import wraps
 import os
 import json
 import ssl
+
+from helyos_agent_sdk.models import CheckinResponseMessage
 from .exceptions import *
 import paho.mqtt.client as mqtt
 import time
@@ -52,7 +54,7 @@ def connect_mqtt(rabbitmq_host, rabbitmq_port, username, passwd, enable_ssl=Fals
     if temporary:
         mqtt_client._connect_timeout = 60
     else:
-        mqtt_client._connect_timeout = 300
+        mqtt_client._connect_timeout = 600
 
     mqtt_client.connect(rabbitmq_host, rabbitmq_port)
     started = time.time()
@@ -103,6 +105,7 @@ class HelyOSMQTTClient():
         self.connection = None
         self.channel = None
         self.checkin_data = None
+        self.checkin_guard_interceptor = lambda *args, **kwargs: True 
         self._protocol = 'MQTT'
 
         self.tries = 0
@@ -247,7 +250,7 @@ class HelyOSMQTTClient():
             raise HelyOSAccountConnectionError(
                 f'Not able to connect as {username}.')
 
-    def perform_checkin(self, yard_uid, status='free', agent_data={}, signed=False):
+    def perform_checkin(self, yard_uid, status='free', agent_data={}, signed=False, checkin_guard_interceptor=None):
         """
         The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
         and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
@@ -276,6 +279,9 @@ class HelyOSMQTTClient():
             self.__connect_as_anonymous()
             username = 'anonymous'
 
+        if checkin_guard_interceptor:
+            self.checkin_guard_interceptor = checkin_guard_interceptor
+
         self.yard_uid = yard_uid
         checkin_msg = {'type': 'checkin',
                        'uuid': self.uuid,
@@ -301,15 +307,18 @@ class HelyOSMQTTClient():
 
     def __checkin_callback_wrapper(self, client, userdata, message):
         try:
-            self.__checkin_callback(str(message.payload.decode()))
+            self.__checkin_callback(client, userdata, str(message.payload.decode()))
             # self.channel.loop_stop()   COMMENT: After the loop stop, I am not able to publish
         except Exception as inst:
             print('error check-in callback', inst)
             client.loop_stop()
 
-    def __checkin_callback(self, received_str):
-        received_message_str = json.loads(received_str)['message']
+    def __checkin_callback(self, client, userdata, received_str):
+        payload = json.loads(received_str)
+        received_message_str = payload['message']
+        signature = payload['signature']
         received_message = json.loads(received_message_str)
+        sender = None
 
         msg_type = received_message['type']
         if msg_type != 'checkin':
@@ -322,6 +331,16 @@ class HelyOSMQTTClient():
             print(body)
             message = body.get('message', 'Check in refused')
             raise HelyOSCheckinError(f'{message}: code {response_code}')
+        
+        try:
+            checkin_data = CheckinResponseMessage(**received_message)
+        except:
+            raise HelyOSCheckinError('Check in refused: received invalid message format')
+
+        if not self.checkin_guard_interceptor(client, sender, checkin_data, received_message_str, signature):
+            client.loop_stop()
+            raise HelyOSCheckinError('Check in refused: checkin_guard_interceptor returned False')
+
 
         password = body.pop('rbmq_password', None)
         self.ca_certificate = body.get('ca_certificate', self.ca_certificate)
@@ -331,7 +350,7 @@ class HelyOSMQTTClient():
         if password:
             self.connection = connect_mqtt(self.rabbitmq_host, self.rabbitmq_port,
                                            body['rbmq_username'], password, self.enable_ssl, self.ca_certificate)
-            self.channel = self.connection.channel()
+            self.channel = self.connection
             self.rbmq_username = body['rbmq_username']
             self.rbmq_password = password
 
@@ -340,7 +359,10 @@ class HelyOSMQTTClient():
             print('password', len(password)*'*')
 
         self.uuid = received_message['uuid']
-        self.checkin_data = body
+        try:
+            self.checkin_data = CheckinResponseMessage(**received_message)
+        except:
+            self.checkin_data = body
 
     @auth_required
     def publish(self, routing_key, message, signed=False, exchange=AGENTS_MQTT_EXCHANGE):

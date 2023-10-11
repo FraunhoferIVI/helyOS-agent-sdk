@@ -5,7 +5,7 @@ import os
 import json
 import ssl
 from .exceptions import *
-from helyos_agent_sdk.models import AGENT_STATE
+from helyos_agent_sdk.models import AGENT_STATE, CheckinResponseMessage
 from .crypto import Signing, generate_private_public_keys
 
 AGENTS_UL_EXCHANGE = os.environ.get(
@@ -85,6 +85,7 @@ class HelyOSClient():
         self.connection = None
         self.channel = None
         self.checkin_data = None
+        self.checkin_guard_interceptor = lambda *args, **kwargs: True
         self._protocol = 'AMQP'
 
         self.tries = 0
@@ -244,10 +245,10 @@ class HelyOSClient():
             raise HelyOSAccountConnectionError(
                 f'Not able to connect as {username} to rabbitMQ. {inst}')
 
-    def perform_checkin(self, yard_uid, status=AGENT_STATE.FREE, agent_data={}, signed=False):
+    def perform_checkin(self, yard_uid, status=AGENT_STATE.FREE, agent_data={}, signed=False, checkin_guard_interceptor=None):
         """
-        The check-in procedure registers the agent to a specific yard. helyOS will publish the relevant data about the yard
-        and the CA certificate of the RabbitMQ server, which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
+        Registers the agent to a specific yard and retrieves relevant data about the yard and the CA certificate of the RabbitMQ server,
+        which is relevant for SSL connections. Use the method `get_checkin_result()` to retrieve these data.
 
         The method `connect_rabbitmq()` should run before the check-in, otherwise, it will be assumed that the agent does not have yet a RabbitMQ account.
         In this case, if the environment variable REGISTRATION_TOKEN is set, helyOS will create a RabbitMQ account using the
@@ -260,11 +261,16 @@ class HelyOSClient():
             helyos_client.perform_checkin(yard_uid='yard_A', status='free')  #  <===
             helyOS_client.get_checkin_result()                               #  <===
 
-
         :param yard_uid: Yard UID
         :type yard_uid: str
         :param status: Agent status, defaults to 'free'
         :type status: str
+        :param agent_data: Additional data to be sent with the check-in message, defaults to an empty dictionary
+        :type agent_data: dict
+        :param signed: Whether or not to sign the check-in message, defaults to False
+        :type signed: bool
+        :param checkin_guard_interceptor: An optional interceptor function to be called to validate the check-in response, returning True or False, defaults to None
+        :type checkin_guard_interceptor: function
         """
         if self.connection:
             self.__prepare_checkin_for_already_connected()
@@ -273,16 +279,19 @@ class HelyOSClient():
             self.__connect_as_anonymous()
             username = 'anonymous'
 
+        if checkin_guard_interceptor:
+            self.checkin_guard_interceptor = checkin_guard_interceptor
+
         self.yard_uid = yard_uid
         checkin_msg = {'type': 'checkin',
-                       'uuid': self.uuid,
-                       'body': {'yard_uid': yard_uid,
+                        'uuid': self.uuid,
+                        'body': {'yard_uid': yard_uid,
                                 'status': status,
                                 'public_key': self.public_key.decode('utf-8'),
                                 'public_key_format': 'PEM',
                                 'registration_token': REGISTRATION_TOKEN,
                                 **agent_data},
-                       }
+                        }
         
         message = json.dumps(checkin_msg, sort_keys=True)
         signature = None
@@ -299,7 +308,7 @@ class HelyOSClient():
 
     def __checkin_callback_wrapper(self, channel, method, properties, received_str):
         try:
-            self.__checkin_callback(received_str)
+            self.__checkin_callback(channel, properties, received_str )
             channel.stop_consuming()
         except Exception as inst:
             self.tries += 1
@@ -307,9 +316,14 @@ class HelyOSClient():
             if self.tries > 3:
                 channel.stop_consuming()
 
-    def __checkin_callback(self, received_str):
-        received_message_str = json.loads(received_str)['message']
+    def __checkin_callback(self, ch, properties, received_str):
+        payload = json.loads(received_str)
+        received_message_str = payload['message']
+        signature = payload['signature']
         received_message = json.loads(received_message_str)
+        sender = None
+        if hasattr(properties, 'user_id'):
+            sender = properties.user_id
 
         msg_type = received_message['type']
         if msg_type != 'checkin':
@@ -322,6 +336,15 @@ class HelyOSClient():
             print(body)
             message = body.get('message', 'Check in refused')
             raise HelyOSCheckinError(f'{message}: code {response_code}')
+
+        try:
+            checkin_data = CheckinResponseMessage(**received_message)
+        except:
+            raise HelyOSCheckinError('Check in refused: received invalid message format')
+
+        if not self.checkin_guard_interceptor(ch, sender, checkin_data, received_message_str, signature):
+            raise HelyOSCheckinError('Check in refused: checkin_guard_interceptor returned False')
+
 
         password = body.pop('rbmq_password', None)
         self.ca_certificate = body.get('ca_certificate', self.ca_certificate)
@@ -340,7 +363,10 @@ class HelyOSClient():
             print('password', len(password)*'*')
 
         self.uuid = received_message['uuid']
-        self.checkin_data = body
+        try:
+            self.checkin_data = CheckinResponseMessage(**received_message)
+        except:
+            self.checkin_data = body
 
     @auth_required
     def publish(self, routing_key, message, signed=False, exchange=AGENTS_UL_EXCHANGE):

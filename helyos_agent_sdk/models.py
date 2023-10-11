@@ -133,6 +133,15 @@ class MissionRequestMessage:
 # ----   Messages From helyOS to Agent ------ #
 
 @dataclass
+class CheckinResponseMessage:
+    uuid: str
+    body: dict
+    _version: str = ''
+    type: str = AGENT_MESSAGE_TYPE.CHECKIN
+    metadata: dict = field(default_factory=dict)
+
+
+@dataclass
 class AssignmentCommandMessage:
     uuid: str
     body: dict
