@@ -292,14 +292,12 @@ class HelyOSMQTTClient():
         self.yard_uid = yard_uid
         checkin_msg = {'type': 'checkin',
                        'uuid': self.uuid,
-                       'status': status,
-                       'replyTo': self.checkin_response_queue,
                        'body': {'yard_uid': yard_uid,
+                                'status': status,
                                 'public_key': self.public_key.decode('utf-8'),
                                 'public_key_format': 'PEM',
                                 'registration_token': REGISTRATION_TOKEN,
                                 **agent_data},
-                       'header': {'timestamp': int(time.time()*1000)}
                        }
         
         message = json.dumps(checkin_msg, sort_keys=True)
@@ -307,7 +305,9 @@ class HelyOSMQTTClient():
         if signed:
             signature = list(self.signing_helper.return_signature(message))
 
-        body = json.dumps({'message': message, 'signature': signature}, sort_keys=True)
+        body = json.dumps({'message': message, 'signature': signature, 'headers': {'timestamp': int(time.time()*1000),
+                                                                                    'replyTo': self.checkin_response_queue,
+                                                                                     'user_id': username }}, sort_keys=True)
 
         self.guest_channel.publish(
             self.checking_routing_key, payload=body)
@@ -387,7 +387,8 @@ class HelyOSMQTTClient():
         if signed:
             signature = self.signing_helper.return_signature(message).hex()
         
-        body = json.dumps({'message': message, 'signature': signature}, sort_keys=True)
+        body = json.dumps({'message': message, 'signature': signature, 'headers': {'timestamp': int(time.time()*1000),
+                                                                                   'user_id': self.rbmq_username} }, sort_keys=True)
 
         self.channel.publish(routing_key, payload=body)
 
