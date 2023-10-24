@@ -89,6 +89,7 @@ class HelyOSClient():
         self._protocol = 'AMQP'
 
         self.tries = 0
+        self.is_reconecting = False
         self.rbmq_username = None
         self.rbmq_password = None
 
@@ -101,6 +102,15 @@ class HelyOSClient():
 
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
+
+    @property
+    def is_connection_open(self):
+        """ Check if the connection is open """
+        try:
+            self.connection.sleep(0.01)
+        except:
+            return False 
+        return self.connection.is_open
 
     @property
     def checking_routing_key(self):
@@ -218,6 +228,12 @@ class HelyOSClient():
 
     def connect_rabbitmq(self, username, password):
         return self.connect(username, password)
+    
+    def reconnect(self):
+        self.is_reconecting = True
+        self.connect(self.rbmq_username, self.rbmq_password)
+        self.is_reconecting = False
+
 
     def connect(self, username, password):
         """
@@ -234,12 +250,14 @@ class HelyOSClient():
         :param password: password previously registered in RabbitMQ server'
         :type password: str
         """
-
+        print("connecting... ")
         try:
             self.connection = connect_rabbitmq(self.rabbitmq_host,
                                                self.rabbitmq_port, username, password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection.channel()
             self.rbmq_username = username
+            self.rbmq_password = password 
+            print("connected")
 
         except Exception as inst:
             raise HelyOSAccountConnectionError(
@@ -369,7 +387,7 @@ class HelyOSClient():
             self.checkin_data = body
 
     @auth_required
-    def publish(self, routing_key, message, signed=False, exchange=AGENTS_UL_EXCHANGE):
+    def publish(self, routing_key, message, signed=False, reply_to=None, corr_id=None, exchange=AGENTS_UL_EXCHANGE):
         """ Publish message in RabbitMQ
             :param message: Message to be transmitted
             :type message: str
@@ -380,23 +398,47 @@ class HelyOSClient():
             :param exchange: RabbitMQ exchange, defaults to env.AGENTS_UL_EXCHANGE
             :type exchange: str
         """
+
+        if self.is_reconecting:
+            return
+
         signature = None
         if signed:
             signature = self.signing_helper.return_signature(message).hex()
         
+
+        headers = pika.BasicProperties( user_id=self.rbmq_username, 
+                                        timestamp=int(time.time()*1000),
+                                        reply_to=reply_to,
+                                        correlation_id=corr_id)
+        
         body = json.dumps({'message': message, 'signature': signature}, sort_keys=True)
 
-        try:
-            self.channel.basic_publish(exchange, routing_key,
-                                       properties=pika.BasicProperties(
-                                           user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
-                                       body=body)
-        except ConnectionResetError:
-            self.channel = self.connection.channel()
-            self.channel.basic_publish(exchange, routing_key,
-                                       properties=pika.BasicProperties(
-                                           user_id=self.rbmq_username, timestamp=int(time.time()*1000)),
-                                       body=message)
+        is_trying = True
+        while is_trying:    
+            try:
+                self.channel.basic_publish(exchange, routing_key,
+                                        properties=headers,
+                                        body=body)
+                is_trying = False
+                
+                
+            except pika.exceptions.AMQPConnectionError as err:
+                print(f"Connection error when publishing. Reconnecting... try {self.tries}")
+                self.tries += 1                
+                if self.tries > 3:
+                    self.tries = 0
+                    raise HelyOSAccountConnectionError("Connection error when publishing.")
+                
+                try: 
+                    self.reconnect()
+                    is_trying = False
+                    self.tries = 0
+                except Exception as err:
+                    print(err)
+                    is_trying = True
+                time.sleep(3)  # Wait for a few seconds before reconnecting
+                
 
     @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
@@ -439,5 +481,6 @@ class HelyOSClient():
         self.channel.stop_consuming()
 
     def close_connection(self):
+        """ Close the AMQP connection with RabbitMQ server """
         self.connection.close()
     

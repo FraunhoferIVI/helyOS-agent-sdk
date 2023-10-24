@@ -1,8 +1,6 @@
-import pika
 import uuid
 import json
 import time
-
 
 class DatabaseConnector():
     """
@@ -41,8 +39,8 @@ class DatabaseConnector():
         if helyos_client._protocol == 'MQTT':
             raise Exception('Remote procedure call should use AMQP protocoll.')
         self.connection = helyos_client.connection
-        self.routing_key = helyos_client.summary_routing_key
-        self.username = helyos_client.rbmq_username
+        self.routing_key = helyos_client.database_routing_key
+        self.helyos_client = helyos_client
 
         self.channel = self.connection.channel()
         result = self.channel.queue_declare(queue='', exclusive=True)
@@ -80,17 +78,19 @@ class DatabaseConnector():
 
         """
 
+        if not self.helyos_client.is_connection_open:
+            self.helyos_client.reconnect()
+            time.sleep(3)
+            self.__init__(self.helyos_client)
+
         self.response = None
         self.corr_id = str(uuid.uuid4())
-        self.channel.basic_publish(
-            exchange='xchange_helyos.agents.ul',
-            routing_key=self.routing_key,
-            properties=pika.BasicProperties(
-                reply_to=self.callback_queue,
-                correlation_id=self.corr_id,
-                user_id=self.username,
-                timestamp=int(time.time()*1000),
-            ),
-            body=json.dumps({'body': request}))
+        self.helyos_client.publish(routing_key=self.routing_key,
+                                   message=json.dumps({'body': request}),
+                                   signed=False,
+                                   reply_to=self.callback_queue,
+                                   corr_id=self.corr_id,
+        )
+
         self.connection.process_data_events(time_limit=None)
         return json.loads(json.loads(self.response)['message'])

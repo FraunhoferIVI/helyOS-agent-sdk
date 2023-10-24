@@ -109,6 +109,7 @@ class HelyOSMQTTClient():
         self._protocol = 'MQTT'
 
         self.tries = 0
+        self.is_reconecting = False
         self.rbmq_username = None
         self.rbmq_password = None
 
@@ -121,6 +122,12 @@ class HelyOSMQTTClient():
 
         self.rabbitmq_host = rabbitmq_host
         self.rabbitmq_port = rabbitmq_port
+
+    @property
+    def is_connection_open(self):
+        """ Check if the connection is open """
+        return self.connection.is_connected()
+
 
     @property
     def checking_routing_key(self):
@@ -223,6 +230,11 @@ class HelyOSMQTTClient():
         self.guest_channel.message_callback_add(
             temp_topic, self.__checkin_callback_wrapper)
 
+    def reconnect(self):
+        self.is_reconecting = True
+        self.connect(self.rbmq_username, self.rbmq_password)
+        self.is_reconecting = False
+
     def connect(self, username, password):
         """
         Creates the connection between agent and the message broker server.
@@ -244,6 +256,7 @@ class HelyOSMQTTClient():
                                            username, password, self.enable_ssl, self.ca_certificate)
             self.channel = self.connection
             self.rbmq_username = username
+            self.rbmq_password = password
 
         except Exception as inst:
             print(inst)
@@ -307,7 +320,8 @@ class HelyOSMQTTClient():
 
         body = json.dumps({'message': message, 'signature': signature, 'headers': {'timestamp': int(time.time()*1000),
                                                                                     'replyTo': self.checkin_response_queue,
-                                                                                     'user_id': username }}, sort_keys=True)
+                                                                                    'reply_to': self.checkin_response_queue,
+                                                                                    'user_id': username }}, sort_keys=True)
 
         self.guest_channel.publish(
             self.checking_routing_key, payload=body)
@@ -372,8 +386,8 @@ class HelyOSMQTTClient():
             self.checkin_data = body
 
     @auth_required
-    def publish(self, routing_key, message, signed=False, exchange=AGENTS_MQTT_EXCHANGE):
-        """ Publish message in RabbitMQ
+    def publish(self, routing_key, message, signed=False, reply_to=None, corr_id=None, exchange=AGENTS_MQTT_EXCHANGE):
+        """ Publish message in RabbitMQ-MQTT
             :param message: Message to be transmitted
             :type message: str
             :param routing_key: MQTT topic name
@@ -383,23 +397,59 @@ class HelyOSMQTTClient():
             :param exchange: RabbitMQ exchange, cannot be changed, fixed to env.AGENTS_MQTT_EXCHANGE
             :type exchange: str
         """
+
+        if self.is_reconecting:
+            return
+
         signature = None
         if signed:
             signature = self.signing_helper.return_signature(message).hex()
-        
-        body = json.dumps({'message': message, 'signature': signature, 'headers': {'timestamp': int(time.time()*1000),
-                                                                                   'user_id': self.rbmq_username} }, sort_keys=True)
 
-        self.channel.publish(routing_key, payload=body)
+
+        headers = { 'user_id': self.rbmq_username,
+                    'timestamp': int(time.time()*1000),
+                    'reply_to':reply_to,
+                    'correlation_id': corr_id}    
+        
+        body = json.dumps({'message': message, 'signature': signature,
+                        'headers':  headers}, sort_keys=True)
+        
+        is_trying = True
+        while is_trying:    
+            try:
+                result= self.channel.publish(routing_key,
+                                     payload=body)
+                if result.rc != mqtt.MQTT_ERR_SUCCESS:
+                    raise Exception("Error when publishing.")
+
+                is_trying = False       
+                
+            except Exception as err:
+                print(f"Connection error when publishing. Reconnecting... try {self.tries}")
+                self.tries += 1                
+                if self.tries > 3:
+                    self.tries = 0
+                    raise HelyOSAccountConnectionError("Connection error when publishing.")
+                
+                try: 
+                    self.reconnect()
+                    is_trying = False
+                    self.tries = 0
+                except Exception as err:
+                    print(err)
+                    is_trying = True
+                time.sleep(3)  # Wait for a few seconds before reconnecting
+                
+
 
     @auth_required
     def set_assignment_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        """ There is no queues in MQTT protocol """
+        """ There are no queues in MQTT protocol """
         return None
 
     @auth_required
     def set_instant_actions_queue(self, exchange=AGENTS_DL_EXCHANGE):
-        """ There is no queues in MQTT protocol """
+        """ There are no queues in MQTT protocol """
         return None
 
     @auth_required
