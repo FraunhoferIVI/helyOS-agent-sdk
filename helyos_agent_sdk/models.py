@@ -12,7 +12,7 @@ from datetime import datetime
 VERSION = '3.0.0'
 
 
-class ASSIGNMENT_STATUS(Enum):
+class ASSIGNMENT_STATUS(str, Enum):
     ACTIVE = 'active'
     SUCCEEDED = 'succeeded'
     CANCELED = 'canceled'
@@ -22,7 +22,7 @@ class ASSIGNMENT_STATUS(Enum):
     EXECUTING = 'executing'
 
 
-class AGENT_STATE(Enum):
+class AGENT_STATE(str, Enum):
     NOT_AUTO = 'not_automatable'
     FREE = 'free'
     BUSY = 'busy'
@@ -40,7 +40,7 @@ class INSTANT_ACTIONS_TYPE(str, Enum):
     RELEASE = 'release_from_mission'
 
 
-class AGENT_MESSAGE_TYPE(Enum):
+class AGENT_MESSAGE_TYPE(str, Enum):
     MISSION = 'mission_request'
     STATE = 'agent_state'
     SENSORS = 'agent_sensors'
