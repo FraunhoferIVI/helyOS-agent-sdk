@@ -131,6 +131,12 @@ and it provides the helyOS routing-key names as properties.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.is_connection_open">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_connection_open</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.is_connection_open" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the connection is open</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checking_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.checking_routing_key" title="Permalink to this definition"></a></dt>
 <dd><p>MQTT Topic value used for check in messages</p>
@@ -209,6 +215,11 @@ as <cite>checkin_data</cite>.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.reconnect">
+<span class="sig-name descname"><span class="pre">reconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.reconnect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect">
 <span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.connect" title="Permalink to this definition"></a></dt>
 <dd><p>Creates the connection between agent and the message broker server.</p>
@@ -255,8 +266,8 @@ uuid as username and returns a password, which can be found in the property <cit
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish">
-<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.mqtt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish" title="Permalink to this definition"></a></dt>
-<dd><p>Publish message in RabbitMQ
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.mqtt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.publish" title="Permalink to this definition"></a></dt>
+<dd><p>Publish message in RabbitMQ-MQTT
 :param message: Message to be transmitted
 :type message: str
 :param routing_key: MQTT topic name
@@ -270,13 +281,13 @@ uuid as username and returns a password, which can be found in the property <cit
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue">
 <span class="sig-name descname"><span class="pre">set_assignment_queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.dl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_assignment_queue" title="Permalink to this definition"></a></dt>
-<dd><p>There is no queues in MQTT protocol</p>
+<dd><p>There are no queues in MQTT protocol</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue">
 <span class="sig-name descname"><span class="pre">set_instant_actions_queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.dl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.mqtt_client.HelyOSMQTTClient.set_instant_actions_queue" title="Permalink to this definition"></a></dt>
-<dd><p>There is no queues in MQTT protocol</p>
+<dd><p>There are no queues in MQTT protocol</p>
 </dd></dl>
 
 <dl class="py method">

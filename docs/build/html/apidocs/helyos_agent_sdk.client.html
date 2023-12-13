@@ -134,6 +134,12 @@ If the helyOS public key is not provided, it is retrieved during the check-in pr
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.is_connection_open">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_connection_open</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.is_connection_open" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the connection is open</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.checking_routing_key">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checking_routing_key</span></span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.checking_routing_key" title="Permalink to this definition"></a></dt>
 <dd><p>Routing key value used for check in messages</p>
@@ -217,6 +223,11 @@ as <cite>checkin_data</cite>.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.reconnect">
+<span class="sig-name descname"><span class="pre">reconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.reconnect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.connect">
 <span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.connect" title="Permalink to this definition"></a></dt>
 <dd><p>Creates the connection between agent and the RabbitMQ server.</p>
@@ -263,7 +274,7 @@ uuid as username and returns a password, which can be found in the property <cit
 
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.publish">
-<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.ul'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.publish" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">routing_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exchange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'xchange_helyos.agents.ul'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.publish" title="Permalink to this definition"></a></dt>
 <dd><p>Publish message in RabbitMQ
 :param message: Message to be transmitted
 :type message: str
@@ -315,7 +326,8 @@ Instant actions are used by helyOS to reserve, release or cancel an assignment.<
 <dl class="py method">
 <dt class="sig sig-object py" id="helyos_agent_sdk.client.HelyOSClient.close_connection">
 <span class="sig-name descname"><span class="pre">close_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#helyos_agent_sdk.client.HelyOSClient.close_connection" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Close the AMQP connection with RabbitMQ server</p>
+</dd></dl>
 
 </dd></dl>
 
