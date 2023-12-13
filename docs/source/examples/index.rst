@@ -12,13 +12,13 @@ To establish a connection to HelyOS using AMQP, follow these steps:
 
 .. code-block:: python
 
-    >>> from agent_helyos_sdk import HelyOSClient
-    >>>
-    >>> helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
-    >>> helyos_client.connect(username="01234-01234-01234", password="secret_password")
-    >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyos_client.get_checkin_result()
-    >>> print(helyos_client.checkin_data) # Data from helyOS containing yard information.
+    from helyos_agent_sdk import HelyOSClient
+
+    helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
+    helyos_client.connect(username="01234-01234-01234", password="secret_password")
+    helyos_client.perform_checkin(yard_uid="0", agent_data={'name':"my truck", 'factsheet':user_defined_dict})
+    helyos_client.get_checkin_result()
+    print(helyos_client.checkin_data) # Data from helyOS containing yard information.
 
 
 Connect to helyOS via MQTT
@@ -27,13 +27,13 @@ To establish a connection to HelyOS using MQTT, use the `HelyOSMQTTClient` as sh
 
 .. code-block:: python
 
-    >>> from agent_helyos_sdk import HelyOSMQTTClient
-    >>>
-    >>> helyos_client = HelyOSMQTTClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
-    >>> helyos_client.connect(username="01234-01234-01234", password="secret_password")
-    >>> helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
-    >>> helyos_client.get_checkin_result()
-    >>> print(helyos_client.checkin_data) # Data containing yard information.
+    from helyos_agent_sdk import HelyOSMQTTClient
+
+    helyos_client = HelyOSMQTTClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
+    helyos_client.connect(username="01234-01234-01234", password="secret_password")
+    helyos_client.perform_checkin(yard_uid="0", agent_data={'name':"my truck", 'factsheet':user_defined_dict})
+    helyos_client.get_checkin_result()
+    print(helyos_client.checkin_data) # Data containing yard information.
 
 
 Connect to helyOS via AMQP without an account
@@ -44,11 +44,12 @@ helyOS will automatically create a Rabbitmq account using the UUID as the userna
 
 .. code-block:: python
 
-    from agent_helyos_sdk import HelyOSClient
+    from helyos_agent_sdk import HelyOSClient
+
     if os.environ.get('REGISTRATION_TOKEN', None):
         helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234")
         # not used => helyos_client.connect(username="01234-01234-01234", password="secret_password")
-        helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':user_defined_dict})
+        helyos_client.perform_checkin(yard_uid="0", agent_data={'name':"my truck", 'factsheet':user_defined_dict})
         helyos_client.get_checkin_result()
         print(helyos_client.checkin_data) # Data containing yard and new authentication credentials.
 
@@ -58,7 +59,8 @@ Connect to helyOS with SSL
 --------------------------
 .. code-block:: python
 
-    from agent_helyos_sdk import HelyOSMQTTClient, HelyOSClient
+    from helyos_agent_sdk import HelyOSMQTTClient, HelyOSClient
+    
     if PROTOCOL == "AMQP":   
         Client = HelyOSClient
         port = 5671
@@ -72,7 +74,7 @@ Connect to helyOS with SSL
                                 enable_ssl=True, ca_certificate=CA_CERTIFICATE)
 
     helyos_client.connect(username="01234-01234-01234", password="secret_password")
-    helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':user_defined_dict})
+    helyos_client.perform_checkin(yard_uid="0", agent_data={'name':"my truck", 'factsheet':user_defined_dict})
     helyos_client.get_checkin_result()
     print(helyos_client.checkin_data) 
 
@@ -83,13 +85,14 @@ To create an Agent Connector and publish messages to HelyOS, follow these steps:
 
 .. code-block:: python
 
-    from agent_helyos_sdk import AgentConnector, AssignmentCurrentStatus
-    agent_connector = AgentConnector(helyos_client)
+    from helyos_agent_sdk import AgentConnector
+    from helyos_agent_sdk.models import AssignmentCurrentStatus
 
+    agent_connector = AgentConnector(helyos_client)
     assignment_status = AssignmentCurrentStatus(id=1, status='executing', result={})
     agent_connector.publish_state(status='free', assignment_status= assignment_status)
-    agent_connector.publish_sensors(x=43243, y=423423, sensors={'temperature': 36})
-    agent_connector.publish_general_updates({x=43243, name='my truck'})
+    agent_connector.publish_sensors(x=43243, y=423423, z=0, orientations=[0], sensors={'temperature': 36})
+    agent_connector.publish_general_updates({'x': 43243, 'name': "my truck"})
 
 
 Signing Published Messages for Increased Security
@@ -100,12 +103,13 @@ The agent's public is loaded to helyOS core in the checkin process and can be up
 
 .. code-block:: python
 
-    from agent_helyos_sdk import AgentConnector, AssignmentCurrentStatus HelyOSClient
+    from helyos_agent_sdk import AgentConnector, HelyOSClient
+    from helyos_agent_sdk.models import AssignmentCurrentStatus
 
     helyos_client = HelyOSClient("dev2.rabbitmq.net", uuid="01234-01234-01234",
                                   agent_pubkey=AGENT_PUBLIC_KEY, agent_privkey=AGENT_PRIVATE_KEY)
     helyos_client.connect(username="01234-01234-01234", password="secret_password")
-    helyos_client.perform_checkin(agent_data={'name':"my truck", 'factsheet':factsheet_dict})
+    helyos_client.perform_checkin(yard_uid="0", agent_data={'name':"my truck", 'factsheet':user_defined_dict})
     helyos_client.get_checkin_result()
     
     agent_connector = AgentConnector(helyos_client)
@@ -121,18 +125,18 @@ Use the agent connector to receive messsages from helyOS
 ---------------------------------------------------------
 .. code-block:: python
 
-    from agent_helyos_sdk.crypto import verify_signature
+    from helyos_agent_sdk.crypto import verify_signature
 
     def example_callback(ch, sender, parsed_data, message_str, signature):
         if PROTOCOL == "AMQP" and sender is not 'helyos_core':
-            trow Exception("Invalid sender")
+            throw Exception("Invalid sender")
         if PROTOCOL == "MQTT":
             verify_signature(message_str, signature, helyos_client.helyos_public_key)
         print("callback", parsed_data)
         
 
-    agent_connector.consume_assignments(assignment_callback=example_callback) # assignment
-    agent_connector.consume_instant_actions( reserve_callback=example_callback,# reserve for mission
+    agent_connector.consume_assignment_messages(assignment_callback=example_callback) # assignment
+    agent_connector.consume_instant_action_messages( reserve_callback=example_callback,# reserve for mission
                                                  release_callback=example_callback,# release from mission
                                                  cancel_callback=example_callback) # cancel assignment
     agent_connector.start_listening()
@@ -143,7 +147,7 @@ Use the agent connector to receive messsages from helyOS
 In the `example_callback()`, the parameter sender is the validated username of the RabbitMQ account of the client that sent the message. 
 This parameter is not available when use MQTT; sender=`None` in this case. For MQTT, you may use the signature parameter to validate the message sender.
 
-In the `publish_sensors()`, the parameter sensors has an arbrittary data format. 
+In the `publish_sensors()`, the parameter sensors has an arbitrary data format. 
 If you don't have any strict requirement, you may use the 
 helyos-native data format:
 
