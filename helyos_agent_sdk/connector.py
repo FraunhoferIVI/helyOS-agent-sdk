@@ -326,7 +326,7 @@ class AgentConnector():
             signed=signed
         )
 
-    def request_mission(self, mission_name, data, tools_uuids=[],  signed=False):
+    def request_mission(self, mission_name, data, agent_uuids=[],  signed=False):
         """ Request a mission to helyOS. The mission data is freely defined by the application.
             As example, this method could be triggered in the scenario where the agent needs an extra assignments to complete
             a mission, or when it delegates an assignment to other agents.
@@ -336,8 +336,8 @@ class AgentConnector():
             :type mission_name: name
             :param data: User-defined data
             :type data: dict
-            :param tools_uuids: UUID list of agents to be reserved for the mission.
-            :type tools_uuids: string list
+            :param agent_uuids: UUID list of agents to be reserved for the mission.
+            :type agent_uuids: string list
             :param signed: A boolean indicating whether the published message must be signed (defaults to False)
             :type signed: boolean
 
@@ -349,7 +349,7 @@ class AgentConnector():
                  'uuid': self.helyos_client.uuid,
                  'body': {'work_process_type_name': mission_name,
                           'data': data,
-                          'tools_uuids': tools_uuids,
+                          'agent_uuids': agent_uuids,
                           'yard_uid': self.helyos_client.yard_uid,
                           }
                  }, sort_keys=True),
