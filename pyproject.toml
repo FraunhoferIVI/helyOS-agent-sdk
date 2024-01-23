@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "helyos_agent_sdk"
-version = "0.7.3"
+version = "0.7.4"
 description = ""
 authors = ["Carlos Viol Barbosa <you@example.com>"]
 readme = "README.md"

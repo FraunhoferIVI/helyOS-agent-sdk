@@ -77,7 +77,7 @@ class AssignmentMetadata:
     id: int = 0
     work_process_id: int = 0
     yard_id: int = 0
-    status: str = ASSIGNMENT_STATUS.TO_EXECUTE
+    status: str = ASSIGNMENT_STATUS.TO_EXECUTE.value
     start_time_stamp: float = datetime.now()
     context: dict = field(default_factory=dict)
 
@@ -117,7 +117,7 @@ class AgentCheckinData:
 class AgentStateMessage:
     uuid: str
     body: AgentStateBody
-    type = AGENT_MESSAGE_TYPE.STATE
+    type: AGENT_MESSAGE_TYPE = AGENT_MESSAGE_TYPE.STATE.value
     _version = VERSION
 
 
@@ -126,7 +126,7 @@ class AgentStateMessage:
 class MissionRequestMessage:
     uuid: str
     body: dict
-    type = AGENT_MESSAGE_TYPE.MISSION
+    type: AGENT_MESSAGE_TYPE = AGENT_MESSAGE_TYPE.MISSION.value
     _version = VERSION
 
 
@@ -137,7 +137,7 @@ class CheckinResponseMessage:
     uuid: str
     body: dict
     _version: str = ''
-    type: str = AGENT_MESSAGE_TYPE.CHECKIN
+    type: AGENT_MESSAGE_TYPE = AGENT_MESSAGE_TYPE.CHECKIN.value
     metadata: dict = field(default_factory=dict)
 
 
@@ -146,7 +146,7 @@ class AssignmentCommandMessage:
     uuid: str
     body: dict
     _version: str = ''
-    type: ASSIGNMENT_MESSAGE_TYPE = ASSIGNMENT_MESSAGE_TYPE.EXECUTION
+    type: ASSIGNMENT_MESSAGE_TYPE = ASSIGNMENT_MESSAGE_TYPE.EXECUTION.value
     metadata: AssignmentMetadata = field(default_factory=dict)
 
 
@@ -155,7 +155,7 @@ class AssignmentCancelMessage:
     uuid: str
     body: dict
     _version: str = ''
-    type: INSTANT_ACTIONS_TYPE  = INSTANT_ACTIONS_TYPE.CANCEL
+    type: INSTANT_ACTIONS_TYPE  = INSTANT_ACTIONS_TYPE.CANCEL.value
     metadata: AssignmentMetadata = field(default_factory=dict)
 
 
