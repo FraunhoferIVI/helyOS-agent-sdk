@@ -26,6 +26,9 @@
 
 ## About The Project
 
+**Important Update: We've relocated this project to a fresh [repository](https://github.com/helyOSFramework/helyos_agent_sdk). Future updates and versions of this source code will be exclusively released in the new repository. This shift is key to enhance project management and foster better collaboration.**
+
+
 The helyos-agent-sdk python package encloses methods and data structures definitions that facilitate the connection to helyOS core through rabbitMQ.
 
 ### List of features
