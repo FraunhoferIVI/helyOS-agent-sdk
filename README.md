@@ -8,7 +8,7 @@
     <img src="truck.png" alt="Logo"  height="80">
   </a>
 
-  <h3 align="center">helyOS Agent SDK</h3>
+  <h3 align="center">helyOS Agent SDK - OUTDATED: THIS PROJECT HAS MOVED! </h3>
 
   <p align="center">
     Methods and data strrctures to connect autonomous vehicles to helyOS.
